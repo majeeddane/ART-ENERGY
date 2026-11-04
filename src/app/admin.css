@@ -1,0 +1,91 @@
+@tailwind components;
+
+@layer components {
+  .admin-body {
+    @apply min-h-screen bg-[#F4F0E7] text-[#14262B] antialiased;
+    background-image: radial-gradient(circle at 12% 0%, rgba(19, 156, 170, 0.09), transparent 34%),
+      radial-gradient(circle at 88% 8%, rgba(209, 162, 70, 0.12), transparent 30%);
+  }
+
+  .admin-card {
+    @apply rounded-2xl border border-[#DED5C4] bg-white shadow-[0_20px_50px_-38px_rgba(11,39,48,0.45)];
+  }
+
+  .admin-label {
+    @apply mb-1.5 block text-[11px] font-semibold text-[#456067];
+  }
+
+  .admin-input,
+  .admin-textarea,
+  .admin-select {
+    @apply w-full rounded-xl border border-[#DED5C4] bg-[#FCFAF5] px-3 py-2.5 text-sm text-[#14262B] outline-none transition placeholder:text-[#9AA5A5] focus:border-[#139CAA] focus:bg-white focus:ring-2 focus:ring-[#139CAA]/15;
+  }
+
+  .admin-textarea {
+    @apply min-h-[92px] leading-7;
+  }
+
+  .admin-input[dir="ltr"],
+  .admin-textarea[dir="ltr"] {
+    @apply text-left;
+  }
+
+  .admin-btn {
+    @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-full px-4 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .admin-btn-primary {
+    @apply bg-[#0B2730] text-[#F2E04E] hover:bg-[#0E3F4D];
+  }
+
+  .admin-btn-gold {
+    @apply bg-[#F2E04E] text-[#0B2730] hover:bg-[#E6D33F];
+  }
+
+  .admin-btn-ghost {
+    @apply border border-[#DED5C4] bg-white text-[#456067] hover:border-[#139CAA] hover:text-[#0B2730];
+  }
+
+  .admin-btn-danger {
+    @apply border border-[#E7B9B5] bg-[#FDF3F2] text-[#A9362E] hover:bg-[#FBE7E5];
+  }
+
+  .admin-chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-[#DED5C4] bg-white px-2.5 py-1 text-[10px] font-medium text-[#456067];
+  }
+
+  .admin-tab {
+    @apply inline-flex min-h-9 items-center justify-center gap-1.5 rounded-full px-3.5 text-[11px] font-semibold text-[#5D7478] transition hover:text-[#0B2730];
+  }
+
+  .admin-tab-active {
+    @apply bg-[#0B2730] text-[#F2E04E] hover:text-[#F2E04E];
+  }
+
+  .admin-section-title {
+    @apply text-lg font-bold tracking-tight text-[#0B2730];
+  }
+
+  .admin-muted {
+    @apply text-xs leading-6 text-[#6A7D80];
+  }
+
+  .admin-field-row {
+    @apply grid gap-3 sm:grid-cols-2;
+  }
+
+  .admin-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #c9c0af transparent;
+  }
+
+  .admin-scroll::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .admin-scroll::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #c9c0af;
+  }
+}
