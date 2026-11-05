@@ -68,6 +68,7 @@ export function Footer({ locale }: { locale: Locale }) {
             <Wordmark
               tone="light"
               markClassName="h-14 w-14"
+              logoClassName="h-14 w-auto max-w-[13rem]"
               logoSrc={settings.logoUrl}
               idPrefix="ae-footer"
             />

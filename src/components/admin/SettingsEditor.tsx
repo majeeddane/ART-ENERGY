@@ -154,19 +154,19 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
 
         <Card
           title="صورة واجهة الموقع"
-          description="الصورة التي تظهر بجانب العنوان في أول الصفحة. ارفع صورة من جهازك أو اخترها من المكتبة، ثم اضغط «حفظ التغييرات»."
+          description="الصورة التي تملأ واجهة الموقع بالكامل، ويظهر فوقها اسم الموقع والعنوان. ارفع صورة من جهازك أو اخترها من المكتبة، ثم اضغط «حفظ التغييرات»."
         >
           <div className="max-w-xl">
             <ImageField
               label="صورة الهيرو"
               value={settings.heroImage}
               onChange={(value) => setSettings({ heroImage: value })}
-              hint="يُفضّل صورة مربعة أو بنسبة 4:5 بجودة عالية. الافتراضي: /images/media-art.webp"
+              hint="يُفضّل صورة أفقية عريضة بجودة عالية (مثل 1920×1080) لأنها تملأ الشاشة كخلفية. الافتراضي: /images/media-art.webp"
             />
           </div>
           <div className="mt-4">
             <Notice tone="info">
-              تظهر الصورة الجديدة في واجهة الموقع مباشرة بعد الحفظ.
+              اختر صورة واضحة وغير مزدحمة في الجهة المقابلة للنص، وستظهر مباشرة بعد الحفظ.
             </Notice>
           </div>
         </Card>

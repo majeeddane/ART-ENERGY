@@ -23,174 +23,141 @@ export function Hero({ locale }: { locale: Locale }) {
   }, []);
 
   const lines = [dict.hero.titleA, dict.hero.titleB, dict.hero.titleC];
-  const eyebrowParts = dict.hero.eyebrow
-    .split("·")
-    .map((part) => part.trim())
-    .filter(Boolean);
+  const ease = [0.16, 1, 0.3, 1] as const;
 
   return (
     <section
       id="home"
-      className="relative isolate overflow-hidden bg-canvas text-foreground"
+      className="relative isolate min-h-[100svh] overflow-hidden bg-[var(--night-bg)] text-[#F7F2E9]"
     >
-      {/* calm studio backdrop */}
+      {/* full-bleed image */}
+      <Image
+        src={heroImage}
+        alt={dict.meta.ogAlt}
+        fill
+        priority
+        unoptimized={/^https?:\/\//i.test(heroImage)}
+        sizes="100vw"
+        className="object-cover object-center"
+      />
+
+      {/* cinematic scrims keep the copy readable on any photo */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(90%_80%_at_50%_-10%,var(--teal-soft)_0%,transparent_58%)] opacity-80" />
-        <div className="absolute -start-40 bottom-[-12rem] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle,var(--gold-soft),transparent_65%)] opacity-40 blur-3xl" />
+        <div className="absolute inset-0 bg-[#04181E]/35" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,24,30,0.72)_0%,rgba(4,24,30,0.28)_34%,rgba(4,24,30,0.5)_62%,rgba(4,24,30,0.94)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(4,24,30,0.92)_0%,rgba(4,24,30,0.66)_36%,rgba(4,24,30,0.16)_72%,rgba(4,24,30,0.04)_100%)] rtl:bg-[linear-gradient(to_left,rgba(4,24,30,0.92)_0%,rgba(4,24,30,0.66)_36%,rgba(4,24,30,0.16)_72%,rgba(4,24,30,0.04)_100%)]" />
       </div>
 
-      <div className="container relative z-10 flex min-h-[100svh] flex-col justify-center pb-14 pt-28 sm:pt-32 lg:pb-16">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-          {/* copy */}
-          <div className="max-w-xl">
-            <motion.div
-              className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[9px] uppercase tracking-[0.18em] text-muted sm:text-[10px] sm:tracking-[0.22em]"
-              initial={false}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-            >
-              {eyebrowParts.map((part, i) => (
-                <span key={part} className="flex items-center gap-x-3">
-                  {i > 0 && (
-                    <span className="h-1 w-1 rounded-full bg-gold/70" />
-                  )}
-                  <span
-                    className={
-                      i === 0 ? "text-[color:var(--accent-teal)]" : undefined
-                    }
-                  >
-                    {part}
-                  </span>
-                </span>
-              ))}
-            </motion.div>
-
-            <h1 className="hero-title mt-5 font-display">
-              {lines.map((line, i) => (
-                <span key={line} className="block overflow-hidden pb-[0.04em]">
-                  <motion.span
-                    className={cn(
-                      "block",
-                      i === 2 && "text-[color:var(--accent-gold)]",
-                    )}
-                    initial={reduced ? false : { y: "110%" }}
-                    animate={ready ? { y: "0%" } : {}}
-                    transition={{
-                      duration: 1.05,
-                      delay: 0.05 + i * 0.08,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                  >
-                    {line}
-                  </motion.span>
-                </span>
-              ))}
-            </h1>
-
-            <motion.div
-              className="mt-6 max-w-lg"
-              initial={false}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <p className="text-base font-semibold text-[color:var(--accent-teal)] sm:text-lg">
-                {dict.hero.subtitle}
-              </p>
-              <p className="mt-3 text-sm leading-8 text-muted sm:text-[0.95rem]">
-                {dict.hero.body}
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="mt-8 flex flex-wrap items-center gap-3"
-              initial={false}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <button
-                type="button"
-                onClick={() => scrollToSection("contact")}
-                className="btn btn-primary"
-              >
-                {dict.hero.ctaPrimary}
-                <ArrowUpRight className="rtl:-scale-x-100" size={18} />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollToSection("services")}
-                className="btn btn-outline"
-              >
-                {dict.hero.ctaSecondary}
-              </button>
-            </motion.div>
-          </div>
-
-          {/* visual */}
+      <div className="container relative z-10 flex min-h-[100svh] flex-col justify-end pb-14 pt-28 sm:pb-16 sm:pt-32 lg:pb-20">
+        <div className="max-w-[44rem]">
+          {/* site name over the image */}
           <motion.div
-            className="relative mx-auto w-full max-w-[480px] lg:max-w-[520px]"
-            initial={reduced ? false : { opacity: 0, y: 26 }}
+            className="flex flex-wrap items-center gap-x-4 gap-y-2"
+            initial={reduced ? false : { opacity: 0, y: 14 }}
             animate={ready ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.9, delay: 0.1, ease }}
           >
-            <div
-              aria-hidden
-              className="pointer-events-none absolute left-1/2 top-1/2 -z-10 aspect-square w-[112%] -translate-x-1/2 -translate-y-1/2"
-            >
-              <span className="absolute inset-0 rounded-full border border-line" />
-              <span className="absolute inset-[7%] rounded-full border border-dashed border-line/80" />
-              <span className="absolute inset-[18%] rounded-full bg-[radial-gradient(circle,var(--teal-soft),transparent_68%)] opacity-70 blur-2xl" />
-            </div>
-
-            <div className="relative overflow-hidden rounded-[1.9rem] border border-line bg-surface p-2 shadow-[0_50px_120px_-60px_rgba(11,39,48,0.55)]">
-              <div className="relative aspect-[5/6] overflow-hidden rounded-[1.45rem] bg-surface">
-                <Image
-                  src={heroImage}
-                  alt={dict.meta.ogAlt}
-                  fill
-                  priority
-                  unoptimized={/^https?:\/\//i.test(heroImage)}
-                  sizes="(max-width: 1024px) 90vw, 520px"
-                  className="object-cover"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.18),transparent_30%,rgba(4,24,30,0.08))]" />
-              </div>
-            </div>
-
-            <div
-              className="mt-4 flex items-center justify-between gap-4 text-[8.5px] uppercase tracking-[0.2em] text-muted"
+            <span className="inline-flex items-center gap-3">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#F2E04E]" />
+              <span
+                className="font-grotesk text-[1.35rem] font-semibold uppercase leading-none tracking-[0.2em] text-[#F7F2E9] sm:text-[1.6rem]"
+                dir="ltr"
+              >
+                ART ENERGY
+              </span>
+            </span>
+            <span className="h-px w-10 bg-[#F2E04E]/60" aria-hidden />
+            <span
+              className="font-grotesk text-[8.5px] uppercase tracking-[0.3em] text-[#F2E04E] sm:text-[9.5px]"
               dir="ltr"
             >
-              <span className="flex items-center gap-2">
-                <span className="h-1 w-1 rounded-full bg-gold" />
-                SHOWREEL / 01
+              Creative media agency
+            </span>
+          </motion.div>
+
+          {/* headline */}
+          <h1 className="hero-title mt-6 font-display text-[#F7F2E9] sm:mt-7">
+            {lines.map((line, i) => (
+              <span key={line} className="block overflow-hidden pb-[0.04em]">
+                <motion.span
+                  className={cn(
+                    "block",
+                    i === 2 && "text-[#F0D48A]",
+                  )}
+                  initial={reduced ? false : { y: "110%" }}
+                  animate={ready ? { y: "0%" } : {}}
+                  transition={{
+                    duration: 1.05,
+                    delay: 0.16 + i * 0.07,
+                    ease,
+                  }}
+                >
+                  {line}
+                </motion.span>
               </span>
-              <span>ART ENERGY</span>
-            </div>
+            ))}
+          </h1>
+
+          <motion.div
+            className="mt-6 max-w-xl sm:mt-7"
+            initial={reduced ? false : { opacity: 0, y: 14 }}
+            animate={ready ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, delay: 0.42, ease }}
+          >
+            <p className="text-base font-medium leading-8 text-[#F7F2E9]/85 sm:text-lg">
+              {dict.hero.subtitle}
+            </p>
+            <p className="mt-2.5 text-[0.9rem] leading-7 text-[#F7F2E9]/60 sm:text-[0.95rem]">
+              {dict.hero.body}
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="mt-8 flex flex-wrap items-center gap-3"
+            initial={reduced ? false : { opacity: 0, y: 14 }}
+            animate={ready ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, delay: 0.52, ease }}
+          >
+            <button
+              type="button"
+              onClick={() => scrollToSection("contact")}
+              className="btn btn-primary"
+            >
+              {dict.hero.ctaPrimary}
+              <ArrowUpRight className="rtl:-scale-x-100" size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToSection("services")}
+              className="btn border border-white/35 bg-white/5 text-[#F7F2E9] backdrop-blur-sm transition hover:border-white/60 hover:bg-white/12"
+            >
+              {dict.hero.ctaSecondary}
+            </button>
           </motion.div>
         </div>
       </div>
 
-      {/* scroll cue */}
+      {/* scroll cue, kept away from the copy */}
       <motion.button
         type="button"
         onClick={() => scrollToSection("about")}
-        className="absolute bottom-6 left-1/2 z-20 hidden -translate-x-1/2 flex-col items-center gap-2 text-[9px] uppercase tracking-[0.24em] text-muted transition hover:text-[color:var(--accent-teal)] sm:flex"
+        className="absolute bottom-10 end-8 z-20 hidden flex-col items-center gap-3 text-[#F7F2E9]/55 transition hover:text-[#F7F2E9] lg:flex"
         initial={{ opacity: 0 }}
         animate={ready ? { opacity: 1 } : {}}
-        transition={{ delay: 1.2, duration: 0.8 }}
+        transition={{ delay: 1.1, duration: 0.8 }}
       >
-        <span className="font-grotesk" dir="ltr">
-          {dict.ui.scroll}
+        <span className="font-grotesk text-[8.5px] uppercase tracking-[0.32em]" dir="ltr">
+          Scroll
         </span>
-        <span className="sr-only">{dict.hero.ctaSecondary}</span>
-        <span className="relative h-9 w-px overflow-hidden bg-[var(--line)]">
+        <span className="relative h-14 w-px overflow-hidden bg-white/25">
           <motion.span
-            className="absolute inset-x-0 top-0 h-3 bg-[color:var(--accent-teal)]"
-            animate={{ y: [-12, 36] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-x-0 top-0 h-4 bg-[#F2E04E]/80"
+            animate={{ y: [-16, 56] }}
+            transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
           />
         </span>
         <ArrowDown size={13} />
+        <span className="sr-only">{dict.ui.scroll}</span>
       </motion.button>
     </section>
   );

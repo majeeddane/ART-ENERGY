@@ -121,6 +121,7 @@ export function BrandMark({
 export function Wordmark({
   className,
   markClassName,
+  logoClassName,
   compact = false,
   tone = "auto",
   idPrefix = "ae-wordmark",
@@ -128,6 +129,7 @@ export function Wordmark({
 }: {
   className?: string;
   markClassName?: string;
+  logoClassName?: string;
   compact?: boolean;
   tone?: "auto" | "light";
   idPrefix?: string;
@@ -143,7 +145,10 @@ export function Wordmark({
         <img
           src={logoSrc}
           alt="ART ENERGY"
-          className={cn("h-11 w-11 shrink-0 object-contain", markClassName)}
+          className={cn(
+            "shrink-0 rounded-lg bg-white object-contain ring-1 ring-black/5",
+            logoClassName ?? "h-11 w-auto max-w-[11rem]",
+          )}
         />
       ) : (
         <BrandMark

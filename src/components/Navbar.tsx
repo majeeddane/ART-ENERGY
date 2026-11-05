@@ -143,6 +143,7 @@ export function Navbar({ locale }: { locale: Locale }) {
               <Wordmark
                 tone="auto"
                 markClassName="h-10 w-10"
+                logoClassName="h-10 w-auto max-w-[9.5rem]"
                 compact={false}
                 logoSrc={settings.logoUrl}
                 idPrefix="ae-nav"
@@ -250,6 +251,7 @@ export function Navbar({ locale }: { locale: Locale }) {
                 <Wordmark
                   tone="light"
                   markClassName="h-10 w-10"
+                  logoClassName="h-10 w-auto max-w-[9.5rem]"
                   logoSrc={settings.logoUrl}
                   idPrefix="ae-menu"
                 />
