@@ -10,6 +10,7 @@ import {
   Megaphone,
   Palette,
   Phone,
+  Lock,
   WhatsApp,
 } from "@/components/ui/Icons";
 import { scrollToSection } from "@/lib/utils";
@@ -193,9 +194,18 @@ export function Footer({ locale }: { locale: Locale }) {
           <p>
             © {year} ART ENERGY — {dict.footer.rights}
           </p>
-          <p className="font-grotesk tracking-[0.16em]" dir="ltr">
-            {dict.footer.tagline}
-          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="font-grotesk tracking-[0.16em]" dir="ltr">
+              {dict.footer.tagline}
+            </p>
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1 text-[9px] font-semibold tracking-[0.08em] text-white/50 transition hover:border-[#D1A246] hover:text-[#F2E04E]"
+            >
+              <Lock size={11} />
+              {dict.footer.admin}
+            </Link>
+          </div>
         </div>
       </div>
 

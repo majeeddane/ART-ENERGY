@@ -451,6 +451,7 @@ const ar = {
     contactTitle: "تواصل",
     rights: "جميع الحقوق محفوظة.",
     backTop: "العودة إلى الأعلى",
+    admin: "دخول الإدارة",
     built: "ART ENERGY",
   },
   hidden: {
@@ -893,6 +894,7 @@ const en: Dict = {
     contactTitle: "Contact",
     rights: "All rights reserved.",
     backTop: "Back to top",
+    admin: "Admin login",
     built: "ART ENERGY",
   },
   hidden: {
