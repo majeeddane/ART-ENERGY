@@ -86,8 +86,6 @@ export function Navbar({ locale }: { locale: Locale }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  const onDark = true;
-
   const go = (id: string) => {
     setOpen(false);
     window.setTimeout(() => scrollToSection(id), 80);
@@ -127,11 +125,11 @@ export function Navbar({ locale }: { locale: Locale }) {
         <div className="container">
           <div
             className={cn(
-              "mt-3 flex h-[4.25rem] items-center justify-between gap-4 rounded-full border px-3 transition-all duration-500 sm:px-4",
+              "mt-3 flex h-[4.25rem] items-center justify-between gap-4 rounded-full border border-line px-3 text-foreground backdrop-blur-xl transition-all duration-500 sm:px-4",
+              "bg-[var(--nav-bg)]",
               scrolled
-                ? "border-white/10 bg-[#04181E]/90 shadow-glass backdrop-blur-xl"
-                : "border-transparent bg-transparent",
-              "text-[#F7F2E9]",
+                ? "shadow-[0_18px_50px_-28px_rgba(4,24,30,0.45)]"
+                : "shadow-none",
             )}
           >
             <Link
@@ -143,7 +141,7 @@ export function Navbar({ locale }: { locale: Locale }) {
               className="shrink-0 rounded-full focus-visible:outline-offset-4"
             >
               <Wordmark
-                tone="light"
+                tone="auto"
                 markClassName="h-10 w-10"
                 compact={false}
                 logoSrc={settings.logoUrl}
@@ -159,7 +157,7 @@ export function Navbar({ locale }: { locale: Locale }) {
                   type="button"
                   onClick={() => go(link.id)}
                   onMouseEnter={() => play("hover")}
-                  className="link-line text-[0.82rem] font-medium opacity-75 transition hover:text-gold-300 hover:opacity-100"
+                  className="link-line text-[0.82rem] font-medium text-foreground/75 transition hover:text-[color:var(--accent-teal)]"
                 >
                   {link.label}
                 </button>
@@ -170,8 +168,7 @@ export function Navbar({ locale }: { locale: Locale }) {
               <Link
                 href={locale === "ar" ? "/en" : "/"}
                 className={cn(
-                  "hidden h-9 items-center gap-1.5 rounded-full border px-3 text-[0.72rem] font-semibold transition hover:border-gold sm:inline-flex",
-                  onDark ? "border-white/20" : "border-line",
+                  "hidden h-9 items-center gap-1.5 rounded-full border border-line px-3 text-[0.72rem] font-semibold transition hover:border-gold sm:inline-flex",
                 )}
               >
                 <Globe size={14} aria-hidden />
@@ -184,8 +181,7 @@ export function Navbar({ locale }: { locale: Locale }) {
                 onClick={toggleTheme}
                 aria-label={theme === "dark" ? dict.ui.themeLight : dict.ui.themeDark}
                 className={cn(
-                  "hidden h-9 w-9 items-center justify-center rounded-full border transition hover:border-gold sm:inline-flex",
-                  onDark ? "border-white/20" : "border-line",
+                  "hidden h-9 w-9 items-center justify-center rounded-full border border-line transition hover:border-gold sm:inline-flex",
                 )}
               >
                 {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
@@ -195,7 +191,7 @@ export function Navbar({ locale }: { locale: Locale }) {
                 type="button"
                 onClick={() => go("contact")}
                 onMouseEnter={() => play("hover")}
-                className="hidden h-10 items-center gap-1.5 rounded-full border border-white/20 px-3.5 text-[0.72rem] font-semibold transition hover:border-gold sm:inline-flex lg:hidden"
+                className="hidden h-10 items-center gap-1.5 rounded-full border border-line px-3.5 text-[0.72rem] font-semibold transition hover:border-gold sm:inline-flex lg:hidden"
               >
                 <Phone size={14} aria-hidden />
                 <span className="sr-only">{dict.ui.phone}</span>
@@ -225,8 +221,7 @@ export function Navbar({ locale }: { locale: Locale }) {
                 aria-controls="mobile-menu"
                 aria-haspopup="dialog"
                 className={cn(
-                  "inline-flex h-10 w-10 items-center justify-center rounded-full border transition hover:border-gold lg:hidden",
-                  onDark ? "border-white/25" : "border-line",
+                  "inline-flex h-10 w-10 items-center justify-center rounded-full border border-line transition hover:border-gold lg:hidden",
                 )}
               >
                 <Menu size={18} />

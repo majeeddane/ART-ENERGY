@@ -153,6 +153,25 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
         </Card>
 
         <Card
+          title="صورة واجهة الموقع"
+          description="الصورة التي تظهر بجانب العنوان في أول الصفحة. ارفع صورة من جهازك أو اخترها من المكتبة، ثم اضغط «حفظ التغييرات»."
+        >
+          <div className="max-w-xl">
+            <ImageField
+              label="صورة الهيرو"
+              value={settings.heroImage}
+              onChange={(value) => setSettings({ heroImage: value })}
+              hint="يُفضّل صورة مربعة أو بنسبة 4:5 بجودة عالية. الافتراضي: /images/media-art.webp"
+            />
+          </div>
+          <div className="mt-4">
+            <Notice tone="info">
+              تظهر الصورة الجديدة في واجهة الموقع مباشرة بعد الحفظ.
+            </Notice>
+          </div>
+        </Card>
+
+        <Card
           title="بيانات التواصل"
           description="تظهر في الهيدر، الفوتر، صفحة التواصل، وأزرار واتساب."
         >
@@ -243,12 +262,6 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
               value={settings.logoUrl}
               onChange={(value) => setSettings({ logoUrl: value })}
               hint="اتركه فارغًا لاستخدام شعار ART ENERGY المرسوم. يُفضّل PNG بخلفية شفافة."
-            />
-            <ImageField
-              label="صورة الهيرو"
-              value={settings.heroImage}
-              onChange={(value) => setSettings({ heroImage: value })}
-              hint="تظهر داخل بطاقة الهيرو. الافتراضي: /images/media-art.webp"
             />
             <ImageField
               label="صورة المشاركة (OG)"

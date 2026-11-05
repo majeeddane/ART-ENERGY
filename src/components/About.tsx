@@ -30,7 +30,7 @@ function IdeaVisual({ top, bottom }: { top: string; bottom: string }) {
     <div ref={ref} className="relative mx-auto aspect-square w-full max-w-[440px]">
       <div className="absolute inset-0 animate-spin-slow rounded-full border border-dashed border-gold/30" />
       <div className="absolute inset-6 rounded-full border border-ink/10" />
-      <div className="absolute inset-0 rounded-full bg-[#F2E04E] shadow-[0_40px_90px_-40px_rgba(209,162,70,0.7)]" />
+      <div className="absolute inset-0 rounded-full border border-gold/35 bg-[radial-gradient(circle_at_32%_24%,#FFFDF8_0%,#FAF2DD_48%,#EEE0BA_100%)] shadow-[0_40px_90px_-55px_rgba(209,162,70,0.5)]" />
       <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_22%,rgba(255,255,255,0.55),transparent_55%)]" />
       <div className="dot-grid absolute inset-0 rounded-full opacity-[0.16]" />
 

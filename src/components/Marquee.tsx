@@ -20,14 +20,14 @@ function Row({
         <span key={`${item}-${i}`} className="flex items-center">
           <span
             className={cn(
-              "whitespace-nowrap px-6 py-4 text-sm font-semibold sm:px-9 sm:py-5 sm:text-base",
+              "whitespace-nowrap px-5 py-3.5 text-[13px] font-medium sm:px-8 sm:py-4 sm:text-sm",
               outline &&
                 "text-transparent [-webkit-text-stroke:1px_rgba(209,162,70,0.65)]",
             )}
           >
             {item}
           </span>
-          <Sparkle className="shrink-0 opacity-60" size={15} />
+          <Sparkle className="shrink-0 text-gold/70" size={13} />
         </span>
       ))}
     </div>
@@ -51,18 +51,11 @@ function Row({
 
 export function MarqueeBand({ items }: { items: string[] }) {
   return (
-    <div className="relative z-20 border-y border-gold/25" aria-hidden>
-      <Row
-        items={items}
-        className="bg-[linear-gradient(180deg,#f79d3f,var(--orange)_60%,#e77f1e)] text-[#1B1206]"
-      />
-      <div className="h-px bg-[#D1A246]/40" />
-      <Row
-        items={items}
-        className="bg-[var(--night-2)] text-[#F2E04E]"
-        reverse
-        outline
-      />
+    <div
+      className="relative z-20 border-y border-line bg-surface/70 [mask-image:linear-gradient(90deg,transparent,black_7%,black_93%,transparent)]"
+      aria-hidden
+    >
+      <Row items={items} className="text-muted" />
     </div>
   );
 }
