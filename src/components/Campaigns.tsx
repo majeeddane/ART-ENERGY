@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import { SectionLabel } from "@/components/ui/Section";
-import { ArrowUpRight, Note } from "@/components/ui/Icons";
+import { ArrowUpRight, Megaphone } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { useQuote } from "@/components/providers/QuoteProvider";
 import { useSound } from "@/components/providers/SoundProvider";
-import { cn, scrollToSection } from "@/lib/utils";
+import { scrollToSection } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
 import { useDict, useSettings } from "@/components/providers/SiteDataProvider";
 import type { Locale } from "@content/model";
@@ -63,8 +63,8 @@ export function Campaigns({ locale }: { locale: Locale }) {
               </div>
               <span className="h-10 w-px bg-white/10" />
               <div className="flex items-center gap-3 text-[9px] uppercase tracking-[0.2em] text-white/35" dir="ltr">
-                <Note size={18} className="text-[#F2E04E]/70" />
-                BIG GOALS / BIG SOUND
+                <Megaphone size={18} className="text-[#F2E04E]/70" />
+                BIG GOALS / BIG IMPACT
               </div>
             </div>
 
@@ -131,28 +131,12 @@ export function Campaigns({ locale }: { locale: Locale }) {
               })}
             </div>
 
-            <div className="mt-2 flex h-12 items-end justify-center gap-1">
-              {[18, 34, 12, 42, 26, 48, 16, 36, 22, 44, 14, 30, 40, 20, 32, 46, 24, 38].map(
-                (h, i) => (
-                  <motion.span
-                    key={i}
-                    className={cn(
-                      "w-1.5 rounded-t-sm bg-gradient-to-t",
-                      i % 4 === 0
-                        ? "from-[#F28C28] to-[#F2E04E]"
-                        : "from-[#139CAA] to-[#3DC1C5]",
-                    )}
-                    animate={{ height: [h * 0.35, h, h * 0.55] }}
-                    transition={{
-                      duration: 1.6 + (i % 5) * 0.2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: i * 0.06,
-                    }}
-                    style={{ height: h }}
-                  />
-                ),
-              )}
+            <div className="mt-10 flex items-center gap-4 border-t border-white/10 pt-5 font-grotesk text-[9px] tracking-[0.22em] text-white/35" dir="ltr">
+              <span>IDEA</span>
+              <span className="h-px flex-1 bg-gradient-to-r from-[#3DC1C5]/50 via-[#D1A246]/40 to-[#F2E04E]/60" />
+              <span className="text-[#F2E04E]/70">06 STEPS</span>
+              <span className="h-px flex-1 bg-gradient-to-r from-[#F2E04E]/40 via-[#D1A246]/30 to-transparent" />
+              <span>IMPACT</span>
             </div>
           </div>
         </div>

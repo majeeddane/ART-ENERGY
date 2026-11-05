@@ -24,7 +24,7 @@ export function SectionLabel({
   );
 }
 
-export function Equalizer({
+export function GrowthMeter({
   className,
   bars = 5,
 }: {
@@ -32,9 +32,12 @@ export function Equalizer({
   bars?: number;
 }) {
   return (
-    <span className={cn("eq", className)} aria-hidden>
+    <span className={cn("meter", className)} aria-hidden>
       {Array.from({ length: bars }).map((_, i) => (
-        <span key={i} style={{ animationDelay: `${-0.18 * i}s` }} />
+        <span
+          key={i}
+          style={{ height: `${34 + (i / Math.max(1, bars - 1)) * 66}%` }}
+        />
       ))}
     </span>
   );

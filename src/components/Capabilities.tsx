@@ -1,7 +1,7 @@
 "use client";
 
 import { SectionLabel } from "@/components/ui/Section";
-import { ArrowUpRight, Note, Sparkle } from "@/components/ui/Icons";
+import { ArrowUpRight, Megaphone, Sparkle } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn, scrollToSection } from "@/lib/utils";
 import { useDict } from "@/components/providers/SiteDataProvider";
@@ -56,12 +56,12 @@ function OrbitStamp({ text, locale }: { text: string; locale: Locale }) {
         />
       </svg>
       <span className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-[#8a6a25] dark:text-[#E8C97E]">
-        <Note size={23} />
+        <Megaphone size={23} />
         <span
           className="font-grotesk text-[6.2px] uppercase tracking-[0.2em]"
           dir="ltr"
         >
-          SOUND / VISION
+          STRATEGY / CREATIVE
         </span>
       </span>
       <Sparkle className="absolute -end-1 top-2 text-gold/60" size={14} />
@@ -108,7 +108,7 @@ export function Capabilities({ locale }: { locale: Locale }) {
                   <span className="font-grotesk text-[10px] tracking-[0.24em] text-gold-700">
                     {group.number}
                   </span>
-                  <Note
+                  <Sparkle
                     size={15}
                     className="text-gold/45 transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-12 group-hover:text-gold-700"
                   />

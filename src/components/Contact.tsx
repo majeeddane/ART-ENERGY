@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { SectionLabel, Equalizer } from "@/components/ui/Section";
+import { SectionLabel } from "@/components/ui/Section";
+import { ChartColumn } from "@/components/ui/Icons";
 import {
   ArrowUpRight,
   Check,
@@ -246,9 +247,9 @@ export function Contact({ locale }: { locale: Locale }) {
           </div>
 
           <div className="mt-10 flex items-center gap-3">
-            <Equalizer className="text-[#F2E04E]" bars={6} />
+            <ChartColumn size={15} className="text-[#F2E04E]" />
             <span className="font-grotesk text-[9px] uppercase tracking-[0.22em] text-white/35" dir="ltr">
-              READY TO TUNE IN
+              READY TO GROW
             </span>
           </div>
         </div>

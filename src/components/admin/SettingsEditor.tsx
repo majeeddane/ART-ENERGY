@@ -248,7 +248,7 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
               label="صورة الهيرو"
               value={settings.heroImage}
               onChange={(value) => setSettings({ heroImage: value })}
-              hint="تظهر داخل بطاقة الهيرو. الافتراضي: /images/wave-art.webp"
+              hint="تظهر داخل بطاقة الهيرو. الافتراضي: /images/media-art.webp"
             />
             <ImageField
               label="صورة المشاركة (OG)"

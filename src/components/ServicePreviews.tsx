@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { BrandMark } from "@/components/brand/Logo";
-import { Equalizer } from "@/components/ui/Section";
+import { ChartColumn } from "@/components/ui/Icons";
 import { Play, Sparkle } from "@/components/ui/Icons";
 
 const fadeUp = {
@@ -202,7 +202,7 @@ export function ContentPreview() {
         </div>
       </div>
       <div className="absolute bottom-4 start-5 flex items-center gap-2 font-grotesk text-[8px] tracking-[0.22em] text-white/45" dir="ltr">
-        <Equalizer className="text-[#F2E04E]" />
+        <ChartColumn size={13} className="text-[#F2E04E]" />
         CONTENT / 03
       </div>
     </div>
@@ -213,7 +213,7 @@ export function ProductionPreview() {
   return (
     <div className="group relative h-full min-h-[320px] overflow-hidden rounded-card bg-[#04181E]">
       <Image
-        src="/images/wave-art.webp"
+        src="/images/media-art.webp"
         alt=""
         fill
         sizes="(max-width: 1024px) 90vw, 460px"
@@ -319,7 +319,7 @@ export function CampaignPreview() {
         <span className="font-grotesk text-[9px] tracking-[0.26em] text-[#F2E04E]/80" dir="ltr">
           CAMPAIGN / 06
         </span>
-        <Equalizer className="text-[#3DC1C5]" />
+        <ChartColumn size={13} className="text-[#3DC1C5]" />
       </div>
 
       <div className="relative mx-auto mt-6 aspect-square w-[220px]">

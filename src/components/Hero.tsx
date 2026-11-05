@@ -10,8 +10,15 @@ import {
 } from "framer-motion";
 import { ThreeWaves } from "@/components/ThreeWaves";
 import { useReducedMotionSafe } from "@/hooks/useReducedMotionSafe";
-import { ArrowDown, ArrowUpRight, Note } from "@/components/ui/Icons";
-import { Equalizer } from "@/components/ui/Section";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  Megaphone,
+  Palette,
+  Play,
+  Share2,
+} from "@/components/ui/Icons";
+import { GrowthMeter } from "@/components/ui/Section";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { useSound } from "@/components/providers/SoundProvider";
 import { cn, scrollToSection } from "@/lib/utils";
@@ -21,7 +28,7 @@ import type { Locale } from "@content/model";
 export function Hero({ locale }: { locale: Locale }) {
   const dict = useDict(locale);
   const settings = useSettings();
-  const heroImage = settings.heroImage || "/images/wave-art.webp";
+  const heroImage = settings.heroImage || "/images/media-art.webp";
   const reduced = useReducedMotionSafe();
   const [ready, setReady] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -34,8 +41,7 @@ export function Hero({ locale }: { locale: Locale }) {
   const glareX = useTransform(rotateY, [-6, 6], ["30%", "70%"]);
 
   useEffect(() => {
-    // Animate the hero behind the preloader so it is already composed when
-    // the curtain lifts. This also keeps the LCP element immediately visible.
+    // Compose the hero behind the preloader so the curtain reveals a finished scene.
     const raf = requestAnimationFrame(() => setReady(true));
     return () => cancelAnimationFrame(raf);
   }, []);
@@ -48,8 +54,8 @@ export function Hero({ locale }: { locale: Locale }) {
     const rect = el.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
-    ry.set(px * 9);
-    rx.set(-py * 9);
+    ry.set(px * 8);
+    rx.set(-py * 8);
   };
 
   const resetCard = () => {
@@ -58,6 +64,18 @@ export function Hero({ locale }: { locale: Locale }) {
   };
 
   const lines = [dict.hero.titleA, dict.hero.titleB, dict.hero.titleC];
+  const eyebrowParts = dict.hero.eyebrow
+    .split("·")
+    .map((part) => part.trim())
+    .filter(Boolean);
+  const mobileEyebrow = eyebrowParts.slice(0, 2).join(" · ");
+
+  const channels = [
+    { Icon: Megaphone, label: "ADVERTISING" },
+    { Icon: Share2, label: "DIGITAL" },
+    { Icon: Palette, label: "CONTENT" },
+    { Icon: Play, label: "PRODUCTION" },
+  ];
 
   return (
     <section
@@ -66,61 +84,40 @@ export function Hero({ locale }: { locale: Locale }) {
     >
       {/* background — layered studio night */}
       <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_72%_12%,var(--night-3)_0%,var(--night-2)_38%,var(--night-bg)_74%)]" />
-      <div className="absolute inset-0 opacity-[0.5]">
+      <div className="absolute inset-0 opacity-[0.45]">
         <ThreeWaves className="h-full w-full" />
       </div>
       <div className="pointer-events-none absolute -start-40 top-1/4 h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle,var(--night-glow),transparent_66%)]" />
       <div className="pointer-events-none absolute -end-36 -top-10 h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,var(--night-glow-2),transparent_66%)]" />
-      {/* ground glow + bottom vignette to melt into the next band */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black/55 to-transparent" />
+
+      {/* editorial grid lines */}
       <div
-        className="pointer-events-none absolute inset-0"
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.07]"
         style={{
-          background:
-            "radial-gradient(90% 60% at 50% 110%, rgba(19,156,170,0.10), transparent 70%)",
+          backgroundImage:
+            "linear-gradient(to right, #f7f2e9 1px, transparent 1px)",
+          backgroundSize: "min(12.5vw, 180px) 100%",
         }}
       />
 
-      {/* circuit lines */}
-      <svg
-        aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.14]"
-        preserveAspectRatio="none"
-        viewBox="0 0 1440 900"
-      >
-        <g fill="none" stroke="#8AD9DD" strokeWidth="1">
-          <path d="M1180 80h120v60h90v90" />
-          <path d="M1240 230h80v90h90" />
-          <path d="M1100 160h60v80h-40v90" />
-          <path d="M120 720h110v-70h90" />
-          <path d="M60 620h80v-80h110" />
-          <path d="M180 820h90v-50h80" />
-        </g>
-        <g fill="#D1A246">
-          <circle cx="1390" cy="230" r="3" />
-          <circle cx="1410" cy="320" r="3" />
-          <circle cx="1220" cy="330" r="3" />
-          <circle cx="320" cy="650" r="3" />
-          <circle cx="250" cy="540" r="3" />
-          <circle cx="350" cy="770" r="3" />
-        </g>
-      </svg>
-
-      <div className="container relative z-10 grid min-h-[100svh] items-center gap-14 pb-24 pt-32 lg:grid-cols-[1.08fr_0.92fr] lg:gap-8 lg:pb-28 lg:pt-28">
+      <div className="container relative z-10 grid min-h-[100svh] items-center gap-14 pb-24 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:pb-28 lg:pt-28">
         {/* copy */}
         <div className="relative">
           <motion.div
-            className="flex flex-wrap items-center gap-3 text-[10px] tracking-[0.24em] text-[#F2E04E]/85"
+            className="flex items-center gap-3 text-[9px] tracking-[0.16em] text-[#F2E04E]/85 sm:text-[10px] sm:tracking-[0.22em]"
             initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <Equalizer className="text-[#3DC1C5]" />
-            <span className="eyebrow" dir="ltr">
-              {dict.hero.eyebrow}
+            <Megaphone size={15} className="shrink-0 text-[#3DC1C5]" />
+            <span className="eyebrow min-w-0 flex-1 whitespace-nowrap" dir="ltr">
+              <span className="sm:hidden">{mobileEyebrow}</span>
+              <span className="hidden sm:inline">{dict.hero.eyebrow}</span>
             </span>
-            <span className="h-px w-10 bg-[#D1A246]/50" />
-            <span className="font-grotesk text-gold-400" dir="ltr">
+            <span className="hidden h-px w-8 shrink-0 bg-[#D1A246]/50 sm:block" />
+            <span className="hidden shrink-0 font-grotesk text-gold-400 sm:inline" dir="ltr">
               2026
             </span>
           </motion.div>
@@ -188,140 +185,140 @@ export function Hero({ locale }: { locale: Locale }) {
           </motion.div>
 
           <motion.div
-            className="mt-10 grid grid-cols-2 gap-x-6 gap-y-2 text-[9px] uppercase tracking-[0.16em] text-[#F7F2E9]/40 sm:flex sm:flex-wrap sm:items-center sm:gap-x-4 sm:text-[10px] sm:tracking-[0.18em]"
+            className="mt-8 flex items-center justify-between gap-x-2 text-[8px] uppercase tracking-[0.1em] text-[#F7F2E9]/45 sm:mt-10 sm:gap-x-5 sm:text-[10px] sm:tracking-[0.18em]"
             initial={false}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.9 }}
             dir="ltr"
           >
-            <span className="font-grotesk">SOUND</span>
-            <span className="hidden h-px w-6 bg-white/20 sm:block" />
-            <span className="font-grotesk">STRATEGY</span>
-            <span className="hidden h-px w-6 bg-white/20 sm:block" />
-            <span className="font-grotesk">VISION</span>
-            <span className="hidden h-px w-6 bg-white/20 sm:block" />
-            <span className="font-grotesk">IMPACT</span>
+            {channels.map(({ Icon, label }, i) => (
+              <span key={label} className="flex items-center gap-4">
+                {i > 0 && <span className="hidden h-px w-5 bg-white/15 sm:block" />}
+                <span className="flex items-center gap-1.5 whitespace-nowrap font-grotesk">
+                  <Icon size={12} className="shrink-0 text-teal-300/70" />
+                  {label}
+                </span>
+              </span>
+            ))}
           </motion.div>
         </div>
 
-        {/* visual */}
+        {/* visual — showreel frame */}
         <motion.div
-          className="relative mx-auto w-full max-w-[540px] lg:mx-0"
+          className="relative mx-auto w-full max-w-[560px] lg:mx-0"
           initial={reduced ? false : { opacity: 0, y: 24, scale: 0.96 }}
           animate={ready ? { opacity: 1, y: 0, scale: 1 } : {}}
-          transition={{ duration: 1.1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="absolute -top-7 end-4 h-24 w-24 rounded-full border border-gold/40 sm:h-32 sm:w-32">
-            <span className="absolute inset-3 rounded-full border border-dashed border-gold/30 orbit" />
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <Note className="rotate-12 text-gold-400" size={24} />
-            </span>
-          </div>
-
-          <div className="relative">
-            {/* vinyl peeking from behind */}
-            <div className="absolute -top-12 end-0 h-52 w-52 animate-spin-slow rounded-full vinyl sm:h-64 sm:w-64">
-              <div className="absolute left-1/2 top-1/2 flex h-[34%] w-[34%] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full vinyl-label">
-                <Note className="text-[#F7F2E9]/90" size={26} />
-              </div>
-            </div>
-
-            <div
-              ref={cardRef}
-              onPointerMove={onCardMove}
-              onPointerLeave={resetCard}
-              className="relative [perspective:1200px]"
-            >
-              <motion.div
-                style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-                className="relative rounded-stage border border-white/15 bg-[#F7F2E9] p-2.5 shadow-lift"
-              >
-                {/* gold hairline inside the cream frame */}
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-7 top-1.5 h-px"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, transparent, rgba(209,162,70,0.85), rgba(242,224,78,0.5), transparent)",
-                  }}
-                />
-                <div className="relative aspect-[1.02] overflow-hidden rounded-[1.35rem] bg-[#F7F2E9]">
-                  <Image
-                    src={heroImage}
-                    alt={dict.meta.ogAlt}
-                    fill
-                    priority
-                    unoptimized={/^https?:\/\//i.test(heroImage)}
-                    sizes="(max-width: 1024px) 88vw, 540px"
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#07262F]/40 via-transparent to-transparent" />
-                  <div className="absolute inset-x-0 top-0 flex items-center justify-between px-4 py-3 text-[8px] uppercase tracking-[0.22em] text-[#0B2730]/70">
-                    <span dir="ltr" className="font-grotesk">
-                      AN-001 / WAVE
-                    </span>
-                    <span className="flex items-center gap-1.5 font-grotesk" dir="ltr">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#F28C28]" />
-                      LIVE
-                    </span>
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-4">
-                    <div>
-                      <p className="font-grotesk text-[10px] tracking-[0.24em] text-white/80" dir="ltr">
-                        ART ENERGY
-                      </p>
-                      <p className="mt-1 font-grotesk text-[7px] uppercase tracking-[0.16em] text-white/60" dir="ltr">
-                        SOUND / VISION / IMPACT
-                      </p>
-                    </div>
-                    <Equalizer className="mb-1 text-[#F2E04E]" bars={7} />
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between gap-3 px-2 pb-1 pt-3">
-                  <span className="font-grotesk text-[8.5px] font-semibold tracking-[0.18em] text-[#0B2730]" dir="ltr">
-                    {dict.hero.albumLabel}
-                  </span>
-                  <span className="truncate font-grotesk text-[7px] uppercase tracking-[0.14em] text-[#0B2730]/55" dir="ltr">
-                    {dict.hero.albumSub}
-                  </span>
-                </div>
-
-                <motion.div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 rounded-stage opacity-30"
-                  style={{
-                    background:
-                      "radial-gradient(420px circle at var(--gx, 50%) 0%, rgba(255,255,255,.7), transparent 60%)",
-                    // @ts-expect-error CSS custom property
-                    "--gx": glareX,
-                  }}
-                />
-              </motion.div>
-            </div>
-
-            {/* floating now-playing card */}
+          {/* showreel frame */}
+          <div
+            ref={cardRef}
+            onPointerMove={onCardMove}
+            onPointerLeave={resetCard}
+            className="relative [perspective:1200px]"
+          >
             <motion.div
-              className="absolute -bottom-8 start-0 z-10 flex w-[min(88%,300px)] items-center gap-3 rounded-card border border-white/15 bg-[#07262F]/90 p-3.5 shadow-glass backdrop-blur-xl sm:-start-6"
-              initial={reduced ? false : { opacity: 0, y: 16 }}
-              animate={ready ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.9, delay: 1.05 }}
+              style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+              className="relative rounded-stage border border-white/15 bg-[#F7F2E9] p-2.5 shadow-lift"
             >
-              <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0E3F4D]">
-                <span className="absolute inset-1 rounded-full border border-[#F2E04E]/30" />
-                <Note className="text-[#F2E04E]" size={20} />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-x-7 top-1.5 h-px"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent, rgba(209,162,70,0.85), rgba(242,224,78,0.5), transparent)",
+                }}
+              />
+              <div className="relative aspect-[1.02] overflow-hidden rounded-[1.35rem] bg-[#F7F2E9]">
+                <Image
+                  src={heroImage}
+                  alt={dict.meta.ogAlt}
+                  fill
+                  priority
+                  unoptimized={/^https?:\/\//i.test(heroImage)}
+                  sizes="(max-width: 1024px) 88vw, 560px"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#04181E]/85 via-[#04181E]/10 to-[#04181E]/40" />
+
+                <div className="absolute inset-x-0 top-0 flex items-center justify-between px-4 py-3 text-[8px] uppercase tracking-[0.22em] text-[#F7F2E9]/80">
+                  <span dir="ltr" className="font-grotesk">
+                    SHOWREEL / 01
+                  </span>
+                  <span className="flex items-center gap-1.5 font-grotesk" dir="ltr">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#F28C28]" />
+                    LIVE
+                  </span>
+                </div>
+
+                {/* play mark */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="relative flex h-16 w-16 items-center justify-center rounded-full border border-white/40 bg-white/10 text-[#F7F2E9] backdrop-blur-md sm:h-20 sm:w-20">
+                    <span className="absolute inset-0 animate-ping rounded-full border border-white/20 [animation-duration:4s]" />
+                    <Play size={22} className="ms-0.5" fill="currentColor" />
+                  </span>
+                </div>
+
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-4">
+                  <div>
+                    <p className="font-grotesk text-[10px] tracking-[0.24em] text-white/85" dir="ltr">
+                      ART ENERGY
+                    </p>
+                    <p className="mt-1 font-grotesk text-[7px] uppercase tracking-[0.16em] text-white/55" dir="ltr">
+                      {dict.hero.liveLabel}
+                    </p>
+                  </div>
+                  <GrowthMeter className="mb-1 text-[#F2E04E]" bars={5} />
+                </div>
               </div>
-              <div className="min-w-0">
-                <p className="font-grotesk text-[9px] uppercase tracking-[0.22em] text-[#F2E04E]/90" dir="ltr">
-                  NOW PLAYING
-                </p>
-                <p className="mt-1 truncate text-xs text-[#F7F2E9]/75">
-                  {dict.hero.subtitle}
-                </p>
+
+              <div className="flex items-center justify-between gap-3 px-2 pb-1 pt-3">
+                <span className="font-grotesk text-[8.5px] font-semibold tracking-[0.18em] text-[#0B2730]" dir="ltr">
+                  {dict.hero.albumLabel}
+                </span>
+                <span className="truncate font-grotesk text-[7px] uppercase tracking-[0.14em] text-[#0B2730]/55" dir="ltr">
+                  {dict.hero.albumSub}
+                </span>
               </div>
-              <Equalizer className="ms-auto text-[#3DC1C5]" />
+
+              <motion.div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 rounded-stage opacity-30"
+                style={{
+                  background:
+                    "radial-gradient(420px circle at var(--gx, 50%) 0%, rgba(255,255,255,.7), transparent 60%)",
+                  // @ts-expect-error CSS custom property
+                  "--gx": glareX,
+                }}
+              />
             </motion.div>
           </div>
+
+          {/* floating capability card */}
+          <motion.div
+            className="absolute -bottom-9 start-0 z-10 flex w-[min(92%,330px)] items-center gap-3 rounded-card border border-white/15 bg-[#07262F]/[0.92] p-3.5 shadow-glass backdrop-blur-xl sm:-start-6"
+            initial={reduced ? false : { opacity: 0, y: 16 }}
+            animate={ready ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, delay: 1 }}
+          >
+            <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0E3F4D] text-[#F2E04E]">
+              <span className="absolute inset-1 rounded-full border border-[#F2E04E]/25" />
+              <Megaphone size={19} />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="font-grotesk text-[9px] uppercase tracking-[0.2em] text-[#F2E04E]/90" dir="ltr">
+                FULL-SERVICE
+              </p>
+              <p className="mt-1 line-clamp-2 text-xs leading-5 text-[#F7F2E9]/75">
+                {dict.hero.subtitle}
+              </p>
+            </div>
+            <div className="flex shrink-0 items-center gap-1 text-teal-300">
+              <Palette size={13} />
+              <Share2 size={13} />
+              <Play size={13} />
+            </div>
+          </motion.div>
         </motion.div>
       </div>
 

@@ -15,7 +15,7 @@ export type { Locale } from "./model";
 export const siteConfig = {
   nameAr: "ارت إنيرجي",
   nameEn: "ART ENERGY",
-  legalName: "ART ENERGY – Production and technical consulting",
+  legalName: "ART ENERGY – Advertising, Marketing & Media Production",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(
     /\/$/,
     "",
@@ -44,7 +44,7 @@ const ar = {
     title: "ارت إنيرجي | ART ENERGY — دعاية وإعلان وإنتاج إعلامي",
     description:
       "ارت إنيرجي (ART ENERGY) — دعاية وإعلان، تسويق رقمي، صناعة محتوى، إنتاج إعلامي وبناء علامات تجارية في المملكة العربية السعودية. حلول متكاملة من الفكرة إلى التأثير.",
-    ogAlt: "ART ENERGY — Production and technical consulting",
+    ogAlt: "ART ENERGY — Advertising, digital marketing & media production",
   },
   nav: {
     home: "الرئيسية",
@@ -67,7 +67,7 @@ const ar = {
     soundOn: "تشغيل الصوت",
     soundOff: "كتم الصوت",
     skip: "تخطي",
-    loading: "جارٍ الضبط",
+    loading: "جارٍ التحميل",
     scroll: "مرّر للأسفل",
     discover: "اكتشف",
     play: "تشغيل",
@@ -89,7 +89,7 @@ const ar = {
     required: "مطلوب",
   },
   hero: {
-    eyebrow: "PRODUCTION & TECHNICAL CONSULTING",
+    eyebrow: "ADVERTISING · DIGITAL · CONTENT · PRODUCTION",
     titleA: "نحوّل الأفكار",
     titleB: "إلى قصص",
     titleC: "مرئية",
@@ -98,8 +98,8 @@ const ar = {
     ctaPrimary: "ابدأ مشروعك",
     ctaSecondary: "استكشف خدماتنا",
     albumLabel: "ART ENERGY",
-    albumSub: "PRODUCTION & TECHNICAL CONSULTING",
-    liveLabel: "SOUND / VISION",
+    albumSub: "ADVERTISING & MARKETING",
+    liveLabel: "STRATEGY / CREATIVE",
     marquee: [
       "الدعاية والإعلان",
       "التسويق الرقمي",
@@ -112,7 +112,7 @@ const ar = {
     label: "من نحن",
     kicker: "ART ENERGY",
     title: "نحن ارت إنيرجي",
-    body: "متخصصة في: الدعاية والإعلان، التسويق الرقمي، صناعة المحتوى، الإنتاج الإعلامي، بناء العلامات التجارية. نقدم حلولًا متكاملة تساعد المؤسسات على تعزيز حضورها وتحقيق أهدافها التسويقية.",
+    body: "شركة متخصصة في الدعاية والإعلان، والتسويق الرقمي، وصناعة المحتوى، والإنتاج الإعلامي، وبناء العلامات التجارية. نقدم حلولًا متكاملة تساعد المؤسسات على تعزيز حضورها وتحقيق أهدافها التسويقية.",
     specialties: [
       "الدعاية والإعلان",
       "التسويق الرقمي",
@@ -121,7 +121,7 @@ const ar = {
       "بناء العلامات التجارية",
     ],
     visualTop: "IDEA",
-    visualBottom: "NOTE",
+    visualBottom: "IMPACT",
     visionLabel: "رؤيتنا",
     vision:
       "أن نكون الشريك الإبداعي الموثوق للعلامات التجارية الباحثة عن النمو والتأثير.",
@@ -136,7 +136,7 @@ const ar = {
     text: "نربط الاستراتيجية والهوية والمحتوى والإنتاج والحملات في مسار واحد.",
     link: "استكشف كل الخدمات",
     ringTop: "ART ENERGY · FROM IDEA TO IMPACT",
-    ringBottom: "PRODUCTION & TECHNICAL CONSULTING",
+    ringBottom: "MEDIA & MARKETING",
     groups: [
       {
         number: "01",
@@ -260,8 +260,8 @@ const ar = {
   },
   journey: {
     label: "رحلة الفكرة إلى التأثير",
-    title: "كل مرحلة نغمة في لحن واحد",
-    hint: "مرّر لتتابع النغمات",
+    title: "من الفكرة الأولى إلى قياس الأثر",
+    hint: "مرّر لتتابع مراحل العمل",
     counter: "المرحلة الحالية",
     stagesLabel: "مراحل الرحلة",
     stages: [
@@ -445,7 +445,7 @@ const ar = {
     emailCta: "أرسل بريدًا",
   },
   footer: {
-    tagline: "Production and technical consulting",
+    tagline: "دعاية · تسويق · إنتاج إعلامي",
     navTitle: "روابط سريعة",
     contactTitle: "تواصل",
     rights: "جميع الحقوق محفوظة.",
@@ -483,7 +483,7 @@ const en: Dict = {
     title: "ART ENERGY — Advertising, Digital & Media Production",
     description:
       "ART ENERGY is an advertising, digital marketing, content and media production agency in Saudi Arabia. Integrated solutions from idea to impact: strategy, branding, content, production and campaigns.",
-    ogAlt: "ART ENERGY — Production and technical consulting",
+    ogAlt: "ART ENERGY — Advertising, digital marketing & media production",
   },
   nav: {
     home: "Home",
@@ -506,7 +506,7 @@ const en: Dict = {
     soundOn: "Turn sound on",
     soundOff: "Mute sound",
     skip: "Skip",
-    loading: "Tuning in",
+    loading: "Loading",
     scroll: "Scroll to explore",
     discover: "Discover",
     play: "Play",
@@ -528,7 +528,7 @@ const en: Dict = {
     required: "Required",
   },
   hero: {
-    eyebrow: "PRODUCTION & TECHNICAL CONSULTING",
+    eyebrow: "ADVERTISING · DIGITAL · CONTENT · PRODUCTION",
     titleA: "We turn ideas",
     titleB: "into visual",
     titleC: "stories",
@@ -537,8 +537,8 @@ const en: Dict = {
     ctaPrimary: "Start your project",
     ctaSecondary: "Explore our services",
     albumLabel: "ART ENERGY",
-    albumSub: "PRODUCTION & TECHNICAL CONSULTING",
-    liveLabel: "SOUND / VISION",
+    albumSub: "ADVERTISING & MARKETING",
+    liveLabel: "STRATEGY / CREATIVE",
     marquee: [
       "Advertising",
       "Digital marketing",
@@ -551,7 +551,7 @@ const en: Dict = {
     label: "About us",
     kicker: "ART ENERGY",
     title: "We are ART ENERGY",
-    body: "Specialised in advertising, digital marketing, content creation, media production and brand building. We deliver integrated solutions that help organisations strengthen their presence and achieve their marketing goals.",
+    body: "A creative agency specialised in advertising, digital marketing, content creation, media production and brand building. We deliver integrated solutions that help organisations strengthen their presence and achieve their marketing goals.",
     specialties: [
       "Advertising",
       "Digital marketing",
@@ -560,7 +560,7 @@ const en: Dict = {
       "Brand building",
     ],
     visualTop: "IDEA",
-    visualBottom: "NOTE",
+    visualBottom: "IMPACT",
     visionLabel: "Our vision",
     vision:
       "To be the trusted creative partner for brands seeking growth and impact.",
@@ -572,10 +572,10 @@ const en: Dict = {
   capabilities: {
     label: "Capabilities",
     title: "Connected disciplines, from idea to impact",
-    text: "We connect strategy, identity, content, production and campaigns in one track.",
+    text: "We connect strategy, identity, content, production and campaigns in one integrated flow.",
     link: "Explore all services",
     ringTop: "ART ENERGY · FROM IDEA TO IMPACT",
-    ringBottom: "PRODUCTION & TECHNICAL CONSULTING",
+    ringBottom: "MEDIA & MARKETING",
     groups: [
       {
         number: "01",
@@ -699,8 +699,8 @@ const en: Dict = {
   },
   journey: {
     label: "From idea to impact",
-    title: "Every stage is a note in one melody",
-    hint: "Scroll to follow the notes",
+    title: "From the first idea to measurable impact",
+    hint: "Scroll to follow the process",
     counter: "Current stage",
     stagesLabel: "Journey stages",
     stages: [
@@ -886,7 +886,7 @@ const en: Dict = {
     emailCta: "Send an email",
   },
   footer: {
-    tagline: "Production and technical consulting",
+    tagline: "Advertising · Marketing · Media",
     navTitle: "Quick links",
     contactTitle: "Contact",
     rights: "All rights reserved.",
@@ -939,7 +939,7 @@ export const defaultSettings: SiteSettings = {
   campaignMin: 10000,
   campaignMax: 15000,
   logoUrl: "",
-  heroImage: "/images/wave-art.webp",
+  heroImage: "/images/media-art.webp",
   ogImage: "/og.png",
   favicon: "/icon.svg",
   keywordsAr: [

@@ -2,8 +2,16 @@
 
 import Link from "next/link";
 import { Wordmark } from "@/components/brand/Logo";
-import { ArrowUpRight, Mail, Note, Phone, WhatsApp } from "@/components/ui/Icons";
-import { Equalizer } from "@/components/ui/Section";
+import {
+  ArrowUp,
+  ArrowUpRight,
+  ChartColumn,
+  Mail,
+  Megaphone,
+  Palette,
+  Phone,
+  WhatsApp,
+} from "@/components/ui/Icons";
 import { scrollToSection } from "@/lib/utils";
 import {
   useDict,
@@ -11,10 +19,6 @@ import {
   useSettings,
 } from "@/components/providers/SiteDataProvider";
 import type { Locale } from "@content/model";
-
-const bars = Array.from({ length: 64 }, (_, i) =>
-  Math.round(16 + Math.abs(Math.sin(i * 1.73) * Math.cos(i * 0.37)) * 78),
-);
 
 export function Footer({ locale }: { locale: Locale }) {
   const dict = useDict(locale);
@@ -68,12 +72,18 @@ export function Footer({ locale }: { locale: Locale }) {
               idPrefix="ae-footer"
             />
             <p className="mt-6 max-w-xs text-sm leading-7 text-white/45">
-              {dict.footer.tagline}
+              {locale === "ar"
+                ? "وكالة دعاية وإعلام تبني العلامات التجارية من الفكرة إلى الأثر."
+                : "An advertising and media agency building brands from idea to impact."}
             </p>
             <div className="mt-6 flex items-center gap-3">
-              <Equalizer className="text-[#F2E04E]" bars={6} />
+              <span className="flex items-center gap-1.5 text-[#F2E04E]">
+                <Megaphone size={13} />
+                <Palette size={13} />
+                <ChartColumn size={13} />
+              </span>
               <span className="font-grotesk text-[8px] uppercase tracking-[0.24em] text-white/55" dir="ltr">
-                SOUND / VISION / IMPACT
+                STRATEGY / CREATIVE / IMPACT
               </span>
             </div>
 
@@ -83,7 +93,7 @@ export function Footer({ locale }: { locale: Locale }) {
               className="group mt-8 inline-flex items-center gap-3 rounded-full border border-white/15 py-2 pe-5 ps-2 text-xs text-white/60 transition hover:border-[#D1A246] hover:text-[#F2E04E]"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F2E04E] text-[#0B2730] transition group-hover:-translate-y-0.5">
-                <Note size={16} />
+                <ArrowUp size={16} />
               </span>
               {dict.footer.backTop}
             </button>
@@ -190,18 +200,7 @@ export function Footer({ locale }: { locale: Locale }) {
 
       <div className="relative mt-2 select-none overflow-hidden">
         <div aria-hidden className="footer-wordmark" />
-        <div aria-hidden className="footer-eq absolute inset-x-0 bottom-0 h-20 px-1 opacity-70">
-          {bars.map((h, i) => (
-            <span
-              key={i}
-              style={{
-                height: `${h}%`,
-                animationDelay: `${-(i % 11) * 0.18}s`,
-                animationDuration: `${2 + (i % 5) * 0.22}s`,
-              }}
-            />
-          ))}
-        </div>
+        <div className="relative h-px w-full bg-gradient-to-r from-transparent via-gold/45 to-transparent" />
       </div>
     </footer>
   );

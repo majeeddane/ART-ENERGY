@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Note } from "@/components/ui/Icons";
 
-/** A note travelling down a five-line staff as the page scrolls. */
+/** A slim progress rail that tracks how far the page has scrolled. */
 export function ScrollProgress() {
-  const noteRef = useRef<HTMLDivElement>(null);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const fillRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -13,11 +13,14 @@ export function ScrollProgress() {
     const update = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
-      if (noteRef.current) {
-        noteRef.current.style.transform = `translateY(${p * 100}%)`;
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translateY(${p * 100}%)`;
+      }
+      if (fillRef.current) {
+        fillRef.current.style.transform = `scaleY(${p})`;
       }
       if (barRef.current) {
-        barRef.current.style.transform = `scaleY(${p})`;
+        barRef.current.style.transform = `scaleX(${p})`;
       }
       raf = 0;
     };
@@ -42,23 +45,28 @@ export function ScrollProgress() {
       >
         <div
           ref={barRef}
-          className="h-full origin-top bg-gradient-to-r from-teal-500 via-teal-300 to-gold-500"
-          style={{ transform: "scaleY(0)" }}
+          className="h-full origin-left bg-gradient-to-r from-teal-500 via-teal-300 to-gold-500"
+          style={{ transform: "scaleX(0)" }}
         />
       </div>
 
       <div
         aria-hidden
-        className="pointer-events-none fixed bottom-1/2 z-[80] hidden h-[240px] w-10 translate-y-1/2 flex-col justify-center lg:flex"
+        className="pointer-events-none fixed bottom-1/2 z-[80] hidden h-[240px] w-8 translate-y-1/2 flex-col justify-center lg:flex"
         style={{ insetInlineStart: "0.6rem" }}
       >
         <div className="relative h-full w-full">
-          <div className="staff-lines absolute inset-y-0 left-1/2 w-7 -translate-x-1/2 opacity-50" />
+          <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-line-strong/60" />
           <div
-            ref={noteRef}
-            className="absolute left-1/2 top-0 -translate-x-1/2 text-gold-500 transition-transform duration-150"
+            ref={fillRef}
+            className="absolute inset-y-0 left-1/2 w-px origin-top -translate-x-1/2 bg-gradient-to-b from-teal-500 via-teal-300 to-gold-500"
+            style={{ transform: "scaleY(0)" }}
+          />
+          <div
+            ref={dotRef}
+            className="absolute left-1/2 top-0 -translate-x-1/2"
           >
-            <Note size={16} />
+            <span className="block h-2 w-2 rounded-full border border-gold-500 bg-canvas shadow-[0_0_0_3px_rgba(209,162,70,0.18)]" />
           </div>
         </div>
       </div>

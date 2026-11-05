@@ -8,9 +8,9 @@ type MarkProps = SVGProps<SVGSVGElement> & {
 };
 
 /**
- * ART ENERGY mark — a music note built from a vinyl record and a headphone.
- * Re-drawn as crisp vector artwork from the supplied brand logo so it works
- * on light, dark and transparent surfaces without a white box.
+ * ART ENERGY mark — a broadcast megaphone on a night-teal tile.
+ * Drawn as crisp vector artwork so it stays sharp on light, dark and
+ * transparent surfaces without a white box behind it.
  */
 export function BrandMark({
   className,
@@ -18,12 +18,10 @@ export function BrandMark({
   title,
   ...props
 }: MarkProps) {
-  const teal = `${idPrefix}-teal`;
-  const tealDeep = `${idPrefix}-teal-deep`;
-  const gold = `${idPrefix}-gold`;
-  const orange = `${idPrefix}-orange`;
-  const disc = `${idPrefix}-disc`;
-  const hole = `${idPrefix}-hole`;
+  const tile = `${idPrefix}-tile`;
+  const glow = `${idPrefix}-glow`;
+  const sheen = `${idPrefix}-sheen`;
+  const arc = `${idPrefix}-arc`;
 
   return (
     <svg
@@ -35,158 +33,87 @@ export function BrandMark({
       {...props}
     >
       <defs>
-        <linearGradient id={teal} x1="98" y1="34" x2="134" y2="190" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#7BD9DA" />
-          <stop offset="0.38" stopColor="#3DC1C5" />
-          <stop offset="0.72" stopColor="#139CAA" />
-          <stop offset="1" stopColor="#0E6572" />
+        <linearGradient
+          id={tile}
+          x1="26"
+          y1="18"
+          x2="216"
+          y2="228"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0" stopColor="#17A8B6" />
+          <stop offset="0.48" stopColor="#0E6D79" />
+          <stop offset="1" stopColor="#07262F" />
         </linearGradient>
-        <linearGradient id={tealDeep} x1="78" y1="150" x2="136" y2="205" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#3DC1C5" />
-          <stop offset="0.55" stopColor="#139CAA" />
-          <stop offset="1" stopColor="#0B4C57" />
-        </linearGradient>
-        <linearGradient id={gold} x1="128" y1="62" x2="212" y2="114" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#F2E04E" />
-          <stop offset="0.55" stopColor="#E8C97E" />
+        <linearGradient
+          id={glow}
+          x1="46"
+          y1="66"
+          x2="196"
+          y2="176"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0" stopColor="#FBEF9A" />
+          <stop offset="0.5" stopColor="#F2E04E" />
           <stop offset="1" stopColor="#D1A246" />
         </linearGradient>
-        <linearGradient id={orange} x1="198" y1="94" x2="226" y2="150" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#F7A24E" />
-          <stop offset="0.6" stopColor="#F28C28" />
-          <stop offset="1" stopColor="#C9630F" />
-        </linearGradient>
-        <radialGradient id={disc} cx="0.34" cy="0.26" r="0.82">
-          <stop offset="0" stopColor="#8AE0E1" />
-          <stop offset="0.32" stopColor="#3DC1C5" />
-          <stop offset="0.72" stopColor="#139CAA" />
-          <stop offset="1" stopColor="#0B4C57" />
+        <radialGradient id={sheen} cx="0.28" cy="0.14" r="0.9">
+          <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.34" />
+          <stop offset="0.55" stopColor="#FFFFFF" stopOpacity="0.05" />
+          <stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
         </radialGradient>
-        <mask id={hole}>
-          <rect width="240" height="240" fill="white" />
-          <circle cx="156" cy="121" r="14" fill="black" />
-        </mask>
+        <linearGradient id={arc} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#F2E04E" stopOpacity="0.7" />
+          <stop offset="1" stopColor="#3DC1C5" stopOpacity="0.15" />
+        </linearGradient>
       </defs>
 
-      {/* Vinyl shadow */}
-      <circle cx="161" cy="126" r="55" fill="#062028" opacity="0.16" />
-
-      {/* Headphone band + cable (behind the disc) */}
-      <path
-        d="M126 70C145 50 190 54 207 92"
+      {/* tile */}
+      <rect width="240" height="240" rx="56" fill={`url(#${tile})`} />
+      <rect width="240" height="240" rx="56" fill={`url(#${sheen})`} />
+      <rect
+        x="1.25"
+        y="1.25"
+        width="237.5"
+        height="237.5"
+        rx="54.75"
         fill="none"
-        stroke={`url(#${gold})`}
-        strokeWidth="7"
-        strokeLinecap="round"
-      />
-      <path
-        d="M209 145c7 21-12 29-3 51 4 10 15 13 18 25"
-        fill="none"
-        stroke={`url(#${orange})`}
-        strokeWidth="3"
-        strokeLinecap="round"
+        stroke="#F2E04E"
+        strokeOpacity="0.28"
+        strokeWidth="2.5"
       />
 
-      {/* Vinyl disc */}
-      <g mask={`url(#${hole})`}>
-        <circle cx="156" cy="121" r="55" fill={`url(#${disc})`} />
-        <g fill="none" stroke="#F7FBF9" opacity="0.18">
-          <circle cx="156" cy="121" r="47" strokeWidth="1" />
-          <circle cx="156" cy="121" r="41" strokeWidth="1" />
-          <circle cx="156" cy="121" r="34" strokeWidth="1" />
-          <circle cx="156" cy="121" r="27" strokeWidth="1" />
-        </g>
-        <path
-          d="M156 78a43 43 0 0 1 36 19"
-          fill="none"
-          stroke="#FFFFFF"
-          strokeOpacity="0.42"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-      </g>
+      {/* broadcast orbit */}
+      <circle
+        cx="120"
+        cy="120"
+        r="80"
+        fill="none"
+        stroke={`url(#${arc})`}
+        strokeWidth="1.5"
+        strokeDasharray="2 10"
+        strokeLinecap="round"
+      />
 
-      {/* Sound waves inside the disc */}
+      {/* megaphone */}
       <g
+        transform="translate(20 20) scale(8.3)"
         fill="none"
-        stroke="#FFFFFF"
-        strokeOpacity="0.78"
-        strokeWidth="2.4"
+        stroke={`url(#${glow})`}
+        strokeWidth="1.75"
         strokeLinecap="round"
+        strokeLinejoin="round"
       >
-        <path d="M176 108a19 19 0 0 1 0 26" />
-        <path d="M183 101a29 29 0 0 1 0 40" />
-        <path d="M190 94a39 39 0 0 1 0 54" />
+        <path d="m3 11 18-5v12L3 14v-3z" />
+        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
       </g>
 
-      {/* Ear cup */}
-      <rect
-        x="198"
-        y="96"
-        width="23"
-        height="50"
-        rx="10"
-        fill={`url(#${orange})`}
-      />
-      <rect
-        x="217"
-        y="104"
-        width="13"
-        height="34"
-        rx="6"
-        fill={`url(#${orange})`}
-      />
-      <rect
-        x="202"
-        y="103"
-        width="6"
-        height="36"
-        rx="3"
-        fill="#FFFFFF"
-        opacity="0.2"
-      />
-
-      {/* Note shadow */}
-      <g transform="translate(7 8)" fill="#062028" opacity="0.16">
-        <rect x="108" y="35" width="22" height="148" rx="11" />
-        <ellipse
-          cx="97"
-          cy="180"
-          rx="37"
-          ry="28"
-          transform="rotate(-18 97 180)"
-        />
+      {/* signal accents */}
+      <g fill="#F2E04E">
+        <circle cx="206" cy="86" r="4.2" />
+        <circle cx="216" cy="108" r="2.8" opacity="0.72" />
+        <circle cx="200" cy="150" r="2.2" opacity="0.5" />
       </g>
-
-      {/* Note stem */}
-      <rect
-        x="108"
-        y="34"
-        width="22"
-        height="148"
-        rx="11"
-        fill={`url(#${teal})`}
-      />
-      <rect x="113" y="44" width="4" height="128" rx="2" fill="#FFFFFF" opacity="0.28" />
-
-      {/* Note head */}
-      <ellipse
-        cx="97"
-        cy="180"
-        rx="37"
-        ry="28"
-        transform="rotate(-18 97 180)"
-        fill={`url(#${tealDeep})`}
-      />
-      <ellipse
-        cx="89"
-        cy="171"
-        rx="19"
-        ry="11"
-        transform="rotate(-18 89 171)"
-        fill="#FFFFFF"
-        opacity="0.18"
-      />
     </svg>
   );
 }
@@ -209,7 +136,7 @@ export function Wordmark({
   return (
     <span
       className={cn("inline-flex items-center gap-3", className)}
-      aria-label="ART ENERGY — Production and technical consulting"
+      aria-label="ART ENERGY — Advertising, marketing and media production"
     >
       {logoSrc ? (
         // eslint-disable-next-line @next/next/no-img-element
@@ -242,7 +169,7 @@ export function Wordmark({
             )}
             dir="ltr"
           >
-            Production and technical consulting
+            Advertising · Marketing · Media
           </span>
         </span>
       )}

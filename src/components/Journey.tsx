@@ -2,15 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { SectionLabel, Equalizer } from "@/components/ui/Section";
-import { Note } from "@/components/ui/Icons";
+import { SectionLabel } from "@/components/ui/Section";
+import {
+  ChartColumn,
+  Clapperboard,
+  Palette,
+  PenTool,
+  Target,
+} from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
+import { useReducedMotionSafe } from "@/hooks/useReducedMotionSafe";
 import { useDict } from "@/components/providers/SiteDataProvider";
 import type { Locale } from "@content/model";
 
+const stageIcons = [Target, Palette, PenTool, Clapperboard, ChartColumn];
+
 export function Journey({ locale }: { locale: Locale }) {
   const dict = useDict(locale);
+  const reduced = useReducedMotionSafe();
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const stages = dict.journey.stages;
@@ -144,24 +154,30 @@ export function Journey({ locale }: { locale: Locale }) {
           <div className="mt-6 hidden max-w-sm rounded-card border border-white/10 bg-white/[0.03] p-4 shadow-glass backdrop-blur-sm xl:block [@media(max-height:900px)]:hidden">
             <div className="flex items-center justify-between">
               <span className="font-grotesk text-[9px] tracking-[0.24em] text-white/40" dir="ltr">
-                THE SCORE
+                THE ROADMAP
               </span>
-              <Equalizer className="text-[#F2E04E]" bars={7} />
+              <span className="flex items-center gap-1.5 font-grotesk text-[8px] tracking-[0.18em] text-[#F2E04E]/70" dir="ltr">
+                <ChartColumn size={12} />
+                IDEA → IMPACT
+              </span>
             </div>
-            <div className="staff-lines relative mt-4 h-20">
-              {dict.journey.stages.map((stage, i) => (
+            <div className="relative mt-5 flex items-center justify-between">
+              <span
+                aria-hidden
+                className="absolute inset-x-2 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-teal-400/40 via-gold/40 to-[#F2E04E]/50"
+              />
+              {stageIcons.map((Icon, i) => (
                 <motion.span
-                  key={stage.number}
-                  className="absolute flex items-center gap-1.5 text-[#F2E04E]"
-                  style={{ left: `${6 + i * 19}%`, top: `${12 + (i % 3) * 22}%` }}
-                  animate={{ y: [0, -4, 0] }}
+                  key={i}
+                  className="relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[var(--night-3)] text-[#F2E04E]"
+                  animate={reduced ? undefined : { y: [0, -5, 0] }}
                   transition={{
                     duration: 3 + i * 0.35,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
                 >
-                  <Note size={i === 4 ? 22 : 17} rotate={i % 2 === 0 ? 0 : 12} />
+                  <Icon size={15} />
                 </motion.span>
               ))}
             </div>
@@ -173,7 +189,6 @@ export function Journey({ locale }: { locale: Locale }) {
         </div>
 
         <div ref={ref} className="relative ps-10 sm:ps-16">
-          <div className="staff-vertical absolute inset-y-0 start-[0.375rem] w-5 opacity-80 sm:start-[0.75rem]" />
           <div className="absolute inset-y-0 start-[calc(1rem-0.5px)] w-px bg-white/10 sm:start-[calc(1.375rem-0.5px)]" />
           <motion.div
             className="absolute inset-y-0 start-[calc(1rem-0.5px)] w-px origin-top bg-gradient-to-b from-[#3DC1C5] via-[#D1A246] to-[#F2E04E] sm:start-[calc(1.375rem-0.5px)]"
@@ -192,7 +207,10 @@ export function Journey({ locale }: { locale: Locale }) {
                 className="relative scroll-mt-28"
               >
                 <span className="absolute -start-10 top-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#D1A246]/50 bg-[var(--night-2)] text-[#F2E04E] shadow-lg sm:-start-16 sm:h-11 sm:w-11">
-                  <Note size={i === 4 ? 20 : 16} />
+                  {(() => {
+                    const Icon = stageIcons[i % stageIcons.length];
+                    return <Icon size={i === 4 ? 19 : 16} />;
+                  })()}
                   <span className="absolute inset-0 animate-ping rounded-full border border-[#F2E04E]/20 [animation-duration:4s]" />
                 </span>
 

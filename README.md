@@ -52,8 +52,7 @@ art-energy/
 │  └─ runtime.json           ← يُنشأ تلقائيًا في التطوير عند الحفظ (غير مُتتبَّع)
 ├─ public/
 │  ├─ fonts/                 ← الخطوط المستضافة محليًا (woff2)
-│  ├─ images/wave-art.webp   ← عمل فني للهيرو
-│  ├─ images/wave-strip.webp ← شريط موجات
+│  ├─ images/media-art.webp  ← عمل فني للهيرو
 │  ├─ uploads/               ← صور اللوحة في التطوير المحلي (غير مُتتبَّعة)
 │  ├─ icon.svg               ← الأيقونة
 │  └─ og.png                 ← صورة المشاركة الاجتماعية 1200×630
@@ -204,7 +203,7 @@ export const siteConfig = {
 
 - أيقونة المتصفح الافتراضية: `public/icon.svg`
 - صورة المشاركة الافتراضية: `public/og.png` (1200×630)
-- يمكن أيضًا استبدال العمل الفني للهيرو في `public/images/wave-art.webp` مع الحفاظ على النسبة.
+- يمكن أيضًا استبدال العمل الفني للهيرو في `public/images/media-art.webp` مع الحفاظ على النسبة.
 
 ### الألوان
 

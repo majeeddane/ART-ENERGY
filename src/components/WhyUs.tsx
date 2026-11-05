@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { SectionLabel } from "@/components/ui/Section";
-import { Check, Note, Sparkle } from "@/components/ui/Icons";
+import { Check, Sparkle, Target } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { useDict } from "@/components/providers/SiteDataProvider";
 import type { Locale } from "@content/model";
@@ -25,11 +25,17 @@ export function WhyUs({ locale }: { locale: Locale }) {
             </h2>
           </Reveal>
 
-          <div className="relative mt-12 hidden h-40 w-40 lg:block">
-            <div className="absolute inset-0 animate-spin-slow rounded-full border border-dashed border-gold/40" />
-            <div className="absolute inset-5 rounded-full bg-[var(--deep)] shadow-lift ring-1 ring-gold/30" />
-            <div className="absolute inset-[3.25rem] flex items-center justify-center rounded-full bg-[#F2E04E] text-[#0B2730] shadow-gold">
-              <Note size={24} />
+          <div className="relative mt-12 hidden w-44 lg:block">
+            <div className="relative flex h-44 w-44 flex-col items-center justify-center gap-3 rounded-[1.75rem] border border-gold/45 bg-gradient-to-br from-[#F2E04E]/22 via-[#FBF8F1] to-transparent shadow-soft">
+              <span className="absolute left-4 top-4 h-3 w-3 border-l border-t border-gold/70" />
+              <span className="absolute right-4 top-4 h-3 w-3 border-r border-t border-gold/70" />
+              <span className="absolute bottom-4 left-4 h-3 w-3 border-b border-l border-gold/70" />
+              <span className="absolute bottom-4 right-4 h-3 w-3 border-b border-r border-gold/70" />
+              <span className="pointer-events-none absolute inset-0 rounded-[1.75rem] bg-[radial-gradient(circle_at_32%_22%,rgba(242,224,78,0.35),transparent_62%)]" />
+              <Target size={56} strokeWidth={1.1} className="relative text-[#0B2730]" />
+              <span className="relative font-grotesk text-[8px] tracking-[0.24em] text-[#0B2730]/55" dir="ltr">
+                FOCUS / IMPACT
+              </span>
             </div>
             <Sparkle className="absolute -end-3 top-2 text-gold-500" size={20} />
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Note } from "@/components/ui/Icons";
+import { Sparkle } from "@/components/ui/Icons";
 import { cn } from "@/lib/utils";
 
 function Row({
@@ -27,7 +27,7 @@ function Row({
           >
             {item}
           </span>
-          <Note className="shrink-0 opacity-70" size={18} />
+          <Sparkle className="shrink-0 opacity-60" size={15} />
         </span>
       ))}
     </div>

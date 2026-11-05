@@ -321,26 +321,6 @@ html[dir="ltr"] .section-title {
   background-size: 22px 22px;
 }
 
-.staff-lines {
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent 0,
-    transparent 13px,
-    rgba(209, 162, 70, 0.28) 13px,
-    rgba(209, 162, 70, 0.28) 14px
-  );
-}
-
-.staff-vertical {
-  background-image: repeating-linear-gradient(
-    90deg,
-    transparent 0,
-    transparent 9px,
-    rgba(209, 162, 70, 0.22) 9px,
-    rgba(209, 162, 70, 0.22) 10px
-  );
-}
-
 /* ───────────────────────────────────────────────────────────
    Components
    ─────────────────────────────────────────────────────────── */
@@ -520,66 +500,23 @@ html[dir="ltr"] .section-title {
   animation-play-state: paused;
 }
 
-/* equalizer */
-.eq {
-  display: flex;
+/* growth meter — reads as an analytics bar chart, not an audio equalizer */
+.meter {
+  display: inline-flex;
   align-items: flex-end;
-  gap: 3px;
-  height: 18px;
+  gap: 2.5px;
+  height: 16px;
 }
-.eq span {
+.meter span {
   display: block;
   width: 3px;
-  border-radius: 2px;
+  border-radius: 99px;
   background: currentColor;
-  transform-origin: bottom;
-  animation: eq 0.9s ease-in-out infinite alternate;
+  opacity: 0.85;
 }
-.eq span:nth-child(1) {
-  height: 45%;
-  animation-delay: -0.2s;
-}
-.eq span:nth-child(2) {
-  height: 90%;
-  animation-delay: -0.55s;
-}
-.eq span:nth-child(3) {
-  height: 65%;
-  animation-delay: -0.1s;
-}
-.eq span:nth-child(4) {
-  height: 100%;
-  animation-delay: -0.75s;
-}
-.eq span:nth-child(5) {
-  height: 55%;
-  animation-delay: -0.35s;
-}
-
-/* rotating vinyl */
-.vinyl {
-  border-radius: 999px;
-  background:
-    radial-gradient(
-      circle at 50% 50%,
-      #fbf8f1 0 9%,
-      transparent 9.4% 15%,
-      #0b2730 15.4% 16%,
-      transparent 16.4%
-    ),
-    repeating-radial-gradient(
-      circle at 50% 50%,
-      #0b2730 0 1.5px,
-      #123a43 1.5px 3px,
-      #0b2730 3px 5px
-    );
-  box-shadow:
-    inset 0 0 40px rgba(255, 255, 255, 0.08),
-    0 30px 60px -30px rgba(0, 0, 0, 0.65);
-}
-
-.vinyl-label {
-  background: radial-gradient(circle at 35% 30%, #3dc1c5, #139caa 60%, #0e6572);
+.meter span:last-child {
+  opacity: 1;
+  animation: pulse-soft 2.8s ease-in-out infinite;
 }
 
 /* card tilt */
@@ -833,24 +770,6 @@ html[dir="rtl"] .book:hover .book-page:nth-child(3) {
   line-height: 1.35;
 }
 
-/* waveform bars in footer */
-.footer-eq {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2px;
-  height: 80px;
-}
-.footer-eq span {
-  flex: 1;
-  min-width: 2px;
-  border-radius: 2px 2px 0 0;
-  background: linear-gradient(to top, var(--teal), var(--gold));
-  transform-origin: bottom;
-  animation: eq 2.4s ease-in-out infinite alternate;
-  opacity: 0.85;
-}
-
 /* remove native number spinners */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -890,9 +809,8 @@ input[type="number"]::-webkit-inner-spin-button {
   .orbit-reverse {
     animation: none !important;
   }
-  .eq span {
+  .meter span:last-child {
     animation: none !important;
-    transform: scaleY(0.6);
   }
   .flip:hover .flip-inner,
   .flip:focus-within .flip-inner {

@@ -3,13 +3,13 @@
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useReducedMotionSafe } from "@/hooks/useReducedMotionSafe";
-import { Eye, Send, Sparkle, Check } from "@/components/ui/Icons";
+import { Eye, Send, Sparkle, Check, Lightbulb } from "@/components/ui/Icons";
 import { SectionLabel } from "@/components/ui/Section";
 import { WordReveal, Reveal } from "@/components/ui/Reveal";
 import { useDict } from "@/components/providers/SiteDataProvider";
 import type { Locale } from "@content/model";
 
-function IdeaNote({ top, bottom }: { top: string; bottom: string }) {
+function IdeaVisual({ top, bottom }: { top: string; bottom: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotionSafe();
   const { scrollYProgress } = useScroll({
@@ -22,9 +22,9 @@ function IdeaNote({ top, bottom }: { top: string; bottom: string }) {
   const qRotate = useTransform(scrollYProgress, [0, 0.6], [0, -24]);
   const qY = useTransform(scrollYProgress, [0, 0.6], [0, -18]);
 
-  const noteOpacity = useTransform(scrollYProgress, [0.45, 0.72], [0, 1]);
-  const noteScale = useTransform(scrollYProgress, [0.45, 0.9], [0.78, 1]);
-  const noteRotate = useTransform(scrollYProgress, [0.45, 0.9], [18, 0]);
+  const ideaOpacity = useTransform(scrollYProgress, [0.45, 0.72], [0, 1]);
+  const ideaScale = useTransform(scrollYProgress, [0.45, 0.9], [0.78, 1]);
+  const ideaRotate = useTransform(scrollYProgress, [0.45, 0.9], [12, 0]);
 
   return (
     <div ref={ref} className="relative mx-auto aspect-square w-full max-w-[440px]">
@@ -59,38 +59,16 @@ function IdeaNote({ top, bottom }: { top: string; bottom: string }) {
         </motion.div>
 
         <motion.div
-          className="absolute flex items-center justify-center"
+          className="absolute flex items-center justify-center text-[#0B2730]"
           style={
             reduced
               ? { opacity: 1 }
-              : { opacity: noteOpacity, scale: noteScale, rotate: noteRotate }
+              : { opacity: ideaOpacity, scale: ideaScale, rotate: ideaRotate }
           }
         >
-          <svg viewBox="0 0 200 230" className="h-[54%] w-[54%]" aria-hidden>
-            <path
-              d="M112 40v140"
-              stroke="#0B2730"
-              strokeWidth="14"
-              strokeLinecap="round"
-            />
-            <ellipse
-              cx="92"
-              cy="181"
-              rx="34"
-              ry="25"
-              transform="rotate(-18 92 181)"
-              fill="#0B2730"
-            />
-            <circle cx="145" cy="120" r="38" fill="none" stroke="#0B2730" strokeWidth="1.4" opacity="0.4" />
-            <circle cx="145" cy="120" r="26" fill="none" stroke="#0B2730" strokeWidth="1.4" opacity="0.3" />
-            <path
-              d="M112 40c18-14 36-10 46 4"
-              fill="none"
-              stroke="#0B2730"
-              strokeWidth="14"
-              strokeLinecap="round"
-            />
-          </svg>
+          <span className="absolute h-[78%] w-[78%] rounded-full border border-ink/15" />
+          <span className="absolute h-[62%] w-[62%] rounded-full border border-dashed border-ink/20" />
+          <Lightbulb size={148} strokeWidth={1.1} />
         </motion.div>
       </div>
 
@@ -208,7 +186,7 @@ export function About({ locale }: { locale: Locale }) {
           </div>
 
           <Reveal y={40} className="relative">
-            <IdeaNote top={dict.about.visualTop} bottom={dict.about.visualBottom} />
+            <IdeaVisual top={dict.about.visualTop} bottom={dict.about.visualBottom} />
             <p className="mx-auto mt-6 max-w-[300px] text-center text-[11px] uppercase tracking-[0.22em] text-muted">
               {dict.about.flipHint}
             </p>

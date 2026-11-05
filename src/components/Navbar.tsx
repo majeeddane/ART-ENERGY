@@ -8,15 +8,13 @@ import {
   ArrowUpRight,
   Close,
   Globe,
+  Megaphone,
   Menu,
   Moon,
   Phone,
   Sun,
-  Volume,
-  VolumeOff,
   WhatsApp,
 } from "@/components/ui/Icons";
-import { Equalizer } from "@/components/ui/Section";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { useSound } from "@/components/providers/SoundProvider";
 import { useLockScroll, useScrolled, useTheme } from "@/hooks/useUi";
@@ -33,7 +31,7 @@ export function Navbar({ locale }: { locale: Locale }) {
   const settings = useSettings();
   const flags = useFlags();
   const scrolled = useScrolled(36);
-  const { enabled, toggle, play } = useSound();
+  const { play } = useSound();
   const { theme, toggle: toggleTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -100,6 +98,7 @@ export function Navbar({ locale }: { locale: Locale }) {
     { id: "services", label: dict.nav.services },
     { id: "packages", label: dict.nav.packages },
     { id: "production", label: dict.nav.production },
+    { id: "campaigns", label: dict.nav.campaigns },
     { id: "contact", label: dict.nav.contact },
   ];
 
@@ -194,19 +193,12 @@ export function Navbar({ locale }: { locale: Locale }) {
 
               <button
                 type="button"
-                onClick={() => {
-                  toggle();
-                  play("click");
-                }}
-                aria-label={enabled ? dict.ui.soundOff : dict.ui.soundOn}
-                aria-pressed={enabled}
-                className={cn(
-                  "hidden h-9 w-9 items-center justify-center rounded-full border transition hover:border-gold sm:inline-flex",
-                  onDark ? "border-white/20" : "border-line",
-                  enabled && "border-gold text-gold",
-                )}
+                onClick={() => go("contact")}
+                onMouseEnter={() => play("hover")}
+                className="hidden h-10 items-center gap-1.5 rounded-full border border-white/20 px-3.5 text-[0.72rem] font-semibold transition hover:border-gold sm:inline-flex lg:hidden"
               >
-                {enabled ? <Volume size={15} /> : <VolumeOff size={15} />}
+                <Phone size={14} aria-hidden />
+                <span className="sr-only">{dict.ui.phone}</span>
               </button>
 
               <Magnetic strength={0.14} className="hidden md:inline-block">
@@ -278,7 +270,7 @@ export function Navbar({ locale }: { locale: Locale }) {
               </div>
 
               <div className="relative z-10 mt-10 flex items-center gap-3 text-[10px] uppercase tracking-[0.22em] text-[#F2E04E]/80">
-                <Equalizer className="text-[#F2E04E]" />
+                <Megaphone size={14} className="text-[#F2E04E]" />
                 <span dir="ltr">ART ENERGY / INDEX</span>
               </div>
 
@@ -318,20 +310,11 @@ export function Navbar({ locale }: { locale: Locale }) {
                   {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
                   {theme === "dark" ? dict.ui.themeLight : dict.ui.themeDark}
                 </button>
-                <button
-                  type="button"
-                  onClick={toggle}
-                  aria-pressed={enabled}
-                  className="flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/20 px-4 text-sm font-semibold"
-                >
-                  {enabled ? <Volume size={16} /> : <VolumeOff size={16} />}
-                  {enabled ? dict.ui.soundOff : dict.ui.soundOn}
-                </button>
                 <a
                   href={`https://wa.me/${settings.whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#F28C28] px-4 text-sm font-bold text-[#1b1206]"
+                  className="col-span-2 flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#F28C28] px-4 text-sm font-bold text-[#1b1206]"
                 >
                   <WhatsApp size={16} />
                   {dict.ui.whatsapp}

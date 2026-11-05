@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { AnimatedNumber } from "@/components/ui/AnimatedNumber";
 import { ArrowUpRight, Check, Plus, WhatsApp } from "@/components/ui/Icons";
-import { Equalizer } from "@/components/ui/Section";
+import { ChartColumn } from "@/components/ui/Icons";
 import { useQuote } from "@/components/providers/QuoteProvider";
 import { useSound } from "@/components/providers/SoundProvider";
 import { cn, scrollToSection, whatsappLink } from "@/lib/utils";
@@ -121,7 +121,7 @@ export function PackageBuilder({ locale }: { locale: Locale }) {
                 {b.description}
               </p>
             </div>
-            <Equalizer className="mt-1 hidden text-teal-600 sm:flex" bars={5} />
+            <ChartColumn size={15} className="mt-0.5 hidden text-teal-600 sm:block" />
           </div>
 
           <div className="mt-8 space-y-8">
@@ -295,7 +295,7 @@ export function PackageBuilder({ locale }: { locale: Locale }) {
           <div className="relative">
             <div className="flex items-center justify-between">
               <span className="eyebrow text-[9px] text-[#F2E04E]/80">{b.total}</span>
-              <Equalizer className="text-[#3DC1C5]" />
+              <ChartColumn size={15} className="text-[#3DC1C5]" />
             </div>
 
             <div

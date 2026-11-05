@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { PageHeader, Card, Notice } from "@/components/admin/ui";
-import { ArrowUpRight, ImageIcon, Note, Sparkle } from "@/components/ui/Icons";
+import { ArrowUpRight, ImageIcon, PenTool, Sparkle } from "@/components/ui/Icons";
 import { adminConfigured } from "@/lib/auth";
 import { getSiteData, storageSummary, uploadsKind } from "@/lib/store";
 
@@ -231,7 +231,7 @@ export default async function AdminOverviewPage() {
                     className="flex items-center justify-between gap-3 rounded-xl border border-[#E7E0D3] bg-[#FCFAF5] px-3.5 py-2.5"
                   >
                     <span className="flex items-center gap-2 text-xs font-semibold text-[#14262B]">
-                      <Note size={13} className="text-[#8A9797]" />
+                      <PenTool size={13} className="text-[#8A9797]" />
                       {flagLabels[key]}
                     </span>
                     <span className="flex items-center gap-2">
@@ -268,7 +268,7 @@ export default async function AdminOverviewPage() {
               href="/admin/content"
               title="محتوى الموقع"
               text="كل النصوص العربية والإنجليزية، الأسعار، والقوائم."
-              icon={<Note size={15} />}
+              icon={<PenTool size={15} />}
             />
             <Action
               href="/admin/sections"

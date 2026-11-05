@@ -166,7 +166,7 @@ export function Preloader({ skipLabel }: { skipLabel: string }) {
           </motion.div>
 
           <div className="mt-16 flex w-[min(78vw,360px)] items-center justify-between font-grotesk text-[10px] uppercase tracking-[0.3em] text-[#F7F2E9]/60">
-            <span dir="ltr">SOUND</span>
+            <span dir="ltr">CREATIVE</span>
             <span className="text-[#F2E04E]" dir="ltr">
               {progress.toString().padStart(2, "0")}%
             </span>

@@ -10,7 +10,7 @@ import {
   Close,
   Globe,
   Menu,
-  Note,
+  PenTool,
   Sparkle,
 } from "@/components/ui/Icons";
 import { cn } from "@/lib/utils";
@@ -69,7 +69,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
             </span>
             {item.label}
           </span>
-          {isActive(item.href) && <Note size={13} />}
+          {isActive(item.href) && <PenTool size={13} />}
         </Link>
       ))}
     </nav>

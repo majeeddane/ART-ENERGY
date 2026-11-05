@@ -2,7 +2,18 @@
 
 import { useRef } from "react";
 import { SectionLabel } from "@/components/ui/Section";
-import { ArrowLeft, ArrowRight, Check, Note, Plus, Sparkle } from "@/components/ui/Icons";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Camera,
+  Check,
+  Clapperboard,
+  Film,
+  PlayCircle,
+  Plus,
+  Sparkle,
+  Video,
+} from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { useQuote } from "@/components/providers/QuoteProvider";
 import { useSound } from "@/components/providers/SoundProvider";
@@ -10,6 +21,16 @@ import { cn, scrollToSection } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
 import { useDict } from "@/components/providers/SiteDataProvider";
 import type { Locale } from "@content/model";
+
+const reelIcons = [PlayCircle, Film, Clapperboard, Video, Camera];
+
+const reelGlow = [
+  "rgba(61,193,197,0.34)",
+  "rgba(242,224,78,0.24)",
+  "rgba(242,140,40,0.26)",
+  "rgba(19,156,170,0.32)",
+  "rgba(232,201,126,0.24)",
+];
 
 export function Production({ locale }: { locale: Locale }) {
   const dict = useDict(locale);
@@ -70,52 +91,55 @@ export function Production({ locale }: { locale: Locale }) {
         >
           {dict.production.items.map((item, i) => {
             const active = quote.production.includes(item.number);
+            const Icon = reelIcons[i % reelIcons.length];
             return (
               <article
                 key={item.number}
                 className="group w-[270px] sm:w-[305px]"
               >
                 <div className="relative aspect-square overflow-hidden rounded-card bg-[#0B2730] p-4 text-[#F7F2E9] shadow-[0_20px_50px_-30px_rgba(11,39,48,0.8)] transition duration-500 group-hover:-translate-y-1">
-                  <div className="dot-grid pointer-events-none absolute inset-0 opacity-20" />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(19,156,170,0.3),transparent_55%)]" />
+                  <div
+                    className="absolute inset-0 bg-[linear-gradient(160deg,#0B3B48_0%,#07262F_58%,#04181E_100%)]"
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: `radial-gradient(circle at 72% 18%, ${reelGlow[i % reelGlow.length]}, transparent 62%)`,
+                    }}
+                  />
+                  <div className="dot-grid pointer-events-none absolute inset-0 opacity-[0.14]" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_16%,rgba(255,255,255,0.14),transparent_58%)]" />
 
                   <div className="relative flex items-center justify-between">
-                    <span className="font-grotesk text-[9px] tracking-[0.24em] text-[#F2E04E]/70" dir="ltr">
-                      SIDE A / {item.number}
+                    <span className="font-grotesk text-[9px] tracking-[0.24em] text-[#F2E04E]/85" dir="ltr">
+                      REEL / {item.number}
                     </span>
-                    <Note size={14} className="text-[#F2E04E]/60" />
+                    <Clapperboard size={14} className="text-[#F2E04E]/65" />
                   </div>
 
-                  <div className="absolute left-1/2 top-1/2 h-[76%] w-[76%] -translate-x-1/2 -translate-y-1/2 animate-spin-slow rounded-full vinyl transition duration-700 group-hover:scale-[1.04]">
-                    <div
-                      className="absolute left-1/2 top-1/2 flex h-[36%] w-[36%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full text-center"
-                      style={{
-                        background: [
-                          "linear-gradient(135deg,#3DC1C5,#0E6572)",
-                          "linear-gradient(135deg,#F2E04E,#D1A246)",
-                          "linear-gradient(135deg,#F7A24E,#D97416)",
-                          "linear-gradient(135deg,#6FCFD2,#139CAA)",
-                          "linear-gradient(135deg,#E8C97E,#B8873A)",
-                        ][i],
-                      }}
-                    >
+                  {/* frame — reads as a screen, not a record */}
+                  <div className="pointer-events-none absolute inset-x-4 bottom-24 top-12 flex items-center justify-center">
+                    <div className="relative flex h-full w-full items-center justify-center rounded-xl border border-white/12 bg-white/[0.04]">
+                      <span className="absolute left-2 top-2 h-2 w-2 border-l border-t border-[#F2E04E]/55" />
+                      <span className="absolute right-2 top-2 h-2 w-2 border-r border-t border-[#F2E04E]/55" />
+                      <span className="absolute bottom-2 left-2 h-2 w-2 border-b border-l border-[#F2E04E]/55" />
+                      <span className="absolute bottom-2 right-2 h-2 w-2 border-b border-r border-[#F2E04E]/55" />
+                      <Icon
+                        size={46}
+                        strokeWidth={1.2}
+                        className="text-[#F2E04E] transition duration-700 group-hover:scale-110"
+                      />
                       <span
-                        className="font-grotesk text-[15px] font-bold leading-none"
-                        style={{ color: i === 1 ? "#0B2730" : "#F7F2E9" }}
-                      >
-                        {item.number}
-                      </span>
-                      <span
-                        className="mt-1 font-grotesk text-[5px] tracking-[0.18em]"
-                        style={{ color: i === 1 ? "rgba(11,39,48,.6)" : "rgba(247,242,233,.7)" }}
+                        aria-hidden
+                        className="absolute bottom-1.5 end-3 font-grotesk text-[52px] font-bold leading-none text-white/[0.07]"
                         dir="ltr"
                       >
-                        ART ENERGY
+                        {item.number}
                       </span>
                     </div>
                   </div>
 
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#04181E] via-[#04181E]/70 to-transparent p-4 pt-12">
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#04181E] via-[#04181E]/82 to-transparent p-4 pt-12">
                     <h3 className="text-lg font-bold leading-6">{item.title}</h3>
                     <p className="mt-1 flex items-baseline gap-1.5 font-grotesk text-[11px] text-[#F2E04E]">
                       <span className="text-[8px] uppercase tracking-[0.16em] text-white/40" dir="ltr">
@@ -129,8 +153,8 @@ export function Production({ locale }: { locale: Locale }) {
                   </div>
 
                   <Sparkle
-                    className="absolute end-4 top-9 text-[#F2E04E]/40"
-                    size={13}
+                    className="absolute end-4 top-9 text-[#F2E04E]/35"
+                    size={12}
                   />
                 </div>
 
