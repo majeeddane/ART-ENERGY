@@ -47,6 +47,177 @@ const stagger = (i: number) => ({
 
 type Icon3DName = Parameters<typeof Icon3D>[0]["name"];
 
+/* ---------------- أيقونات مخصصة بسيطة ---------------- */
+
+function LogoMark({ size = 20, color = brand.teal }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="3" y="3" width="18" height="18" rx="4" />
+      <path d="M7 7l10 10" />
+      <circle cx="9" cy="9" r="2" fill={color} />
+    </svg>
+  );
+}
+
+function TypeScale({ size = 20, color = brand.teal }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M4 6h4M4 10h6M4 14h3M18 6v12M6 18h12" />
+    </svg>
+  );
+}
+
+function VoiceTone({ size = 20, color = brand.teal }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M1 9c0 2 1 3 3 3h2c2 0 3-1 3-3V7c0-2-1-3-3-3H4c-2 0-3 1-3 3zM13 17c0 2 1 3 3 3h2c2 0 3-1 3-3v-4c0-2-1-3-3-3h-2c-2 0-3 1-3 3z" />
+    </svg>
+  );
+}
+
+function RealWorld({ size = 20, color = brand.teal }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="2" y="3" width="20" height="14" rx="2" />
+      <line x1="8" y1="21" x2="16" y2="21" />
+      <line x1="12" y1="17" x2="12" y2="21" />
+    </svg>
+  );
+}
+
+/* ---------------- بطاقة واحدة ---------------- */
+
+interface BrandCardProps {
+  number: string;
+  title: string;
+  desc: string;
+  icon: React.ComponentType<{ size?: number; color?: string }>;
+  color: string;
+  index: number;
+}
+
+function BrandCard({ number, title, desc, icon: Icon, color, index }: BrandCardProps) {
+  return (
+    <motion.div
+      {...stagger(index)}
+      className="group relative overflow-hidden rounded-2xl border border-line bg-white shadow-sm transition-all duration-500 hover:shadow-xl hover:border-[#139CAA]/50"
+    >
+      <div className="absolute -inset-4 bg-gradient-to-tr from-[#139CAA]/20 via-transparent to-[#F2E04E]/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden />
+
+      <div className="relative z-10 p-6">
+        <div className="flex items-start gap-3 mb-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-line shadow-sm">
+            <Icon size={22} color={color} />
+          </div>
+          <span className={`flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-grotesk font-bold border`} dir="ltr" style={{ borderColor: color + "33", color }}>
+            {number}
+          </span>
+        </div>
+
+        <h3 className="mb-2 text-xl font-bold text-[#0B2730] leading-none">{title}</h3>
+        <p className="text-base text-[#6A7D80] leading-6">{desc}</p>
+      </div>
+
+      <div
+        className={`absolute left-0 bottom-0 h-1 w-full bg-gradient-to-r from-transparent via-${color} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+        aria-hidden
+      />
+    </motion.div>
+  );
+}
+
+/* ---------------- 02 — الهوية المرئية ---------------- */
+
+export function BrandPreview() {
+  return (
+    <div className="relative h-full min-h-[320px] overflow-hidden rounded-panel border border-line bg-[#FBF8F1] p-6">
+      <div className="absolute -end-8 -top-8 h-44 w-44 rounded-full bg-[#F2E04E]/40 blur-2xl" />
+      <div className="relative flex items-center justify-between mb-8">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F2E04E] text-[#0B2730] text-[10px] font-grotesk font-bold" dir="ltr">
+          02
+        </span>
+        <Palette size={20} className="text-[#0B2730]/80" />
+      </div>
+
+      <h3 className="mb-4 text-2xl font-bold tracking-tight">نظام الهوية المرئية</h3>
+      <p className="mb-8 text-base text-[#6A7D80] leading-7 max-w-md">
+        شعار، خط، لوحة ألوان، ونبرة صوت — كل عنصر يُصمّم ليعيش على أرض الواقع قبل الشاشة.
+      </p>
+
+      <div className="grid gap-4 md:grid-cols-3">
+        <BrandCard
+          index={0}
+          number="01"
+          title="الشعار"
+          desc="العلامة البصرية الأساسية التي تُمثّل هوية ART ENERGY في كل تطبيق."
+          icon={LogoMark}
+          color={brand.teal}
+        />
+        <BrandCard
+          index={1}
+          number="02"
+          title="الخط"
+          desc="طباعة عربية وإنجليزية واضحة ومتوازنة تعزز قابلية القراءة والشخصية."
+          icon={TypeScale}
+          color={brand.cyan}
+        />
+        <BrandCard
+          index={2}
+          number="03"
+          title="لوحة الألوان"
+          desc="ألوان أساسية وثانوية مستوحاة من الطاقة والإبداع، مع تدرجات متناسقة."
+          icon={Palette}
+          color={brand.yellow}
+        />
+        <BrandCard
+          index={3}
+          number="04"
+          title="نبرة الصوت"
+          desc="لغة تواصل مهنية، دافئة، ومُلهمة تخاطب العميل بلغة النتائج والتأثير."
+          icon={VoiceTone}
+          color={brand.orange}
+        />
+        <BrandCard
+          index={4}
+          number="05"
+          title="التطبيق على أرض الواقع"
+          desc="الهوية تُطبّق على الأوراق، اللوحات، المنصات الرقمية، والوسائط كافة."
+          icon={RealWorld}
+          color={brand.deep}
+        />
+        <BrandCard
+          index={5}
+          number="06"
+          title="دليل الاستخدام"
+          desc="مرجع شامل لكيفية استخدام كل عنصر بشكل صحيح ومتسق في جميع القنوات."
+          icon={BadgeCheck}
+          color={brand.teal}
+        />
+      </div>
+
+      <div className="mt-8 flex items-center justify-between rounded-lg border border-[#0B2730]/10 bg-white px-3 py-2.5">
+        <span className="font-grotesk text-[8px] tracking-[0.2em] text-[#0B2730]/55" dir="ltr">
+          PRIMARY / #139CAA
+        </span>
+        <div className="flex gap-1.5">
+          <span className="h-3.5 w-3.5 rounded-full bg-[#139CAA]" />
+          <span className="h-3.5 w-3.5 rounded-full bg-[#D1A246]" />
+          <span className="h-3.5 w-3.5 rounded-full bg-[#F2E04E]" />
+        </div>
+      </div>
+
+      <motion.div
+        className="absolute -bottom-6 -left-2 h-20 w-20 rounded-full border-[4px] border-[#FBF8F1] bg-[#0B2730] shadow-lg"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        aria-hidden
+      >
+        <BrandMark idPrefix="brand-badge" className="h-full w-full p-2" />
+      </motion.div>
+    </div>
+  );
+}
+
 /* --------------------------------------------------------------
    01 — STRATEGY / LAB
    -------------------------------------------------------------- */
@@ -93,65 +264,6 @@ export function StrategyPreview() {
 
       <div className="absolute -right-6 -top-10 h-24 w-24 rounded-full border-4 border-[#139CAA]/30 animate-spin-reverse" aria-hidden />
       <div className="absolute left-4 bottom-4 h-12 w-12 rounded-full bg-[#F2E04E]/40 backdrop-blur" aria-hidden />
-    </div>
-  );
-}
-
-/* --------------------------------------------------------------
-   02 — BRAND / IDENTITY
-   -------------------------------------------------------------- */
-export function BrandPreview() {
-  return (
-    <div className="relative h-full min-h-[320px] overflow-hidden rounded-panel border border-line bg-[#FBF8F1] p-6">
-      <div className="absolute -end-8 -top-8 h-44 w-44 rounded-full bg-[#F2E04E]/40 blur-2xl" />
-      <div className="relative flex items-center justify-between mb-8">
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F2E04E] text-[#0B2730] text-[10px] font-grotesk font-bold" dir="ltr">
-          02
-        </span>
-        <Palette size={20} className="text-[#0B2730]/80" />
-      </div>
-
-      <h3 className="mb-4 text-2xl font-bold tracking-tight">نظام الهوية المرئية</h3>
-      <p className="mb-6 text-base text-[#6A7D80] leading-7 max-w-md">
-        شعار، خط، لوحة ألوان، ونبرة صوت — كل عنصر يُصمّم ليعيش على أرض الواقع
-        قبل الشاشة.
-      </p>
-
-      <div className="grid gap-2 md:grid-cols-3">
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <motion.div
-            key={i}
-            {...stagger(i)}
-            className="flex aspect-square items-center justify-center rounded-xl border border-[#0B2730]/10 bg-white shadow-sm"
-          >
-            <BrandMark
-              idPrefix={`brand-grid-${i}`}
-              className="h-8 w-8"
-              title={i === 4 ? "ART ENERGY monochrome" : undefined}
-            />
-          </motion.div>
-        ))}
-      </div>
-
-      <div className="mt-6 flex items-center justify-between rounded-lg border border-[#0B2730]/10 bg-white px-3 py-2.5">
-        <span className="font-grotesk text-[8px] tracking-[0.2em] text-[#0B2730]/55" dir="ltr">
-          PRIMARY / #139CAA
-        </span>
-        <div className="flex gap-1.5">
-          <span className="h-3.5 w-3.5 rounded-full bg-[#139CAA]" />
-          <span className="h-3.5 w-3.5 rounded-full bg-[#D1A246]" />
-          <span className="h-3.5 w-3.5 rounded-full bg-[#F2E04E]" />
-        </div>
-      </div>
-
-      <motion.div
-        className="absolute -bottom-6 -left-2 h-20 w-20 rounded-full border-[4px] border-[#FBF8F1] bg-[#0B2730] shadow-lg"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        aria-hidden
-      >
-        <BrandMark idPrefix="brand-badge" className="h-full w-full p-2" />
-      </motion.div>
     </div>
   );
 }
