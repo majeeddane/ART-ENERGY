@@ -3,7 +3,8 @@
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useReducedMotionSafe } from "@/hooks/useReducedMotionSafe";
-import { Eye, Send, Sparkle, Check, Lightbulb } from "@/components/ui/Icons";
+import { Sparkle, Check } from "@/components/ui/Icons";
+import { Icon3D } from "@/components/ui/Icon3D";
 import { SectionLabel } from "@/components/ui/Section";
 import { WordReveal, Reveal } from "@/components/ui/Reveal";
 import { useDict } from "@/components/providers/SiteDataProvider";
@@ -43,32 +44,23 @@ function IdeaVisual({ top, bottom }: { top: string; bottom: string }) {
               : { opacity: qOpacity, scale: qScale, rotate: qRotate, y: qY }
           }
         >
-          <svg viewBox="0 0 200 240" className="h-[58%] w-[58%]" aria-hidden>
-            <text
-              x="100"
-              y="188"
-              textAnchor="middle"
-              fontFamily="var(--font-grotesk), sans-serif"
-              fontWeight="700"
-              fontSize="210"
-              fill="#0B2730"
-            >
-              ?
-            </text>
-          </svg>
+          <Icon3D
+            name="magnifier"
+            size={150}
+            className="drop-shadow-[0_16px_26px_rgba(11,39,48,0.18)]"
+          />
         </motion.div>
 
         <motion.div
-          className="absolute flex items-center justify-center text-[#0B2730]"
+          className="absolute flex items-center justify-center"
           style={
             reduced
               ? { opacity: 1 }
               : { opacity: ideaOpacity, scale: ideaScale, rotate: ideaRotate }
           }
         >
-          <span className="absolute h-[78%] w-[78%] rounded-full border border-ink/15" />
-          <span className="absolute h-[62%] w-[62%] rounded-full border border-dashed border-ink/20" />
-          <Lightbulb size={148} strokeWidth={1.1} />
+          <span className="absolute h-[80%] w-[80%] rounded-full border border-ink/10" />
+          <Icon3D name="light-bulb" size={176} className="drop-shadow-[0_18px_28px_rgba(11,39,48,0.22)]" priority />
         </motion.div>
       </div>
 
@@ -94,7 +86,7 @@ function FlipCard({
   text: string;
   index: string;
   hint: string;
-  icon: "eye" | "send";
+  icon: "vision" | "mission";
 }) {
   const [flipped, setFlipped] = useState(false);
   return (
@@ -119,8 +111,8 @@ function FlipCard({
             <span className="font-grotesk text-[10px] tracking-[0.24em] text-gold-700">
               {index}
             </span>
-            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-gold/40 text-gold-700">
-              {icon === "eye" ? <Eye size={20} /> : <Send size={20} />}
+            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-gold/40 bg-white/60">
+              <Icon3D name={icon === "vision" ? "eye" : "rocket"} size={26} />
             </span>
           </div>
           <div>
@@ -187,9 +179,6 @@ export function About({ locale }: { locale: Locale }) {
 
           <Reveal y={40} className="relative">
             <IdeaVisual top={dict.about.visualTop} bottom={dict.about.visualBottom} />
-            <p className="mx-auto mt-6 max-w-[300px] text-center text-[11px] uppercase tracking-[0.22em] text-muted">
-              {dict.about.flipHint}
-            </p>
           </Reveal>
         </div>
 
@@ -200,7 +189,7 @@ export function About({ locale }: { locale: Locale }) {
               label={dict.about.visionLabel}
               text={dict.about.vision}
               hint={dict.about.flipHint}
-              icon="eye"
+              icon="vision"
             />
           </Reveal>
           <Reveal delay={0.1}>
@@ -209,7 +198,7 @@ export function About({ locale }: { locale: Locale }) {
               label={dict.about.missionLabel}
               text={dict.about.mission}
               hint={dict.about.flipHint}
-              icon="send"
+              icon="mission"
             />
           </Reveal>
         </div>

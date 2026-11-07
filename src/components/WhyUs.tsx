@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { SectionLabel } from "@/components/ui/Section";
-import { Check, Sparkle, Target } from "@/components/ui/Icons";
+import { Check } from "@/components/ui/Icons";
+import { Icon3D } from "@/components/ui/Icon3D";
 import { Reveal } from "@/components/ui/Reveal";
 import { useDict } from "@/components/providers/SiteDataProvider";
 import type { Locale } from "@content/model";
@@ -32,12 +33,12 @@ export function WhyUs({ locale }: { locale: Locale }) {
               <span className="absolute bottom-4 left-4 h-3 w-3 border-b border-l border-gold/70" />
               <span className="absolute bottom-4 right-4 h-3 w-3 border-b border-r border-gold/70" />
               <span className="pointer-events-none absolute inset-0 rounded-[1.75rem] bg-[radial-gradient(circle_at_32%_22%,rgba(242,224,78,0.35),transparent_62%)]" />
-              <Target size={56} strokeWidth={1.1} className="relative text-[#0B2730]" />
+              <Icon3D name="trophy" size={86} className="relative drop-shadow-[0_16px_24px_rgba(11,39,48,0.18)]" />
               <span className="relative font-grotesk text-[8px] tracking-[0.24em] text-[#0B2730]/55" dir="ltr">
                 FOCUS / IMPACT
               </span>
             </div>
-            <Sparkle className="absolute -end-3 top-2 text-gold-500" size={20} />
+            <Icon3D name="sparkles" size={24} className="absolute -end-3 top-2" />
           </div>
         </div>
 

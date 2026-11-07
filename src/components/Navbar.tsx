@@ -125,7 +125,7 @@ export function Navbar({ locale }: { locale: Locale }) {
         <div className="container">
           <div
             className={cn(
-              "mt-3 flex h-[4.25rem] items-center justify-between gap-4 rounded-full border border-line px-3 text-foreground backdrop-blur-xl transition-all duration-500 sm:px-4",
+              "mt-3 flex h-[4.75rem] items-center justify-between gap-4 rounded-full border border-line px-3 text-foreground backdrop-blur-xl transition-all duration-500 sm:px-4",
               "bg-[var(--nav-bg)]",
               scrolled
                 ? "shadow-[0_18px_50px_-28px_rgba(4,24,30,0.45)]"
@@ -143,7 +143,7 @@ export function Navbar({ locale }: { locale: Locale }) {
               <Wordmark
                 tone="auto"
                 markClassName="h-10 w-10"
-                logoClassName="h-10 w-auto max-w-[9.5rem]"
+                logoClassName="h-12 w-auto max-w-[11rem]"
                 compact={false}
                 logoSrc={settings.logoUrl}
                 idPrefix="ae-nav"
@@ -251,7 +251,7 @@ export function Navbar({ locale }: { locale: Locale }) {
                 <Wordmark
                   tone="light"
                   markClassName="h-10 w-10"
-                  logoClassName="h-10 w-auto max-w-[9.5rem]"
+                  logoClassName="h-12 w-auto max-w-[11rem]"
                   logoSrc={settings.logoUrl}
                   idPrefix="ae-menu"
                 />

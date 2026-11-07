@@ -5,15 +5,11 @@ import { SectionLabel } from "@/components/ui/Section";
 import {
   ArrowLeft,
   ArrowRight,
-  Camera,
   Check,
-  Clapperboard,
-  Film,
-  PlayCircle,
   Plus,
-  Sparkle,
-  Video,
 } from "@/components/ui/Icons";
+import { Icon3D } from "@/components/ui/Icon3D";
+import type { Icon3DName } from "@/components/ui/Icon3D";
 import { Reveal } from "@/components/ui/Reveal";
 import { useQuote } from "@/components/providers/QuoteProvider";
 import { useSound } from "@/components/providers/SoundProvider";
@@ -22,7 +18,13 @@ import { formatNumber } from "@/lib/format";
 import { useDict } from "@/components/providers/SiteDataProvider";
 import type { Locale } from "@content/model";
 
-const reelIcons = [PlayCircle, Film, Clapperboard, Video, Camera];
+const reelIcons: Icon3DName[] = [
+  "clapper-board",
+  "film-frames",
+  "movie-camera",
+  "video-camera",
+  "camera",
+];
 
 const reelGlow = [
   "rgba(61,193,197,0.34)",
@@ -91,7 +93,6 @@ export function Production({ locale }: { locale: Locale }) {
         >
           {dict.production.items.map((item, i) => {
             const active = quote.production.includes(item.number);
-            const Icon = reelIcons[i % reelIcons.length];
             return (
               <article
                 key={item.number}
@@ -114,7 +115,7 @@ export function Production({ locale }: { locale: Locale }) {
                     <span className="font-grotesk text-[9px] tracking-[0.24em] text-[#F2E04E]/85" dir="ltr">
                       REEL / {item.number}
                     </span>
-                    <Clapperboard size={14} className="text-[#F2E04E]/65" />
+                    <Icon3D name="clapper-board" size={18} />
                   </div>
 
                   {/* frame — reads as a screen, not a record */}
@@ -124,10 +125,10 @@ export function Production({ locale }: { locale: Locale }) {
                       <span className="absolute right-2 top-2 h-2 w-2 border-r border-t border-[#F2E04E]/55" />
                       <span className="absolute bottom-2 left-2 h-2 w-2 border-b border-l border-[#F2E04E]/55" />
                       <span className="absolute bottom-2 right-2 h-2 w-2 border-b border-r border-[#F2E04E]/55" />
-                      <Icon
-                        size={46}
-                        strokeWidth={1.2}
-                        className="text-[#F2E04E] transition duration-700 group-hover:scale-110"
+                      <Icon3D
+                        name={reelIcons[i % reelIcons.length]}
+                        size={88}
+                        className="drop-shadow-[0_18px_30px_rgba(0,0,0,0.35)] transition duration-700 group-hover:scale-110"
                       />
                       <span
                         aria-hidden
@@ -152,9 +153,10 @@ export function Production({ locale }: { locale: Locale }) {
                     </p>
                   </div>
 
-                  <Sparkle
-                    className="absolute end-4 top-9 text-[#F2E04E]/35"
-                    size={12}
+                  <Icon3D
+                    name="sparkles"
+                    size={16}
+                    className="absolute end-4 top-9 opacity-70"
                   />
                 </div>
 

@@ -3,20 +3,21 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { SectionLabel } from "@/components/ui/Section";
-import {
-  ChartColumn,
-  Clapperboard,
-  Palette,
-  PenTool,
-  Target,
-} from "@/components/ui/Icons";
+import { Icon3D } from "@/components/ui/Icon3D";
+import type { Icon3DName } from "@/components/ui/Icon3D";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 import { useReducedMotionSafe } from "@/hooks/useReducedMotionSafe";
 import { useDict } from "@/components/providers/SiteDataProvider";
 import type { Locale } from "@content/model";
 
-const stageIcons = [Target, Palette, PenTool, Clapperboard, ChartColumn];
+const stageIcons: Icon3DName[] = [
+  "bullseye",
+  "palette",
+  "pencil",
+  "clapper-board",
+  "chart-up",
+];
 
 export function Journey({ locale }: { locale: Locale }) {
   const dict = useDict(locale);
@@ -157,7 +158,7 @@ export function Journey({ locale }: { locale: Locale }) {
                 THE ROADMAP
               </span>
               <span className="flex items-center gap-1.5 font-grotesk text-[8px] tracking-[0.18em] text-[#F2E04E]/70" dir="ltr">
-                <ChartColumn size={12} />
+                <Icon3D name="chart-up" size={14} />
                 IDEA → IMPACT
               </span>
             </div>
@@ -166,10 +167,10 @@ export function Journey({ locale }: { locale: Locale }) {
                 aria-hidden
                 className="absolute inset-x-2 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-teal-400/40 via-gold/40 to-[#F2E04E]/50"
               />
-              {stageIcons.map((Icon, i) => (
+              {stageIcons.map((name, i) => (
                 <motion.span
-                  key={i}
-                  className="relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[var(--night-3)] text-[#F2E04E]"
+                  key={name}
+                  className="relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[var(--night-3)]"
                   animate={reduced ? undefined : { y: [0, -5, 0] }}
                   transition={{
                     duration: 3 + i * 0.35,
@@ -177,7 +178,7 @@ export function Journey({ locale }: { locale: Locale }) {
                     ease: "easeInOut",
                   }}
                 >
-                  <Icon size={15} />
+                  <Icon3D name={name} size={20} />
                 </motion.span>
               ))}
             </div>
@@ -206,11 +207,11 @@ export function Journey({ locale }: { locale: Locale }) {
                 transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
                 className="relative scroll-mt-28"
               >
-                <span className="absolute -start-10 top-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#D1A246]/50 bg-[var(--night-2)] text-[#F2E04E] shadow-lg sm:-start-16 sm:h-11 sm:w-11">
-                  {(() => {
-                    const Icon = stageIcons[i % stageIcons.length];
-                    return <Icon size={i === 4 ? 19 : 16} />;
-                  })()}
+                <span className="absolute -start-10 top-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#D1A246]/50 bg-[var(--night-2)] shadow-lg sm:-start-16 sm:h-11 sm:w-11">
+                  <Icon3D
+                    name={stageIcons[i % stageIcons.length]}
+                    size={i === 4 ? 26 : 22}
+                  />
                   <span className="absolute inset-0 animate-ping rounded-full border border-[#F2E04E]/20 [animation-duration:4s]" />
                 </span>
 

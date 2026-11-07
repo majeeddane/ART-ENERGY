@@ -1,7 +1,8 @@
 "use client";
 
 import { SectionLabel } from "@/components/ui/Section";
-import { ArrowUpRight, Megaphone, Sparkle } from "@/components/ui/Icons";
+import { ArrowUpRight } from "@/components/ui/Icons";
+import { Icon3D } from "@/components/ui/Icon3D";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn, scrollToSection } from "@/lib/utils";
 import { useDict } from "@/components/providers/SiteDataProvider";
@@ -56,7 +57,7 @@ function OrbitStamp({ text, locale }: { text: string; locale: Locale }) {
         />
       </svg>
       <span className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-[#8a6a25] dark:text-[#E8C97E]">
-        <Megaphone size={23} />
+        <Icon3D name="megaphone" size={30} />
         <span
           className="font-grotesk text-[6.2px] uppercase tracking-[0.2em]"
           dir="ltr"
@@ -64,7 +65,7 @@ function OrbitStamp({ text, locale }: { text: string; locale: Locale }) {
           STRATEGY / CREATIVE
         </span>
       </span>
-      <Sparkle className="absolute -end-1 top-2 text-gold/60" size={14} />
+      <Icon3D name="sparkles" size={20} className="absolute -end-1 top-2" />
     </div>
   );
 }
@@ -108,9 +109,10 @@ export function Capabilities({ locale }: { locale: Locale }) {
                   <span className="font-grotesk text-[10px] tracking-[0.24em] text-gold-700">
                     {group.number}
                   </span>
-                  <Sparkle
-                    size={15}
-                    className="text-gold/45 transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-12 group-hover:text-gold-700"
+                  <Icon3D
+                    name="sparkles"
+                    size={22}
+                    className="transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-12"
                   />
                 </div>
                 <h3 className="mt-7 text-2xl font-bold leading-tight">

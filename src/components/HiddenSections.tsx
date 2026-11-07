@@ -235,9 +235,25 @@ function JournalRow({ item, locale }: { item: JournalItem; locale: Locale }) {
   const title = pick(locale, item.titleAr, item.titleEn);
   const excerpt = pick(locale, item.excerptAr, item.excerptEn);
   const body = (
-    <div className="grid gap-5 border-b border-white/10 py-7 sm:grid-cols-[140px_1fr] sm:gap-8">
+    <div className="grid gap-5 border-b border-white/10 py-7 sm:grid-cols-[180px_1fr] sm:gap-8">
       <div>
-        <span className="font-grotesk text-[10px] tracking-[0.2em] text-[#F2E04E]/70" dir="ltr">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-white/[0.04]">
+          {item.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={item.image}
+              alt={title}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
+            />
+          ) : (
+            <span className="absolute inset-0 flex items-center justify-center font-grotesk text-[9px] tracking-[0.22em] text-white/40">
+              ART ENERGY
+            </span>
+          )}
+        </div>
+        <span className="mt-2 block font-grotesk text-[10px] tracking-[0.2em] text-[#F2E04E]/70" dir="ltr">
           {item.date}
         </span>
       </div>

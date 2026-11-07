@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { BrandMark } from "@/components/brand/Logo";
-import { ChartColumn } from "@/components/ui/Icons";
-import { Play, Sparkle } from "@/components/ui/Icons";
+import { Icon3D } from "@/components/ui/Icon3D";
+import { Play } from "@/components/ui/Icons";
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -105,7 +105,7 @@ export function BrandPreview() {
         <span className="font-grotesk text-[9px] tracking-[0.26em] text-[#0B2730]/75" dir="ltr">
           IDENTITY / SYSTEM
         </span>
-        <Sparkle size={16} className="text-[#0B2730]/75" />
+        <Icon3D name="palette" size={22} />
       </div>
 
       <div className="relative mt-6 grid grid-cols-3 gap-2">
@@ -202,7 +202,7 @@ export function ContentPreview() {
         </div>
       </div>
       <div className="absolute bottom-4 start-5 flex items-center gap-2 font-grotesk text-[8px] tracking-[0.22em] text-white/45" dir="ltr">
-        <ChartColumn size={13} className="text-[#F2E04E]" />
+        <Icon3D name="chart-up" size={16} />
         CONTENT / 03
       </div>
     </div>
@@ -314,46 +314,48 @@ export function PrintPreview() {
 export function CampaignPreview() {
   return (
     <div className="relative h-full min-h-[320px] overflow-hidden rounded-card bg-[#07262F] p-5 text-white">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(209,162,70,0.16),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(209,162,70,0.18),transparent_60%)]" />
       <div className="relative flex items-center justify-between">
         <span className="font-grotesk text-[9px] tracking-[0.26em] text-[#F2E04E]/80" dir="ltr">
           CAMPAIGN / 06
         </span>
-        <ChartColumn size={13} className="text-[#3DC1C5]" />
+        <Icon3D name="megaphone" size={22} />
       </div>
 
-      <div className="relative mx-auto mt-6 aspect-square w-[220px]">
-        <div className="absolute inset-0 rounded-full border border-white/10" />
-        <div className="orbit absolute inset-4 rounded-full border border-dashed border-[#D1A246]/40" />
-        <div className="orbit-reverse absolute inset-10 rounded-full border border-[#3DC1C5]/30" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="flex h-24 w-24 flex-col items-center justify-center rounded-full border border-[#F2E04E]/40 bg-[#07262F]/80 text-center backdrop-blur">
-            <span className="font-grotesk text-[7px] tracking-[0.22em] text-[#F2E04E]" dir="ltr">
-              IDEA
-            </span>
-            <span className="my-0.5 h-px w-6 bg-[#D1A246]/60" />
-            <span className="font-grotesk text-[7px] tracking-[0.22em] text-white/60" dir="ltr">
-              IMPACT
-            </span>
-          </div>
+      <div className="relative mt-4 h-[178px] overflow-hidden rounded-2xl border border-white/10">
+        <Image
+          src="/images/photos/campaign.webp"
+          alt=""
+          fill
+          sizes="(max-width: 1024px) 90vw, 460px"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#04181E] via-[#04181E]/20 to-transparent" />
+        <div className="absolute inset-x-3 bottom-3 flex items-center justify-between font-grotesk text-[8px] tracking-[0.24em]" dir="ltr">
+          <span className="text-[#F2E04E]">IDEA</span>
+          <span className="h-px flex-1 mx-3 bg-gradient-to-r from-[#3DC1C5]/70 via-[#D1A246]/60 to-[#F2E04E]/70" />
+          <span className="text-white/70">IMPACT</span>
         </div>
-        {[0, 60, 120, 180, 240, 300].map((deg, i) => {
-          const rad = (deg * Math.PI) / 180;
-          const x = 50 + Math.cos(rad) * 44;
-          const y = 50 + Math.sin(rad) * 44;
-          return (
-            <span
-              key={deg}
-              className="absolute flex h-6 w-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-[#0E3F4D] font-grotesk text-[7px] text-[#F2E04E]"
-              style={{ left: `${x}%`, top: `${y}%` }}
-            >
+      </div>
+
+      <div className="relative mt-3 grid grid-cols-3 gap-2">
+        {["PLAN", "LAUNCH", "SCALE"].map((label, i) => (
+          <div
+            key={label}
+            className="rounded-lg border border-white/10 bg-white/[0.04] px-2 py-2.5 text-center"
+            dir="ltr"
+          >
+            <span className="font-grotesk text-[7px] tracking-[0.18em] text-[#F2E04E]/70">
               0{i + 1}
             </span>
-          );
-        })}
+            <span className="mt-0.5 block font-grotesk text-[8px] tracking-[0.16em] text-white/65">
+              {label}
+            </span>
+          </div>
+        ))}
       </div>
 
-      <div className="relative mt-4 flex h-8 items-end justify-center gap-1">
+      <div className="relative mt-3 flex h-7 items-end justify-center gap-1">
         {[14, 26, 10, 32, 18, 28, 12, 24, 16, 30, 8, 22].map((h, i) => (
           <motion.span
             key={i}

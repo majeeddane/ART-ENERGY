@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useReducedMotionSafe } from "@/hooks/useReducedMotionSafe";
+import { Icon3D } from "@/components/ui/Icon3D";
 
 export function Preloader({ skipLabel }: { skipLabel: string }) {
   const [visible, setVisible] = useState(true);
@@ -98,7 +99,7 @@ export function Preloader({ skipLabel }: { skipLabel: string }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <svg viewBox="0 0 200 200" className="h-36 w-36" aria-hidden>
+            <svg viewBox="0 0 200 200" className="absolute h-40 w-40" aria-hidden>
               <circle
                 cx="100"
                 cy="100"
@@ -121,27 +122,6 @@ export function Preloader({ skipLabel }: { skipLabel: string }) {
                 animate={{ pathLength: 1, opacity: 0.9 }}
                 transition={{ duration: 1.2, ease: "easeInOut" }}
               />
-              <motion.path
-                d="M108 46v74"
-                stroke="#3DC1C5"
-                strokeWidth="7"
-                strokeLinecap="round"
-                fill="none"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 0.7, ease: "easeInOut" }}
-              />
-              <motion.ellipse
-                cx="99"
-                cy="124"
-                rx="13"
-                ry="9.5"
-                transform="rotate(-18 99 124)"
-                fill="#139CAA"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.55, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              />
               <motion.circle
                 cx="100"
                 cy="100"
@@ -155,6 +135,19 @@ export function Preloader({ skipLabel }: { skipLabel: string }) {
                 transition={{ delay: 0.3, duration: 0.8 }}
               />
             </svg>
+            <motion.div
+              className="relative"
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <Icon3D
+                name="light-bulb"
+                size={116}
+                priority
+                className="drop-shadow-[0_22px_36px_rgba(0,0,0,0.45)]"
+              />
+            </motion.div>
             <motion.span
               className="absolute -bottom-3 font-grotesk text-[10px] tracking-[0.3em] text-[#F2E04E]/80"
               animate={{ opacity: [0.4, 1, 0.4] }}

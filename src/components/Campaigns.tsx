@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionLabel } from "@/components/ui/Section";
-import { ArrowUpRight, Megaphone } from "@/components/ui/Icons";
+import { ArrowUpRight } from "@/components/ui/Icons";
+import { Icon3D } from "@/components/ui/Icon3D";
 import { Reveal } from "@/components/ui/Reveal";
 import { useQuote } from "@/components/providers/QuoteProvider";
 import { useSound } from "@/components/providers/SoundProvider";
@@ -50,7 +52,7 @@ export function Campaigns({ locale }: { locale: Locale }) {
                 <span className="eyebrow text-[8px] text-[#F2E04E]/60">
                   {dict.campaigns.rangeLabel}
                 </span>
-                <div className="mt-2 flex items-baseline gap-2">
+                <div className="mt-2 flex items-baseline gap-2" dir="ltr">
                   <span className="font-grotesk text-2xl font-semibold sm:text-3xl" dir="ltr">
                     {formatNumber(settings.campaignMin, locale)}
                   </span>
@@ -63,7 +65,7 @@ export function Campaigns({ locale }: { locale: Locale }) {
               </div>
               <span className="h-10 w-px bg-white/10" />
               <div className="flex items-center gap-3 text-[9px] uppercase tracking-[0.2em] text-white/35" dir="ltr">
-                <Megaphone size={18} className="text-[#F2E04E]/70" />
+                <Icon3D name="megaphone" size={22} />
                 BIG GOALS / BIG IMPACT
               </div>
             </div>
@@ -79,62 +81,65 @@ export function Campaigns({ locale }: { locale: Locale }) {
             </button>
           </div>
 
-          <div className="relative mx-auto w-full max-w-[500px]">
-            <div className="relative aspect-square w-full">
-              <div className="absolute inset-[4%] rounded-full border border-white/10" />
-              <div className="orbit absolute inset-[10%] rounded-full border border-dashed border-[#D1A246]/35" />
-              <div className="orbit-reverse absolute inset-[20%] rounded-full border border-[#3DC1C5]/20" />
-              <div className="absolute inset-[30%] rounded-full border border-white/10" />
+          <div className="relative mx-auto w-full max-w-[520px]">
+            <motion.div
+              className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/10 shadow-[0_50px_120px_-60px_rgba(0,0,0,0.9)]"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-15%" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
+            >
+              <Image
+                src="/images/photos/campaign.webp"
+                alt={dict.campaigns.label}
+                fill
+                sizes="(min-width: 1024px) 520px, 90vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#04181E] via-[#04181E]/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#07262F]/35 via-transparent to-transparent" />
 
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  className="flex h-[38%] w-[38%] flex-col items-center justify-center rounded-full border border-[#F2E04E]/30 bg-[#07262F]/80 text-center backdrop-blur-md"
-                  animate={{ boxShadow: ["0 0 0 0 rgba(242,224,78,0.0)", "0 0 0 18px rgba(242,224,78,0.03)", "0 0 0 0 rgba(242,224,78,0.0)"] }}
-                  transition={{ duration: 4, repeat: Infinity }}
-                >
-                  <span className="font-grotesk text-[7px] tracking-[0.24em] text-[#F2E04E]/70" dir="ltr">
-                    CAMPAIGN
-                  </span>
-                  <span className="mt-1 font-grotesk text-xl font-semibold" dir="ltr">
-                    {formatNumber(settings.campaignMin, locale)}
-                  </span>
-                  <span className="my-0.5 h-px w-6 bg-[#D1A246]/60" />
-                  <span className="font-grotesk text-xl font-light text-[#F2E04E]" dir="ltr">
-                    {formatNumber(settings.campaignMax, locale)}
-                  </span>
-                  <span className="mt-1 text-[8px] text-white/40">{dict.ui.sar}</span>
-                </motion.div>
+              <div className="absolute start-5 top-5 flex items-center gap-2 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 backdrop-blur">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3DC1C5] opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#3DC1C5]" />
+                </span>
+                <span className="font-grotesk text-[9px] tracking-[0.24em] text-white/70" dir="ltr">
+                  ON SET
+                </span>
               </div>
 
-              {steps.map((step, i) => {
-                const angle = (i / steps.length) * Math.PI * 2 - Math.PI / 2;
-                const x = 50 + Math.cos(angle) * 45;
-                const y = 50 + Math.sin(angle) * 45;
-                return (
-                  <motion.div
-                    key={step}
-                    className="absolute z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1.5"
-                    style={{ left: `${x}%`, top: `${y}%` }}
-                    initial={{ opacity: 0, scale: 0.7 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: i * 0.08 }}
-                  >
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D1A246]/50 bg-[#04181E] font-grotesk text-[9px] text-[#F2E04E] shadow-lg">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="max-w-[92px] text-center text-[9px] leading-3 text-white/60 sm:text-[10px] sm:leading-4">
-                      {step}
-                    </span>
-                  </motion.div>
-                );
-              })}
+              <div className="absolute end-5 top-5 flex items-center gap-2 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 backdrop-blur">
+                <Icon3D name="clapper-board" size={18} />
+                <span className="font-grotesk text-[9px] tracking-[0.24em] text-white/70" dir="ltr">
+                  PRODUCTION
+                </span>
+              </div>
+
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <span className="font-grotesk text-[8px] tracking-[0.26em] text-[#F2E04E]/75" dir="ltr">
+                  CREATIVE MEDIA AGENCY
+                </span>
+              </div>
+            </motion.div>
+
+            <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10">
+              {steps.map((step, i) => (
+                <div key={step} className="flex items-start gap-2.5 bg-[#04181E]/85 px-4 py-3.5">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#D1A246]/50 bg-[#07262F] font-grotesk text-[8px] text-[#F2E04E]">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-[10.5px] leading-4 text-white/70 sm:text-[11.5px] sm:leading-5">
+                    {step}
+                  </span>
+                </div>
+              ))}
             </div>
 
-            <div className="mt-10 flex items-center gap-4 border-t border-white/10 pt-5 font-grotesk text-[9px] tracking-[0.22em] text-white/35" dir="ltr">
+            <div className="mt-6 flex items-center gap-4 font-grotesk text-[9px] tracking-[0.22em] text-white/35" dir="ltr">
               <span>IDEA</span>
               <span className="h-px flex-1 bg-gradient-to-r from-[#3DC1C5]/50 via-[#D1A246]/40 to-[#F2E04E]/60" />
-              <span className="text-[#F2E04E]/70">06 STEPS</span>
+              <Icon3D name="rocket" size={18} />
               <span className="h-px flex-1 bg-gradient-to-r from-[#F2E04E]/40 via-[#D1A246]/30 to-transparent" />
               <span>IMPACT</span>
             </div>
