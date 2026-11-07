@@ -5,6 +5,7 @@ import { Card, ImageField, Notice, PageHeader, SaveBar, Toggle } from "@/compone
 import { useSiteDraft } from "@/components/admin/useSiteDraft";
 import type { SiteData } from "@content/site";
 import type { FeatureFlags, SiteSettings, SocialLinks } from "@content/model";
+import { Globe, Mail, Phone, WhatsApp, Sparkle } from "@/components/ui/Icons";
 
 const FLAG_COPY: Record<keyof FeatureFlags, { label: string; description: string }> = {
   work: {
@@ -83,6 +84,12 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
 
   const settings = draft.settings;
 
+  const cardActions = (Icon: React.ComponentType<{ size?: number; className?: string }>, colorClass: string) => (
+    <div className={`flex h-8 w-8 items-center justify-center rounded-lg bg-white border border-[${colorClass}] shadow-sm`}>
+      <Icon size={16} className={`text-${colorClass}`} />
+    </div>
+  );
+
   return (
     <div>
       <PageHeader
@@ -92,9 +99,11 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
       />
 
       <div className="space-y-4">
+        {/* الهوية */}
         <Card
           title="الهوية"
           description="الأسماء التي تظهر في SEO وبيانات المنظمة."
+          actions={cardActions(Sparkle, "text-[#D1A246]")}
         >
           <div className="admin-field-row">
             <Field label="الاسم بالعربية">
@@ -152,9 +161,11 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
           </div>
         </Card>
 
+        {/* صورة واجهة الموقع */}
         <Card
           title="صورة واجهة الموقع"
           description="الصورة التي تملأ واجهة الموقع بالكامل، ويظهر فوقها اسم الموقع والعنوان. ارفع صورة من جهازك أو اخترها من المكتبة، ثم اضغط «حفظ التغييرات»."
+          actions={cardActions(Sparkle, "text-[#139CAA]")}
         >
           <div className="max-w-xl">
             <ImageField
@@ -171,9 +182,11 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
           </div>
         </Card>
 
+        {/* بيانات التواصل */}
         <Card
           title="بيانات التواصل"
           description="تظهر في الهيدر، الفوتر، صفحة التواصل، وأزرار واتساب."
+          actions={cardActions(Mail, "text-[#3DC1C5]")}
         >
           <div className="admin-field-row">
             <Field label="البريد الإلكتروني">
@@ -223,9 +236,11 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
           </div>
         </Card>
 
+        {/* نطاق الحملة */}
         <Card
           title="نطاق الحملة"
           description="السعران المستخدمان في قسم الحملات ومنشئ الباقات."
+          actions={cardActions(WhatsApp, "text-[#F28C28]")}
         >
           <div className="admin-field-row max-w-xl">
             <Field label="الحد الأدنى (ريال)">
@@ -255,8 +270,12 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
           </div>
         </Card>
 
-        <Card title="الشعار والصور">
-          <div className="grid gap-5 md:grid-cols-2">
+        {/* الشعار والصور */}
+        <Card
+          title="الشعار والصور"
+          actions={cardActions(Phone, "text-[#D1A246]")}
+        >
+          <div className="grid gap-5 md:grid-cols-3">
             <ImageField
               label="الشعار"
               value={settings.logoUrl}
@@ -278,9 +297,11 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
           </div>
         </Card>
 
+        {/* الروابط الاجتماعية */}
         <Card
           title="روابط التواصل الاجتماعي"
           description="اترك الحقل فارغًا لإخفاء المنصة. لا تظهر أي روابط غير مضافة."
+          actions={cardActions(Globe, "text-[#139CAA]")}
         >
           <div className="admin-field-row">
             {SOCIAL_FIELDS.map(([key, label]) => (
@@ -298,9 +319,11 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
           </div>
         </Card>
 
+        {/* الكلمات المفتاحية */}
         <Card
           title="الكلمات المفتاحية (SEO)"
           description="كلمة أو عبارة في كل سطر."
+          actions={cardActions(Sparkle, "text-[#D1A246]")}
         >
           <div className="admin-field-row">
             <Field label="عربي">
@@ -335,9 +358,11 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
           </div>
         </Card>
 
+        {/* الأقسام المخفية */}
         <Card
           title="الأقسام المخفية"
           description="شغّل القسم بعد إضافة عناصره من صفحة «الأقسام المخفية»."
+          actions={cardActions(Sparkle, "text-[#0B2730]")}
         >
           <div className="grid gap-3 sm:grid-cols-2">
             {(Object.keys(FLAG_COPY) as Array<keyof FeatureFlags>).map((key) => (
@@ -357,15 +382,15 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
             </Notice>
           </div>
         </Card>
-      </div>
 
-      <SaveBar
-        dirty={dirty}
-        saving={saving}
-        message={message}
-        onSave={save}
-        onDiscard={discard}
-      />
+        <SaveBar
+          dirty={dirty}
+          saving={saving}
+          message={message}
+          onSave={save}
+          onDiscard={discard}
+        />
+      </div>
     </div>
   );
 }

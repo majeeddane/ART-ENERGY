@@ -45,33 +45,37 @@ export function AdminShell({ children }: { children: ReactNode }) {
   };
 
   const nav = (
-    <nav className="space-y-1">
-      {items.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          onClick={() => setOpen(false)}
-          className={cn(
-            "group flex items-center justify-between gap-3 rounded-xl px-3.5 py-3 text-sm transition",
-            isActive(item.href)
-              ? "bg-[#F2E04E] text-[#0B2730]"
-              : "text-white/60 hover:bg-white/[0.06] hover:text-white",
-          )}
-        >
-          <span className="flex items-center gap-2.5">
-            <span
-              className={cn(
-                "font-grotesk text-[9px] tracking-[0.16em]",
-                isActive(item.href) ? "text-[#0B2730]/55" : "text-white/25",
-              )}
-            >
-              {item.icon}
+    <nav className="space-y-0.5">
+      {items.map((item) => {
+        const active = isActive(item.href);
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={() => setOpen(false)}
+            className={cn(
+              "group flex items-center justify-between gap-3 rounded-xl px-3.5 py-3 text-sm transition-all duration-300",
+              active
+                ? "bg-[#F2E04E] text-[#0B2730] shadow-soft"
+                : "text-white/60 hover:bg-white/[0.06] hover:text-white hover:border-[#139CAA]/30",
+              "border border-transparent",
+            )}
+          >
+            <span className="flex items-center gap-2.5">
+              <span
+                className={cn(
+                  "font-grotesk text-[9px] tracking-[0.16em] shrink-0",
+                  active ? "text-[#0B2730]/60" : "text-white/20",
+                )}
+              >
+                {item.icon}
+              </span>
+              <span className="truncate">{item.label}</span>
             </span>
-            {item.label}
-          </span>
-          {isActive(item.href) && <PenTool size={13} />}
-        </Link>
-      ))}
+            {active && <PenTool size={13} />}
+          </Link>
+        );
+      })}
     </nav>
   );
 
@@ -79,7 +83,10 @@ export function AdminShell({ children }: { children: ReactNode }) {
     <div className="min-h-screen lg:grid lg:grid-cols-[280px_1fr]">
       <aside className="hidden min-h-screen flex-col justify-between overflow-hidden bg-[#07262F] px-4 py-5 text-[#F7F2E9] lg:flex">
         <div>
-          <Link href="/admin" className="flex items-center gap-3 px-2">
+          <Link
+            href="/admin"
+            className="flex items-center gap-3 px-2 mb-6"
+          >
             <BrandMark idPrefix="ae-admin" className="h-12 w-12" />
             <span className="flex flex-col">
               <span
@@ -94,13 +101,13 @@ export function AdminShell({ children }: { children: ReactNode }) {
             </span>
           </Link>
 
-          <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-3.5">
+          <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 shadow-lg shadow-[#0B2730]/20">
             <div className="flex items-center gap-2 text-[10px] text-[#F2E04E]/80">
               <Sparkle size={12} />
               CONTROL ROOM
             </div>
             <p className="mt-2 text-[10px] leading-5 text-white/40">
-              كل تعديل تحفظه يظهر على الموقع مباشرة بعد إعادة التحقق.
+              كل تعديل تحفظه يظهر على الموقع مباشرة بعد إعادة التحميل.
             </p>
           </div>
 
@@ -111,7 +118,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           <Link
             href="/"
             target="_blank"
-            className="flex items-center justify-between gap-2 rounded-xl border border-white/10 px-3.5 py-3 text-xs text-white/55 transition hover:border-[#D1A246] hover:text-[#F2E04E]"
+            className="flex items-center justify-between gap-2 rounded-xl border border-white/10 px-3.5 py-3 text-xs text-white/55 transition-all hover:border-[#D1A246] hover:text-[#F2E04E] hover:shadow-soft"
           >
             <span className="flex items-center gap-2">
               <Globe size={14} />
@@ -123,7 +130,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
             type="button"
             onClick={signOut}
             disabled={leaving}
-            className="w-full rounded-xl border border-white/10 px-3.5 py-3 text-start text-xs text-white/45 transition hover:border-[#E7B9B5]/50 hover:text-[#F7C9C4] disabled:opacity-50"
+            className="w-full rounded-xl border border-white/10 px-3.5 py-3 text-start text-xs text-white/45 transition-all hover:border-[#E7B9B5]/50 hover:text-[#F7C9C4] disabled:opacity-50 disabled:hover:border-white/10 disabled:hover:text-white/45"
           >
             {leaving ? "جارٍ الخروج…" : "تسجيل الخروج"}
           </button>
@@ -131,7 +138,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       </aside>
 
       <div className="min-w-0">
-        <header className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#DED5C4] bg-[#F4F0E7]/90 px-4 py-3 backdrop-blur-lg lg:hidden">
+        <header className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#DED5C4] bg-[#F4F0E7]/95 px-4 py-3 backdrop-blur-xl lg:hidden shadow-sm">
           <Link href="/admin" className="flex items-center gap-2">
             <BrandMark idPrefix="ae-admin-mobile" className="h-9 w-9" />
             <span
@@ -145,14 +152,14 @@ export function AdminShell({ children }: { children: ReactNode }) {
             type="button"
             onClick={() => setOpen(true)}
             aria-label="فتح القائمة"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#DED5C4] bg-white text-[#0B2730]"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#DED5C4] bg-white text-[#0B2730] transition-all hover:border-[#139CAA] hover:bg-[#139CAA]/10"
           >
             <Menu size={18} />
           </button>
         </header>
 
         {open && (
-          <div className="fixed inset-0 z-[80] bg-[#07262F] p-5 text-[#F7F2E9] lg:hidden">
+          <div className="fixed inset-0 z-[80] bg-[#07262F] p-5 text-[#F7F2E9] lg:hidden backdrop-blur-md">
             <div className="flex items-center justify-between">
               <span
                 className="font-grotesk text-sm font-semibold tracking-[0.18em]"
@@ -164,7 +171,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="إغلاق القائمة"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition-all hover:border-white"
               >
                 <Close size={18} />
               </button>
@@ -173,7 +180,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <Link
               href="/"
               target="_blank"
-              className="mt-6 flex items-center justify-between rounded-xl border border-white/10 px-3.5 py-3 text-xs text-white/60"
+              className="mt-6 flex items-center justify-between rounded-xl border border-white/10 px-3.5 py-3 text-xs text-white/60 transition-all hover:border-[#D1A246] hover:text-[#F2E04E]"
             >
               عرض الموقع
               <ArrowUpRight size={13} />
@@ -181,7 +188,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <button
               type="button"
               onClick={signOut}
-              className="mt-2 w-full rounded-xl border border-white/10 px-3.5 py-3 text-start text-xs text-white/45"
+              className="mt-2 w-full rounded-xl border border-white/10 px-3.5 py-3 text-start text-xs text-white/45 transition-all hover:border-[#E7B9B5]/50 hover:text-[#F7C9C4]"
             >
               تسجيل الخروج
             </button>

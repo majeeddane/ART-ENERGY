@@ -35,8 +35,8 @@ export function LoginForm({ configured }: { configured: boolean }) {
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(19,156,170,0.35),transparent_50%)]" />
           <div className="pointer-events-none absolute -bottom-20 -end-16 h-72 w-72 rounded-full bg-[#D1A246]/20 blur-3xl" />
           <div className="relative">
-            <BrandMark idPrefix="ae-login" className="h-20 w-20" />
-            <h1 className="mt-8 font-display text-4xl leading-tight">
+            <BrandMark idPrefix="ae-login" className="h-20 w-20 drop-shadow-[0_16px_28px_rgba(11,39,48,0.45)]" />
+            <h1 className="mt-8 font-display text-4xl leading-tight tracking-tight">
               لوحة تحكم
               <br />
               ارت إنيرجي
@@ -46,7 +46,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
               بالأقسام المخفية — كل ذلك من مكان واحد.
             </p>
           </div>
-          <div className="relative">
+          <div className="relative mt-8">
             <p className="font-grotesk text-[9px] uppercase tracking-[0.26em] text-[#F2E04E]/70" dir="ltr">
               ART ENERGY / CONTROL ROOM
             </p>
@@ -74,7 +74,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
             </Link>
           </div>
 
-          <h2 className="mt-7 text-2xl font-bold text-[#0B2730]">
+          <h2 className="mt-7 text-2xl font-bold text-[#0B2730] tracking-tight">
             تسجيل الدخول
           </h2>
           <p className="mt-2 text-sm leading-7 text-[#6A7D80]">
@@ -119,7 +119,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
             {error && (
               <p
                 role="alert"
-                className="rounded-xl border border-[#E7B9B5] bg-[#FDF3F2] px-3 py-2.5 text-xs text-[#A9362E]"
+                className="rounded-xl border border-[#E7B9B5] bg-[#FDF3F2] px-3 py-2.5 text-xs text-[#A9362E] shadow-soft"
               >
                 {error}
               </p>
@@ -128,10 +128,10 @@ export function LoginForm({ configured }: { configured: boolean }) {
             <button
               type="submit"
               disabled={!configured || loading || !password}
-              className="admin-btn admin-btn-primary w-full"
+              className="admin-btn admin-btn-primary w-full transition-all hover:shadow-soft hover:-translate-y-0.5"
             >
               {loading ? "جارٍ التحقق…" : "دخول إلى اللوحة"}
-              <ArrowUpRight size={15} className="rtl:-scale-x-100" />
+              <ArrowUpRight size={15} className="rtl:-scale-x-100 transition-transform duration-200" />
             </button>
           </form>
 
