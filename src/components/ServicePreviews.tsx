@@ -4,281 +4,157 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { BrandMark } from "@/components/brand/Logo";
 import { Icon3D } from "@/components/ui/Icon3D";
-import {
-  BadgeCheck,
-  ChartColumn,
-  Clapperboard,
-  Film,
-  LayoutGrid,
-  Lightbulb,
-  Palette,
-  Play,
-  Rocket,
-  Target,
-  Users,
-} from "@/components/ui/Icons";
-
-const brand = {
-  teal: "#139CAA",
-  cyan: "#3DC1C5",
-  yellow: "#F2E04E",
-  orange: "#D1A246",
-  deep: "#0B2730",
-  deepBg: "#04181E",
-  ink: "#07262F",
-  paper: "#F7F2E9",
-  bone: "#FBF8F1",
-  sand: "#E9E1D2",
-  line: "#DED5C4",
-  textMuted: "#6A7D80",
-};
+import { Play } from "@/components/ui/Icons";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 18 },
+  initial: { opacity: 0, y: 16 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-12%" },
-  transition: { duration: 0.6, ease: [0.2, 0, 0, 1] as const },
+  viewport: { once: true, margin: "-15%" },
+  transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
 };
 
-const stagger = (i: number) => ({
-  ...fadeUp,
-  transition: { ...fadeUp.transition, delay: 0.1 + i * 0.05 },
-});
-
-type Icon3DName = Parameters<typeof Icon3D>[0]["name"];
-
-/* ---------------- أيقونات مخصصة بسيطة ---------------- */
-
-function LogoMark({ size = 20, color = brand.teal }: { size?: number; color?: string }) {
+export function StrategyPreview() {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="3" y="3" width="18" height="18" rx="4" />
-      <path d="M7 7l10 10" />
-      <circle cx="9" cy="9" r="2" fill={color} />
-    </svg>
-  );
-}
-
-function TypeScale({ size = 20, color = brand.teal }: { size?: number; color?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M4 6h4M4 10h6M4 14h3M18 6v12M6 18h12" />
-    </svg>
-  );
-}
-
-function VoiceTone({ size = 20, color = brand.teal }: { size?: number; color?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M1 9c0 2 1 3 3 3h2c2 0 3-1 3-3V7c0-2-1-3-3-3H4c-2 0-3 1-3 3zM13 17c0 2 1 3 3 3h2c2 0 3-1 3-3v-4c0-2-1-3-3-3h-2c-2 0-3 1-3 3z" />
-    </svg>
-  );
-}
-
-function RealWorld({ size = 20, color = brand.teal }: { size?: number; color?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="2" y="3" width="20" height="14" rx="2" />
-      <line x1="8" y1="21" x2="16" y2="21" />
-      <line x1="12" y1="17" x2="12" y2="21" />
-    </svg>
-  );
-}
-
-/* ---------------- بطاقة واحدة ---------------- */
-
-interface BrandCardProps {
-  number: string;
-  title: string;
-  desc: string;
-  icon: React.ComponentType<{ size?: number; color?: string }>;
-  color: string;
-  index: number;
-}
-
-function BrandCard({ number, title, desc, icon: Icon, color, index }: BrandCardProps) {
-  return (
-    <motion.div
-      {...stagger(index)}
-      className="group relative overflow-hidden rounded-2xl border border-line bg-white shadow-sm transition-all duration-500 hover:shadow-xl hover:border-[#139CAA]/50"
-    >
-      <div className="absolute -inset-4 bg-gradient-to-tr from-[#139CAA]/20 via-transparent to-[#F2E04E]/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden />
-
-      <div className="relative z-10 p-6">
-        <div className="flex items-start gap-3 mb-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-line shadow-sm">
-            <Icon size={22} color={color} />
-          </div>
-          <span className={`flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-grotesk font-bold border`} dir="ltr" style={{ borderColor: color + "33", color }}>
-            {number}
-          </span>
-        </div>
-
-        <h3 className="mb-2 text-xl font-bold text-[#0B2730] leading-none">{title}</h3>
-        <p className="text-base text-[#6A7D80] leading-6">{desc}</p>
+    <div className="relative h-full min-h-[320px] overflow-hidden rounded-card bg-[#07262F] p-5 text-[#F7F2E9]">
+      <div className="dot-grid absolute inset-0 opacity-20" />
+      <div className="relative flex items-center justify-between">
+        <span className="font-grotesk text-[9px] tracking-[0.26em] text-[#F2E04E]/80" dir="ltr">
+          STRATEGY / LAB
+        </span>
+        <span className="flex items-center gap-1.5 font-grotesk text-[8px] tracking-[0.2em] text-white/40" dir="ltr">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#3DC1C5]" />
+          LIVE
+        </span>
       </div>
 
-      <div
-        className={`absolute left-0 bottom-0 h-1 w-full bg-gradient-to-r from-transparent via-${color} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-        aria-hidden
-      />
-    </motion.div>
+      <div className="relative mt-6 h-[54%] min-h-[170px]">
+        <svg viewBox="0 0 400 220" className="h-full w-full" aria-hidden>
+          <defs>
+            <linearGradient id="strategy-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#3DC1C5" stopOpacity="0.35" />
+              <stop offset="1" stopColor="#3DC1C5" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          {[40, 80, 120, 160, 200].map((y) => (
+            <line key={y} x1="0" y1={y} x2="400" y2={y} stroke="#F7F2E9" strokeOpacity="0.06" />
+          ))}
+          <motion.path
+            d="M0 180 C40 172 55 140 90 146 S150 176 185 128 S250 70 285 96 S345 116 400 42 V220 H0 Z"
+            fill="url(#strategy-fill)"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+          />
+          <motion.path
+            d="M0 180 C40 172 55 140 90 146 S150 176 185 128 S250 70 285 96 S345 116 400 42"
+            fill="none"
+            stroke="#F2E04E"
+            strokeWidth="2"
+            strokeLinecap="round"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.4, ease: "easeInOut" }}
+          />
+          <path
+            d="M0 205 C60 198 80 186 120 190 S190 214 230 190 S310 172 400 176"
+            fill="none"
+            stroke="#3DC1C5"
+            strokeWidth="1.5"
+            strokeDasharray="4 6"
+            opacity="0.65"
+          />
+          <circle cx="400" cy="42" r="5" fill="#F2E04E" />
+          <circle cx="400" cy="42" r="12" fill="none" stroke="#F2E04E" strokeOpacity="0.3" />
+        </svg>
+        <div className="absolute end-2 top-0 rounded-lg border border-white/10 bg-white/5 px-2 py-1 font-grotesk text-[8px] tracking-[0.18em] text-white/60" dir="ltr">
+          03 / GROWTH
+        </div>
+      </div>
+
+      <div className="relative mt-3 grid grid-cols-3 gap-2">
+        {["MARKET", "PLAN", "MEASURE"].map((label, i) => (
+          <div
+            key={label}
+            className="rounded-lg border border-white/10 bg-white/[0.04] px-2 py-2 text-center font-grotesk text-[7.5px] tracking-[0.14em] text-white/60"
+            dir="ltr"
+          >
+            <span className="mx-auto mb-1 block h-6 w-full overflow-hidden rounded-sm bg-white/5">
+              <motion.span
+                className="block h-full w-full origin-bottom bg-gradient-to-t from-[#139CAA] to-[#F2E04E]/70"
+                initial={{ scaleY: 0.15 }}
+                whileInView={{ scaleY: 0.9 - i * 0.14 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.3 + i * 0.1 }}
+              />
+            </span>
+            {label}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
-
-/* ---------------- 02 — الهوية المرئية ---------------- */
 
 export function BrandPreview() {
   return (
-    <div className="relative h-full min-h-[320px] overflow-hidden rounded-panel border border-line bg-[#FBF8F1] p-6">
-      <div className="absolute -end-8 -top-8 h-44 w-44 rounded-full bg-[#F2E04E]/40 blur-2xl" />
-      <div className="relative flex items-center justify-between mb-8">
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F2E04E] text-[#0B2730] text-[10px] font-grotesk font-bold" dir="ltr">
-          02
+    <div className="relative h-full min-h-[320px] overflow-hidden rounded-card border border-line bg-[#F3EDE1] p-5">
+      <div className="absolute -end-10 -top-10 h-44 w-44 rounded-full bg-[#F2E04E]" />
+      <div className="relative flex items-center justify-between">
+        <span className="font-grotesk text-[9px] tracking-[0.26em] text-[#0B2730]/75" dir="ltr">
+          IDENTITY / SYSTEM
         </span>
-        <Palette size={20} className="text-[#0B2730]/80" />
+        <Icon3D name="palette" size={22} />
       </div>
 
-      <h3 className="mb-4 text-2xl font-bold tracking-tight">نظام الهوية المرئية</h3>
-      <p className="mb-8 text-base text-[#6A7D80] leading-7 max-w-md">
-        شعار، خط، لوحة ألوان، ونبرة صوت — كل عنصر يُصمّم ليعيش على أرض الواقع قبل الشاشة.
-      </p>
-
-      <div className="grid gap-4 md:grid-cols-3">
-        <BrandCard
-          index={0}
-          number="01"
-          title="الشعار"
-          desc="العلامة البصرية الأساسية التي تُمثّل هوية ART ENERGY في كل تطبيق."
-          icon={LogoMark}
-          color={brand.teal}
-        />
-        <BrandCard
-          index={1}
-          number="02"
-          title="الخط"
-          desc="طباعة عربية وإنجليزية واضحة ومتوازنة تعزز قابلية القراءة والشخصية."
-          icon={TypeScale}
-          color={brand.cyan}
-        />
-        <BrandCard
-          index={2}
-          number="03"
-          title="لوحة الألوان"
-          desc="ألوان أساسية وثانوية مستوحاة من الطاقة والإبداع، مع تدرجات متناسقة."
-          icon={Palette}
-          color={brand.yellow}
-        />
-        <BrandCard
-          index={3}
-          number="04"
-          title="نبرة الصوت"
-          desc="لغة تواصل مهنية، دافئة، ومُلهمة تخاطب العميل بلغة النتائج والتأثير."
-          icon={VoiceTone}
-          color={brand.orange}
-        />
-        <BrandCard
-          index={4}
-          number="05"
-          title="التطبيق على أرض الواقع"
-          desc="الهوية تُطبّق على الأوراق، اللوحات، المنصات الرقمية، والوسائط كافة."
-          icon={RealWorld}
-          color={brand.deep}
-        />
-        <BrandCard
-          index={5}
-          number="06"
-          title="دليل الاستخدام"
-          desc="مرجع شامل لكيفية استخدام كل عنصر بشكل صحيح ومتسق في جميع القنوات."
-          icon={BadgeCheck}
-          color={brand.teal}
-        />
+      <div className="relative mt-6 grid grid-cols-3 gap-2">
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <motion.div
+            key={i}
+            {...fadeUp}
+            transition={{ ...fadeUp.transition, delay: i * 0.06 }}
+            className="flex aspect-square items-center justify-center rounded-xl border border-[#0B2730]/10 bg-[#FBF8F1]"
+          >
+            <BrandMark
+              idPrefix={`brand-grid-${i}`}
+              className={i === 4 ? "h-10 w-10 grayscale" : "h-10 w-10"}
+            />
+          </motion.div>
+        ))}
       </div>
 
-      <div className="mt-8 flex items-center justify-between rounded-lg border border-[#0B2730]/10 bg-white px-3 py-2.5">
+      <div className="relative mt-4 flex items-center justify-between rounded-xl border border-[#0B2730]/10 bg-[#FBF8F1] px-3 py-2.5">
         <span className="font-grotesk text-[8px] tracking-[0.2em] text-[#0B2730]/55" dir="ltr">
           PRIMARY / #139CAA
         </span>
         <div className="flex gap-1.5">
-          <span className="h-3.5 w-3.5 rounded-full bg-[#139CAA]" />
-          <span className="h-3.5 w-3.5 rounded-full bg-[#D1A246]" />
-          <span className="h-3.5 w-3.5 rounded-full bg-[#F2E04E]" />
+          <span className="h-4 w-4 rounded-full bg-[#139CAA]" />
+          <span className="h-4 w-4 rounded-full bg-[#D1A246]" />
+          <span className="h-4 w-4 rounded-full bg-[#F28C28]" />
+          <span className="h-4 w-4 rounded-full bg-[#F2E04E]" />
         </div>
       </div>
 
       <motion.div
-        className="absolute -bottom-6 -left-2 h-20 w-20 rounded-full border-[4px] border-[#FBF8F1] bg-[#0B2730] shadow-lg"
+        className="absolute -bottom-8 -start-4 h-24 w-24 rounded-full border-[6px] border-[#FBF8F1] bg-[#0B2730] shadow-lg"
         animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        aria-hidden
+        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
       >
-        <BrandMark idPrefix="brand-badge" className="h-full w-full p-2" />
+        <BrandMark idPrefix="brand-badge" className="h-full w-full p-3" />
       </motion.div>
     </div>
   );
 }
 
-/* --------------------------------------------------------------
-   01 — STRATEGY / LAB
-   -------------------------------------------------------------- */
-export function StrategyPreview() {
-  return (
-    <div className="relative h-full min-h-[320px] overflow-hidden rounded-panel border border-teal-100/60 bg-gradient-to-br from-teal-50 to-teal-100/50 p-6 text-[#0B2730]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(19,156,170,0.15),transparent_55%)]" />
-      <div className="relative flex items-center justify-between mb-8">
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#139CAA] text-white text-[10px] font-grotesk font-bold" dir="ltr">
-          01
-        </span>
-        <Lightbulb size={20} className="text-[#139CAA]" />
-      </div>
-
-      <h3 className="mb-4 text-2xl font-bold tracking-tight">الاستراتيجية والكشف</h3>
-      <p className="mb-6 text-base text-[#6A7D80] leading-7 max-w-md">
-        نبدأ بالاستماع العميق للسوق، ثم نرسّم خارطة طريق تربط الهدف بالنتيجة
-        بأقل مجهود وأعلى تأثير.
-      </p>
-
-      <div className="grid gap-3 md:grid-cols-3">
-        {[
-          { label: "تحليل السوق", value: "سوق الهدف" },
-          { label: "الشخصية الاستراتيجية", value: "هوية العلامة" },
-          { label: "مقياس الأثر", value: "KPI dashboard" },
-        ].map((item, i) => (
-          <motion.div
-            key={item.label}
-            {...stagger(i)}
-            className="rounded-lg border border-teal-200 bg-white p-4 shadow-sm"
-          >
-            <span className="block h-1 w-full rounded-sm bg-[#139CAA]/10 mb-2" />
-            <div className="flex items-baseline gap-1">
-              <span className="text-[10px] font-bold text-[#139CAA] uppercase tracking-wider" dir="ltr">
-                {item.label}
-              </span>
-              <span className="text-sm font-medium text-[#0B2730]" dir="ltr">
-                {item.value}
-              </span>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      <div className="absolute -right-6 -top-10 h-24 w-24 rounded-full border-4 border-[#139CAA]/30 animate-spin-reverse" aria-hidden />
-      <div className="absolute left-4 bottom-4 h-12 w-12 rounded-full bg-[#F2E04E]/40 backdrop-blur" aria-hidden />
-    </div>
-  );
-}
-
-/* --------------------------------------------------------------
-   03 — CONTENT / EDITORIAL
-   -------------------------------------------------------------- */
 export function ContentPreview() {
   return (
-    <div className="relative h-full min-h-[320px] overflow-hidden rounded-panel border border-teal-100/40 bg-gradient-to-br from-teal-50/60 to-transparent p-6 text-[#0B2730]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(19,156,170,0.25),transparent_55%)]" />
+    <div className="relative h-full min-h-[320px] overflow-hidden rounded-card bg-[#0B2730] p-5">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(19,156,170,0.35),transparent_55%)]" />
       <div className="relative flex h-full items-center justify-center">
-        <div className="relative h-[300px] w-[140px] rounded-2xl border border-teal-200 bg-white p-2 shadow-xl">
-          <div className="absolute left-1/2 top-2 h-1 w-8 -translate-x-1/2 rounded-full bg-teal-200" />
-          <div className="mt-4 h-full overflow-hidden rounded-xl bg-[#FBF8F1]">
+        <div className="relative h-[290px] w-[150px] rounded-panel border border-white/20 bg-[#04181E] p-2 shadow-2xl">
+          <div className="absolute left-1/2 top-2 h-1 w-8 -translate-x-1/2 rounded-full bg-white/20" />
+          <div className="mt-4 h-full overflow-hidden rounded-card bg-[#FBF8F1]">
             <div className="flex items-center gap-2 border-b border-black/5 px-2.5 py-2">
               <span className="h-5 w-5 rounded-full bg-[#139CAA]" />
               <span className="h-1.5 w-10 rounded-full bg-black/15" />
@@ -312,11 +188,11 @@ export function ContentPreview() {
           </span>
         </div>
 
-        <div className="absolute -start-2 top-1/2 -translate-y-1/2 flex -translate-x-1/2 flex-col gap-2">
+        <div className="absolute -start-1 top-1/2 flex -translate-y-1/2 flex-col gap-2">
           {["+", "◇", "↗", "♥"].map((c, i) => (
             <motion.span
               key={c}
-              className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/60 text-xs text-teal-600 backdrop-blur shadow-sm"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/10 text-xs text-white/70 backdrop-blur"
               animate={{ y: [0, -5, 0] }}
               transition={{ duration: 3 + i * 0.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
             >
@@ -325,7 +201,7 @@ export function ContentPreview() {
           ))}
         </div>
       </div>
-      <div className="absolute bottom-4 left-4 flex items-center gap-2 font-grotesk text-[8px] tracking-[0.22em] text-teal-600/80" dir="ltr">
+      <div className="absolute bottom-4 start-5 flex items-center gap-2 font-grotesk text-[8px] tracking-[0.22em] text-white/45" dir="ltr">
         <Icon3D name="chart-up" size={16} />
         CONTENT / 03
       </div>
@@ -333,18 +209,15 @@ export function ContentPreview() {
   );
 }
 
-/* --------------------------------------------------------------
-   04 — PRODUCTION / FILM
-   -------------------------------------------------------------- */
 export function ProductionPreview() {
   return (
-    <div className="group relative h-full min-h-[320px] overflow-hidden rounded-panel bg-[#04181E] p-0">
+    <div className="group relative h-full min-h-[320px] overflow-hidden rounded-card bg-[#04181E]">
       <Image
         src="/images/media-art.webp"
         alt=""
         fill
         sizes="(max-width: 1024px) 90vw, 460px"
-        className="object-cover opacity-85 transition duration-700 group-hover:scale-105"
+        className="object-cover opacity-80 transition duration-700 group-hover:scale-105"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#04181E] via-[#04181E]/30 to-transparent" />
       <div className="absolute inset-0 flex items-center justify-center">
@@ -375,14 +248,11 @@ export function ProductionPreview() {
   );
 }
 
-/* --------------------------------------------------------------
-   05 — PRINT / PAPER
-   -------------------------------------------------------------- */
 export function PrintPreview() {
   return (
-    <div className="relative h-full min-h-[320px] overflow-hidden rounded-panel border border-line bg-[#E9E1D2] p-6">
-      <div className="absolute inset-0 opacity-40" style={{ maskImage: "linear-gradient(to bottom, transparent 0%, black 40%)" }} />
-      <div className="relative flex items-center justify-between mb-6">
+    <div className="relative h-full min-h-[320px] overflow-hidden rounded-card border border-line bg-[#E9E1D2] p-5">
+      <div className="paper-lines absolute inset-0 opacity-40" />
+      <div className="relative flex items-center justify-between">
         <span className="font-grotesk text-[9px] tracking-[0.26em] text-[#0B2730]/55" dir="ltr">
           PRINT / 05
         </span>
@@ -391,7 +261,7 @@ export function PrintPreview() {
         </span>
       </div>
 
-      <div className="book relative mx-auto mt-6 h-[220px] w-[190px]">
+      <div className="book relative mx-auto mt-6 h-[210px] w-[190px]">
         <div className="absolute inset-0 translate-x-3 translate-y-3 rounded-r-md rounded-l-sm bg-[#0B2730]/10" />
         <div className="absolute inset-0 overflow-hidden rounded-r-md rounded-l-sm border border-[#0B2730]/15 bg-[#0B2730] shadow-xl">
           <div className="flex h-full flex-col justify-between p-4 text-[#F7F2E9]">
@@ -441,21 +311,15 @@ export function PrintPreview() {
   );
 }
 
-/* --------------------------------------------------------------
-   06 — CAMPAIGN / IMPACT
-   -------------------------------------------------------------- */
 export function CampaignPreview() {
   return (
-    <div className="relative h-full min-h-[320px] overflow-hidden rounded-panel bg-[#07262F] p-6 text-white">
+    <div className="relative h-full min-h-[320px] overflow-hidden rounded-card bg-[#07262F] p-5 text-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(209,162,70,0.18),transparent_60%)]" />
-      <div className="relative flex items-center justify-between mb-6">
+      <div className="relative flex items-center justify-between">
         <span className="font-grotesk text-[9px] tracking-[0.26em] text-[#F2E04E]/80" dir="ltr">
           CAMPAIGN / 06
         </span>
-        <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#F2E04E]">
-          <path d="M5 3h4l2 16H5z" />
-          <circle cx="9" cy="10" r="2" />
-        </svg>
+        <Icon3D name="megaphone" size={22} />
       </div>
 
       <div className="relative mt-4 h-[178px] overflow-hidden rounded-2xl border border-white/10">
@@ -474,7 +338,7 @@ export function CampaignPreview() {
         </div>
       </div>
 
-      <div className="relative mt-5 grid grid-cols-3 gap-2">
+      <div className="relative mt-3 grid grid-cols-3 gap-2">
         {["PLAN", "LAUNCH", "SCALE"].map((label, i) => (
           <div
             key={label}
@@ -491,7 +355,7 @@ export function CampaignPreview() {
         ))}
       </div>
 
-      <div className="relative mt-5 flex h-7 items-end justify-center gap-1">
+      <div className="relative mt-3 flex h-7 items-end justify-center gap-1">
         {[14, 26, 10, 32, 18, 28, 12, 24, 16, 30, 8, 22].map((h, i) => (
           <motion.span
             key={i}
