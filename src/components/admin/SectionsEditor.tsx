@@ -90,7 +90,7 @@ function Shell({
   return (
     <details
       open
-      className="group rounded-xl border border-[#E7E0D3] bg-[#FCFAF5]"
+      className="group rounded-xl border border-[#E7E0D3] bg-[#FCFAF5] shadow-sm transition-all hover:shadow-soft"
     >
       <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-3">
         <span className="flex min-w-0 items-center gap-2">
@@ -114,7 +114,7 @@ function Shell({
               onMove(-1);
             }}
             aria-label="تحريك لأعلى"
-            className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#DED5C4] text-[#6A7D80] disabled:opacity-30"
+            className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#DED5C4] text-[#6A7D80] disabled:opacity-30 transition-all"
           >
             ↑
           </button>
@@ -126,7 +126,7 @@ function Shell({
               onMove(1);
             }}
             aria-label="تحريك لأسفل"
-            className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#DED5C4] text-[#6A7D80] disabled:opacity-30"
+            className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#DED5C4] text-[#6A7D80] disabled:opacity-30 transition-all"
           >
             ↓
           </button>

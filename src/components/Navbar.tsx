@@ -94,9 +94,11 @@ export function Navbar({ locale }: { locale: Locale }) {
   const links: Array<{ id: string; label: string }> = [
     { id: "about", label: dict.nav.about },
     { id: "services", label: dict.nav.services },
+    { id: "journey", label: dict.nav.journey },
     { id: "packages", label: dict.nav.packages },
     { id: "production", label: dict.nav.production },
     { id: "campaigns", label: dict.nav.campaigns },
+    { id: "why", label: dict.nav.why },
     { id: "contact", label: dict.nav.contact },
   ];
 
