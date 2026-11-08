@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowUpRight } from "@/components/ui/Icons";
-import { BrandMark } from "@/components/brand/Logo";
 import { useReducedMotionSafe } from "@/hooks/useReducedMotionSafe";
 import { cn, scrollToSection } from "@/lib/utils";
 import { useDict, useSettings } from "@/components/providers/SiteDataProvider";
@@ -53,27 +52,21 @@ export function Hero({ locale }: { locale: Locale }) {
         <div className="max-w-[44rem]">
           {/* brand lockup over the image */}
           <motion.div
-            className="inline-flex items-center gap-3 sm:gap-4"
+            className="inline-flex flex-col items-start"
             initial={reduced ? false : { opacity: 0, y: 14 }}
             animate={ready ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.1, ease }}
           >
-            <BrandMark
-              idPrefix="ae-hero"
-              className="h-10 w-10 shrink-0 sm:h-12 sm:w-12"
-            />
-            <span className="flex min-w-0 flex-col justify-center">
-              <span
-                className="whitespace-nowrap font-grotesk text-[1.02rem] font-semibold uppercase leading-none tracking-[0.14em] text-[#F7F2E9] sm:text-[1.22rem] sm:tracking-[0.18em]"
-                dir="ltr"
-              >
-                ART ENERGY
-              </span>
-              <span className="mt-1.5 flex items-center gap-2" dir="ltr">
-                <span className="h-px w-4 shrink-0 bg-[#F2E04E]/60" aria-hidden />
-                <span className="whitespace-nowrap font-grotesk text-[7.5px] uppercase leading-none tracking-[0.22em] text-[#F2E04E]/90 sm:text-[8.5px] sm:tracking-[0.26em]">
-                  Creative media agency
-                </span>
+            <span
+              className="whitespace-nowrap font-grotesk text-[1.08rem] font-semibold uppercase leading-none tracking-[0.14em] text-[#F7F2E9] sm:text-[1.3rem] sm:tracking-[0.18em]"
+              dir="ltr"
+            >
+              ART ENERGY
+            </span>
+            <span className="mt-2 flex items-center gap-2" dir="ltr">
+              <span className="h-px w-5 shrink-0 bg-[#F2E04E]/60" aria-hidden />
+              <span className="whitespace-nowrap font-grotesk text-[7.5px] uppercase leading-none tracking-[0.22em] text-[#F2E04E]/90 sm:text-[8.5px] sm:tracking-[0.26em]">
+                Creative media agency
               </span>
             </span>
           </motion.div>
