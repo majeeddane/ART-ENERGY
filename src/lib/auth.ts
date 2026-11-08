@@ -1,5 +1,4 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
-import { cookies } from "next/headers";
 
 export const ADMIN_COOKIE = "ae_admin";
 export const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
@@ -7,6 +6,13 @@ export const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 const LOGIN_WINDOW_MS = 10 * 60 * 1000;
 const LOGIN_MAX_ATTEMPTS = 8;
 const loginHits = new Map<string, number[]>();
+
+type SessionPayload = {
+  exp: number;
+  userId?: string;
+  email?: string;
+  role?: string;
+};
 
 function secret() {
   return (
@@ -24,7 +30,6 @@ function safeEqual(left: string, right: string) {
   const a = Buffer.from(left);
   const b = Buffer.from(right);
   if (a.length !== b.length) {
-    // Keep the comparison constant-time even when lengths differ.
     timingSafeEqual(b, b);
     return false;
   }
@@ -41,9 +46,15 @@ export function verifyPassword(input: string) {
   return safeEqual(input, expected);
 }
 
-export function createSessionToken() {
+export function createSessionToken(user?: { id?: string; email?: string; role?: string }) {
   const expires = String(Date.now() + SESSION_MAX_AGE * 1000);
-  return `${expires}.${sign(expires)}`;
+  const payload: SessionPayload = { exp: Number(expires) };
+  if (user) {
+    payload.userId = user.id;
+    payload.email = user.email;
+    payload.role = user.role;
+  }
+  return `${expires}.${sign(JSON.stringify(payload))}`;
 }
 
 export function verifySessionToken(token: string | undefined) {
@@ -57,9 +68,16 @@ export function verifySessionToken(token: string | undefined) {
   return Number.isFinite(expiresAt) && expiresAt > Date.now();
 }
 
-export async function isAuthenticated() {
-  const jar = await cookies();
-  return verifySessionToken(jar.get(ADMIN_COOKIE)?.value);
+export function decodeSessionToken(token: string | undefined): SessionPayload | null {
+  if (!token) return null;
+  const index = token.lastIndexOf(".");
+  if (index <= 0) return null;
+  const payloadPart = token.slice(index + 1);
+  try {
+    return JSON.parse(Buffer.from(payloadPart, "base64url").toString("utf8")) as SessionPayload;
+  } catch {
+    return null;
+  }
 }
 
 export function sessionCookieOptions() {

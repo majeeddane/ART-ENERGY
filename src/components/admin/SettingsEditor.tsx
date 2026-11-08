@@ -26,14 +26,14 @@ const FLAG_COPY: Record<keyof FeatureFlags, { label: string; description: string
   },
 };
 
-const SOCIAL_FIELDS: Array<[keyof SocialLinks, string]> = [
-  ["instagram", "Instagram"],
-  ["x", "X (Twitter)"],
-  ["linkedin", "LinkedIn"],
-  ["tiktok", "TikTok"],
-  ["youtube", "YouTube"],
-  ["behance", "Behance"],
-  ["facebook", "Facebook"],
+const SOCIAL_FIELDS: Array<[keyof SocialLinks, string, React.ComponentType<{ size?: number; className?: string }>]> = [
+  ["instagram", "Instagram", Globe],
+  ["x", "X (Twitter)", Globe],
+  ["linkedin", "LinkedIn", Globe],
+  ["tiktok", "TikTok", Globe],
+  ["youtube", "YouTube", Globe],
+  ["behance", "Behance", Globe],
+  ["facebook", "Facebook", Globe],
 ];
 
 function Field({
@@ -84,9 +84,9 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
 
   const settings = draft.settings;
 
-  const cardActions = (Icon: React.ComponentType<{ size?: number; className?: string }>, colorClass: string) => (
-    <div className={`flex h-8 w-8 items-center justify-center rounded-lg bg-white border border-[${colorClass}] shadow-sm`}>
-      <Icon size={16} className={`text-${colorClass}`} />
+  const cardActions = (Icon: React.ComponentType<{ size?: number; className?: string }>, color: string) => (
+    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white border border-[${color}] shadow-sm">
+      <Icon size={16} className={`text-[${color}]`} />
     </div>
   );
 
@@ -98,12 +98,12 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
         description="بيانات التواصل، الروابط الاجتماعية، الشعار والصور، الكلمات المفتاحية، وتشغيل الأقسام المخفية."
       />
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         {/* الهوية */}
         <Card
           title="الهوية"
-          description="الأسماء التي تظهر في SEO وبيانات المنظمة."
-          actions={cardActions(Sparkle, "text-[#D1A246]")}
+          description="الأسماء التي تظهر في محركات البحث وبيانات المنظمة."
+          actions={cardActions(Sparkle, "#D1A246")}
         >
           <div className="admin-field-row">
             <Field label="الاسم بالعربية">
@@ -131,7 +131,7 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
             </Field>
             <Field
               label="رابط الموقع"
-              hint="مثال: https://artenergy.sa — يُستخدم في SEO وsitemap."
+              hint="مثال: https://artenergy.sa — يُستخدم في محركات البحث وخرائط الموقع."
             >
               <input
                 className="admin-input"
@@ -164,15 +164,15 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
         {/* صورة واجهة الموقع */}
         <Card
           title="صورة واجهة الموقع"
-          description="الصورة التي تملأ واجهة الموقع بالكامل، ويظهر فوقها اسم الموقع والعنوان. ارفع صورة من جهازك أو اخترها من المكتبة، ثم اضغط «حفظ التغييرات»."
-          actions={cardActions(Sparkle, "text-[#139CAA]")}
+          description="الصورة التي تملأ واجهة الموقع بالكامل، ويظهر فوقها اسم الموقع والعنوان."
+          actions={cardActions(Sparkle, "#139CAA")}
         >
           <div className="max-w-xl">
             <ImageField
               label="صورة الهيرو"
               value={settings.heroImage}
               onChange={(value) => setSettings({ heroImage: value })}
-              hint="يُفضّل صورة أفقية عريضة بجودة عالية (مثل 1920×1080) لأنها تملأ الشاشة كخلفية. الافتراضي: /images/media-art.webp"
+              hint="يُفضّل صورة أفقية عريضة بجودة عالية (مثل 1920×1080) لأنها تملأ الشاشة كخلفية."
             />
           </div>
           <div className="mt-4">
@@ -186,7 +186,7 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
         <Card
           title="بيانات التواصل"
           description="تظهر في الهيدر، الفوتر، صفحة التواصل، وأزرار واتساب."
-          actions={cardActions(Mail, "text-[#3DC1C5]")}
+          actions={cardActions(Mail, "#3DC1C5")}
         >
           <div className="admin-field-row">
             <Field label="البريد الإلكتروني">
@@ -240,7 +240,7 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
         <Card
           title="نطاق الحملة"
           description="السعران المستخدمان في قسم الحملات ومنشئ الباقات."
-          actions={cardActions(WhatsApp, "text-[#F28C28]")}
+          actions={cardActions(WhatsApp, "#F28C28")}
         >
           <div className="admin-field-row max-w-xl">
             <Field label="الحد الأدنى (ريال)">
@@ -273,9 +273,9 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
         {/* الشعار والصور */}
         <Card
           title="الشعار والصور"
-          actions={cardActions(Phone, "text-[#D1A246]")}
+          actions={cardActions(Phone, "#D1A246")}
         >
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3">
             <ImageField
               label="الشعار"
               value={settings.logoUrl}
@@ -301,7 +301,7 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
         <Card
           title="روابط التواصل الاجتماعي"
           description="اترك الحقل فارغًا لإخفاء المنصة. لا تظهر أي روابط غير مضافة."
-          actions={cardActions(Globe, "text-[#139CAA]")}
+          actions={cardActions(Globe, "#139CAA")}
         >
           <div className="admin-field-row">
             {SOCIAL_FIELDS.map(([key, label]) => (
@@ -323,7 +323,7 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
         <Card
           title="الكلمات المفتاحية (SEO)"
           description="كلمة أو عبارة في كل سطر."
-          actions={cardActions(Sparkle, "text-[#D1A246]")}
+          actions={cardActions(Sparkle, "#D1A246")}
         >
           <div className="admin-field-row">
             <Field label="عربي">
@@ -362,7 +362,7 @@ export function SettingsEditor({ initialData }: { initialData: SiteData }) {
         <Card
           title="الأقسام المخفية"
           description="شغّل القسم بعد إضافة عناصره من صفحة «الأقسام المخفية»."
-          actions={cardActions(Sparkle, "text-[#0B2730]")}
+          actions={cardActions(Sparkle, "#0B2730")}
         >
           <div className="grid gap-3 sm:grid-cols-2">
             {(Object.keys(FLAG_COPY) as Array<keyof FeatureFlags>).map((key) => (

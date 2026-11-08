@@ -4,11 +4,10 @@ import {
   adminConfigured,
   clearLoginAttempts,
   createSessionToken,
-  isAuthenticated,
   loginRateLimited,
   sessionCookieOptions,
-  verifyPassword,
 } from "@/lib/auth";
+import { isAuthenticated, verifyAdminLogin } from "@/lib/auth-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -49,9 +48,11 @@ export async function POST(request: Request) {
     );
   }
 
+  let email = "";
   let password = "";
   try {
-    const body = (await request.json()) as { password?: unknown };
+    const body = (await request.json()) as { email?: unknown; password?: unknown };
+    email = typeof body.email === "string" ? body.email : "";
     password = typeof body.password === "string" ? body.password : "";
   } catch {
     return NextResponse.json(
@@ -60,25 +61,34 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!password) {
+  if (!email || !password) {
     return NextResponse.json(
-      { ok: false, error: "missing_password", message: "أدخل كلمة المرور." },
+      { ok: false, error: "missing_fields", message: "أدخل البريد الإلكتروني وكلمة المرور." },
       { status: 400 },
     );
   }
 
-  if (!verifyPassword(password)) {
+  const user = await verifyAdminLogin({ email, password });
+  if (!user) {
     return NextResponse.json(
-      { ok: false, error: "invalid_password", message: "كلمة المرور غير صحيحة." },
+      { ok: false, error: "invalid_credentials", message: "البريد الإلكتروني أو كلمة المرور غير صحيحة." },
       { status: 401 },
     );
   }
 
   clearLoginAttempts(ip);
-  const response = NextResponse.json({ ok: true });
+  const response = NextResponse.json({
+    ok: true,
+    user: {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    },
+  });
   response.cookies.set(
     ADMIN_COOKIE,
-    createSessionToken(),
+    createSessionToken(user),
     sessionCookieOptions(),
   );
   return response;

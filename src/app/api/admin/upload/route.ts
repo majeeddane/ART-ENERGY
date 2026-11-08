@@ -3,7 +3,7 @@ import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import type { MediaItem } from "@content/model";
-import { isAuthenticated } from "@/lib/auth";
+import { isAuthenticated } from "@/lib/auth-server";
 import { readSiteData, saveSiteData, uploadsKind } from "@/lib/store";
 
 export const runtime = "nodejs";

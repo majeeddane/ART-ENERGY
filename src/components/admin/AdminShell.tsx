@@ -12,16 +12,26 @@ import {
   Menu,
   PenTool,
   Sparkle,
+  Lock,
 } from "@/components/ui/Icons";
 import { cn } from "@/lib/utils";
 import { logout } from "@/lib/admin-client";
 
 const items = [
   { href: "/admin", label: "نظرة عامة", icon: "01" },
-  { href: "/admin/content", label: "محتوى الموقع", icon: "02" },
-  { href: "/admin/sections", label: "الأقسام المخفية", icon: "03" },
-  { href: "/admin/settings", label: "الإعدادات والهوية", icon: "04" },
-  { href: "/admin/media", label: "الصور والملفات", icon: "05" },
+  { href: "/admin/about", label: "إدارة من نحن", icon: "02" },
+  { href: "/admin/hero", label: "إدارة الصفحة الرئيسية", icon: "03" },
+  { href: "/admin/content", label: "محتوى الموقع", icon: "04" },
+  { href: "/admin/services", label: "إدارة الخدمات", icon: "05" },
+  { href: "/admin/packages", label: "إدارة الباقات", icon: "06" },
+  { href: "/admin/campaigns", label: "إدارة الحملات", icon: "07" },
+  { href: "/admin/appearance", label: "إدارة المظهر", icon: "08" },
+  { href: "/admin/sections", label: "الأقسام المخفية", icon: "09" },
+  { href: "/admin/settings", label: "الإعدادات والهوية", icon: "10" },
+  { href: "/admin/media", label: "الصور والملفات", icon: "11" },
+  { href: "/admin/inquiries", label: "استفسارات التواصل", icon: "12" },
+  { href: "/admin/users", label: "إدارة المستخدمين", icon: "13" },
+  { href: "/admin/audit-log", label: "سجل النشاطات", icon: "14" },
 ];
 
 export function AdminShell({ children }: { children: ReactNode }) {
@@ -54,10 +64,10 @@ export function AdminShell({ children }: { children: ReactNode }) {
             href={item.href}
             onClick={() => setOpen(false)}
             className={cn(
-              "group flex items-center justify-between gap-3 rounded-xl px-3.5 py-3 text-sm transition-all duration-300",
+              "group relative flex items-center justify-between gap-3 rounded-xl px-3.5 py-3 text-sm transition-all duration-300",
               active
-                ? "bg-[#F2E04E] text-[#0B2730] shadow-soft"
-                : "text-white/60 hover:bg-white/[0.06] hover:text-white hover:border-[#139CAA]/30",
+                ? "bg-[#0B2730] text-[#F2E04E] shadow-[0_0_0_8px_rgba(11,39,48,0.25)]"
+                : "text-[#456067] hover:bg-[#F4F0E7] hover:text-[#0B2730] hover:border-[#139CAA]/30",
               "border border-transparent",
             )}
           >
@@ -65,14 +75,16 @@ export function AdminShell({ children }: { children: ReactNode }) {
               <span
                 className={cn(
                   "font-grotesk text-[9px] tracking-[0.16em] shrink-0",
-                  active ? "text-[#0B2730]/60" : "text-white/20",
+                  active ? "text-[#F2E04E]" : "text-[#9AA5A5]",
                 )}
               >
                 {item.icon}
               </span>
               <span className="truncate">{item.label}</span>
             </span>
-            {active && <PenTool size={13} />}
+            {active && (
+              <span className="absolute -right-1 top-1/2 -translate-y-1/2 h-1.5 w-1.5 rounded-full bg-[#F2E04E]" />
+            )}
           </Link>
         );
       })}
@@ -81,11 +93,11 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[280px_1fr]">
-      <aside className="hidden min-h-screen flex-col justify-between overflow-hidden bg-[#07262F] px-4 py-5 text-[#F7F2E9] lg:flex">
+      <aside className="hidden min-h-screen flex-col justify-between overflow-hidden bg-[#0B2730] px-4 py-6 text-[#F7F2E9] lg:flex shadow-[0_10px_40px_-20px_rgba(0,0,0,0.15)]">
         <div>
           <Link
             href="/admin"
-            className="flex items-center gap-3 px-2 mb-6"
+            className="flex items-center gap-3 px-2 mb-8"
           >
             <BrandMark idPrefix="ae-admin" className="h-12 w-12" />
             <span className="flex flex-col">
@@ -95,30 +107,30 @@ export function AdminShell({ children }: { children: ReactNode }) {
               >
                 ART ENERGY
               </span>
-              <span className="mt-1 text-[10px] text-white/45">
+              <span className="mt-1 text-[10px] text-white/50">
                 لوحة التحكم
               </span>
             </span>
           </Link>
 
-          <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 shadow-lg shadow-[#0B2730]/20">
+          <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-lg shadow-[#0B2730]/30">
             <div className="flex items-center gap-2 text-[10px] text-[#F2E04E]/80">
               <Sparkle size={12} />
               CONTROL ROOM
             </div>
-            <p className="mt-2 text-[10px] leading-5 text-white/40">
+            <p className="mt-2 text-[10px] leading-5 text-white/45">
               كل تعديل تحفظه يظهر على الموقع مباشرة بعد إعادة التحميل.
             </p>
           </div>
 
-          <div className="mt-6">{nav}</div>
+          <div className="mt-8">{nav}</div>
         </div>
 
         <div className="space-y-2">
           <Link
             href="/"
             target="_blank"
-            className="flex items-center justify-between gap-2 rounded-xl border border-white/10 px-3.5 py-3 text-xs text-white/55 transition-all hover:border-[#D1A246] hover:text-[#F2E04E] hover:shadow-soft"
+            className="flex items-center justify-between gap-2 rounded-xl border border-white/10 px-3.5 py-3 text-xs text-white/55 transition-all duration-200 hover:border-[#D1A246] hover:text-[#F2E04E] hover:shadow-[0_0_0_5px_rgba(209,162,70,0.20)]"
           >
             <span className="flex items-center gap-2">
               <Globe size={14} />
@@ -130,15 +142,15 @@ export function AdminShell({ children }: { children: ReactNode }) {
             type="button"
             onClick={signOut}
             disabled={leaving}
-            className="w-full rounded-xl border border-white/10 px-3.5 py-3 text-start text-xs text-white/45 transition-all hover:border-[#E7B9B5]/50 hover:text-[#F7C9C4] disabled:opacity-50 disabled:hover:border-white/10 disabled:hover:text-white/45"
+            className="w-full rounded-xl border border-white/10 px-3.5 py-3 text-start text-xs text-white/45 transition-all duration-200 disabled:opacity-50 hover:border-[#E7B9B5]/50 hover:text-[#F7C9C4] disabled:hover:border-white/10 disabled:hover:text-white/45"
           >
             {leaving ? "جارٍ الخروج…" : "تسجيل الخروج"}
           </button>
         </div>
       </aside>
 
-      <div className="min-w-0">
-        <header className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#DED5C4] bg-[#F4F0E7]/95 px-4 py-3 backdrop-blur-xl lg:hidden shadow-sm">
+      <div className="min-w-0 admin-body">
+        <header className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#E7E0D3] bg-white/90 px-4 py-3 backdrop-blur-xl lg:hidden shadow-sm">
           <Link href="/admin" className="flex items-center gap-2">
             <BrandMark idPrefix="ae-admin-mobile" className="h-9 w-9" />
             <span
@@ -152,14 +164,14 @@ export function AdminShell({ children }: { children: ReactNode }) {
             type="button"
             onClick={() => setOpen(true)}
             aria-label="فتح القائمة"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#DED5C4] bg-white text-[#0B2730] transition-all hover:border-[#139CAA] hover:bg-[#139CAA]/10"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#DED5C4] bg-white text-[#0B2730] transition-all duration-200 hover:border-[#139CAA] hover:bg-[#139CAA]/10"
           >
             <Menu size={18} />
           </button>
         </header>
 
         {open && (
-          <div className="fixed inset-0 z-[80] bg-[#07262F] p-5 text-[#F7F2E9] lg:hidden backdrop-blur-md">
+          <div className="fixed inset-0 z-[80] bg-[#0B2730] p-5 text-[#F7F2E9] lg:hidden backdrop-blur-md shadow-lg">
             <div className="flex items-center justify-between">
               <span
                 className="font-grotesk text-sm font-semibold tracking-[0.18em]"
@@ -171,7 +183,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="إغلاق القائمة"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition-all hover:border-white"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition-all duration-200 hover:border-white"
               >
                 <Close size={18} />
               </button>
@@ -180,7 +192,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <Link
               href="/"
               target="_blank"
-              className="mt-6 flex items-center justify-between rounded-xl border border-white/10 px-3.5 py-3 text-xs text-white/60 transition-all hover:border-[#D1A246] hover:text-[#F2E04E]"
+              className="mt-6 flex items-center justify-between rounded-xl border border-white/10 px-3.5 py-3 text-xs text-white/60 transition-all duration-200 hover:border-[#D1A246] hover:text-[#F2E04E]"
             >
               عرض الموقع
               <ArrowUpRight size={13} />
@@ -188,14 +200,14 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <button
               type="button"
               onClick={signOut}
-              className="mt-2 w-full rounded-xl border border-white/10 px-3.5 py-3 text-start text-xs text-white/45 transition-all hover:border-[#E7B9B5]/50 hover:text-[#F7C9C4]"
+              className="mt-2 w-full rounded-xl border border-white/10 px-3.5 py-3 text-start text-xs text-white/45 transition-all duration-200 hover:border-[#E7B9B5]/50 hover:text-[#F7C9C4]"
             >
               تسجيل الخروج
             </button>
           </div>
         )}
 
-        <main className="mx-auto w-full max-w-[1180px] px-4 py-6 sm:px-6 sm:py-8">
+        <main className="mx-auto w-full max-w-[1240px] px-4 py-6 sm:px-6 sm:py-8">
           {children}
         </main>
       </div>

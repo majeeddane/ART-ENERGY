@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import type { SiteData } from "@content/site";
-import { isAuthenticated } from "@/lib/auth";
+import { isAuthenticated } from "@/lib/auth-server";
 import { readSiteData, saveSiteData } from "@/lib/store";
 
 export const runtime = "nodejs";

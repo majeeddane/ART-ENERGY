@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
 import { BrandMark } from "@/components/brand/Logo";
-import { ArrowUpRight, Lock } from "@/components/ui/Icons";
-import { login } from "@/lib/admin-client";
+import { ArrowUpRight, Lock, Mail } from "@/components/ui/Icons";
 
 export function LoginForm({ configured }: { configured: boolean }) {
   const router = useRouter();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -19,8 +19,18 @@ export function LoginForm({ configured }: { configured: boolean }) {
     setLoading(true);
     setError(null);
     try {
-      await login(password);
-      router.replace("/admin");
+      const res = await fetch("/api/admin/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "البريد الإلكتروني أو كلمة المرور غير صحيحة.");
+        setLoading(false);
+        return;
+      }
+      await router.replace("/admin");
       router.refresh();
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "تعذر تسجيل الدخول.");
@@ -30,8 +40,8 @@ export function LoginForm({ configured }: { configured: boolean }) {
 
   return (
     <main className="flex min-h-screen items-center justify-center px-4 py-10">
-      <div className="grid w-full max-w-4xl overflow-hidden rounded-stage border border-[#DED5C4] bg-white shadow-[0_40px_100px_-50px_rgba(11,39,48,0.6)] lg:grid-cols-[1fr_1.05fr]">
-        <aside className="relative hidden overflow-hidden bg-[#07262F] p-10 text-[#F7F2E9] lg:flex lg:flex-col lg:justify-between">
+      <div className="grid w-full max-w-4xl overflow-hidden rounded-[2rem] border border-[#E7E0D3] bg-white shadow-[0_40px_100px_-50px_rgba(11,39,48,0.6)] lg:grid-cols-[1fr_1.05fr]">
+        <aside className="relative hidden overflow-hidden bg-[#0B2730] p-10 text-[#F7F2E9] lg:flex lg:flex-col lg:justify-between">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(19,156,170,0.35),transparent_50%)]" />
           <div className="pointer-events-none absolute -bottom-20 -end-16 h-72 w-72 rounded-full bg-[#D1A246]/20 blur-3xl" />
           <div className="relative">
@@ -64,7 +74,9 @@ export function LoginForm({ configured }: { configured: boolean }) {
 
         <section className="p-7 sm:p-10">
           <div className="flex items-center justify-between">
-            <span className="eyebrow text-[9px] text-[#8A6A25]">ADMIN ACCESS</span>
+            <span className="eyebrow text-[9px] text-[#8A6A25] uppercase">
+              ADMIN ACCESS
+            </span>
             <Link
               href="/"
               className="inline-flex items-center gap-1 text-[10px] font-medium text-[#6A7D80] transition hover:text-[#0B2730]"
@@ -78,7 +90,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
             تسجيل الدخول
           </h2>
           <p className="mt-2 text-sm leading-7 text-[#6A7D80]">
-            أدخل كلمة مرور المدير للمتابعة.
+            أدخل بريدك الإلكتروني وكلمة المرور للمتابعة.
           </p>
 
           {!configured && (
@@ -92,6 +104,30 @@ export function LoginForm({ configured }: { configured: boolean }) {
           )}
 
           <form onSubmit={submit} className="mt-7 space-y-4">
+            <div>
+              <label htmlFor="admin-email" className="admin-label">
+                البريد الإلكتروني
+              </label>
+              <div className="relative">
+                <Mail
+                  size={15}
+                  className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-[#8A9797]"
+                />
+                <input
+                  id="admin-email"
+                  type="email"
+                  autoComplete="email"
+                  dir="ltr"
+                  className="admin-input ps-9"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  placeholder="admin@artenergy.sa"
+                  disabled={!configured || loading}
+                  required
+                />
+              </div>
+            </div>
+
             <div>
               <label htmlFor="admin-password" className="admin-label">
                 كلمة المرور
@@ -127,8 +163,8 @@ export function LoginForm({ configured }: { configured: boolean }) {
 
             <button
               type="submit"
-              disabled={!configured || loading || !password}
-              className="admin-btn admin-btn-primary w-full transition-all hover:shadow-soft hover:-translate-y-0.5"
+              disabled={!configured || loading || !email || !password}
+              className="admin-btn admin-btn-primary w-full transition-all duration-200 hover:shadow-[0_0_0_6px_color-mix(in_srgb,#0B2730_20%,transparent)]"
             >
               {loading ? "جارٍ التحقق…" : "دخول إلى اللوحة"}
               <ArrowUpRight size={15} className="rtl:-scale-x-100 transition-transform duration-200" />

@@ -1,7 +1,7 @@
 import { unlink } from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
-import { isAuthenticated } from "@/lib/auth";
+import { isAuthenticated } from "@/lib/auth-server";
 import { readSiteData, saveSiteData } from "@/lib/store";
 
 export const runtime = "nodejs";

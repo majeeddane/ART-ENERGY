@@ -99,7 +99,7 @@ export function MediaLibrary({
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={busy}
-          className="admin-btn admin-btn-primary min-h-9 px-4 text-[10px]"
+          className="admin-btn admin-btn-primary min-h-10 px-4 text-[10px] font-semibold"
         >
           <Upload size={14} />
           {busy ? "جارٍ الرفع…" : "رفع صور"}
@@ -142,13 +142,13 @@ export function MediaLibrary({
         )}
       </Notice>
 
-      <div className="mt-4">
+      <div className="mt-6">
         {media.length === 0 ? (
-          <Card>
-            <div className="flex flex-col items-center justify-center py-14 text-center">
-              <span className="flex h-14 w-14 items-center justify-center rounded-full border border-dashed border-[#DED5C4] text-[#9AA5A5]">
+          <Card className="p-6">
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-dashed border-[#DED5C4] text-[#9AA5A5]">
                 <ImageIcon size={24} />
-              </span>
+              </div>
               <p className="mt-4 text-sm font-semibold text-[#0B2730]">
                 لا توجد صور بعد
               </p>
@@ -166,7 +166,7 @@ export function MediaLibrary({
             </div>
           </Card>
         ) : (
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {media.map((item) => (
               <article
                 key={item.id}
@@ -178,7 +178,7 @@ export function MediaLibrary({
                     src={item.url}
                     alt={item.name}
                     loading="lazy"
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                   />
                   <span className="absolute end-2 top-2 rounded-full bg-[#04181E]/70 px-2 py-1 font-grotesk text-[8px] uppercase tracking-[0.12em] text-white/80">
                     {item.provider}

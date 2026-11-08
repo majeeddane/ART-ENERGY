@@ -57,6 +57,9 @@ import {
   Volume2 as LVolume,
   VolumeX as LVolumeOff,
   X as LX,
+  User as LUser,
+  Activity as LActivity,
+  Clock as LClock,
   Zap as LZap,
 } from "lucide-react";
 
@@ -145,6 +148,9 @@ export const Users = make(LUsers);
 export const Video = make(LVideo);
 export const Volume = make(LVolume);
 export const VolumeOff = make(LVolumeOff);
+export const User = make(LUser);
+export const Activity = make(LActivity);
+export const Clock = make(LClock);
 export const Zap = make(LZap);
 
 /** Brand glyphs stay hand-tuned for exact recognition. */

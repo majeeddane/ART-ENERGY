@@ -492,38 +492,44 @@ function ValueEditor({
       );
     }
     return (
-      <input
-        className="admin-input"
-        dir={locale === "en" ? "ltr" : undefined}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-      />
+      <div className="relative w-full">
+        <input
+          className="admin-input w-full"
+          dir={locale === "en" ? "ltr" : undefined}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+        />
+      </div>
     );
   }
 
   if (typeof value === "number") {
     return (
-      <input
-        type="number"
-        className="admin-input max-w-[220px]"
-        dir="ltr"
-        value={Number.isFinite(value) ? value : 0}
-        onChange={(event) => onChange(Number(event.target.value))}
-      />
+      <div className="relative w-64">
+        <input
+          type="number"
+          className="admin-input w-full"
+          dir="ltr"
+          value={Number.isFinite(value) ? value : 0}
+          onChange={(event) => onChange(Number(event.target.value))}
+        />
+      </div>
     );
   }
 
   if (typeof value === "boolean") {
     return (
-      <label className="inline-flex items-center gap-2 text-xs text-[#456067]">
+      <div className="flex items-center gap-2">
         <input
           type="checkbox"
           checked={value}
           onChange={(event) => onChange(event.target.checked)}
-          className="h-4 w-4 accent-[#139CAA]"
+          className="h-4 w-4 rounded border border-[#DED5C4] text-[#139CAA] focus:ring-0 accent-[#139CAA]"
         />
-        {value ? "مفعّل" : "متوقف"}
-      </label>
+        <span className="text-[10px] text-[#456067]">
+          {value ? "مفعّل" : "متوقف"}
+        </span>
+      </div>
     );
   }
 
@@ -637,35 +643,35 @@ export function ContentEditor({ initialData }: { initialData: SiteData }) {
         </Link>
       </PageHeader>
 
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div className="inline-flex rounded-full border border-[#DED5C4] bg-white p-1">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <div className="inline-flex rounded-full border border-[#E7E0D3] bg-white p-1">
           <button
             type="button"
             onClick={() => setLocale("ar")}
             className={cn("admin-tab", locale === "ar" && "admin-tab-active")}
           >
-            العربية
+            <span className="font-arabic text-[9px]">العربية</span>
           </button>
           <button
             type="button"
             onClick={() => setLocale("en")}
             className={cn("admin-tab", locale === "en" && "admin-tab-active")}
           >
-            English
+            <span className="font-grotesk text-[9px]">English</span>
           </button>
         </div>
         <button
           type="button"
           onClick={copyFromOther}
-          className="admin-btn admin-btn-ghost min-h-8 px-3 text-[10px]"
+          className="admin-btn admin-btn-ghost min-h-9 px-3.5 text-[10px] text-left"
         >
-          <Sparkle size={12} />
+          <Sparkle size={12} className="text-[#D1A24E]" />
           نسخ نصوص {locale === "ar" ? "الإنجليزية" : "العربية"} إلى هذا القسم
         </button>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[210px_1fr]">
-        <aside className="admin-card admin-scroll h-fit overflow-x-auto p-2 lg:sticky lg:top-5">
+      <div className="grid gap-4 lg:grid-cols-[220px_1fr]">
+        <aside className="admin-card admin-scroll h-fit overflow-x-auto p-3 lg:sticky lg:top-5">
           <div className="flex gap-1 lg:flex-col">
             {SECTION_ORDER.map((key) => (
               <button
@@ -673,13 +679,14 @@ export function ContentEditor({ initialData }: { initialData: SiteData }) {
                 type="button"
                 onClick={() => setSection(key)}
                 className={cn(
-                  "flex shrink-0 items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-start text-[11px] font-medium transition lg:w-full",
+                  "flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-start text-[10px] font-medium transition-all duration-200 lg:w-full",
                   section === key
-                    ? "bg-[#0B2730] text-[#F2E04E]"
-                    : "text-[#5D7478] hover:bg-[#F4F0E7] hover:text-[#0B2730]",
+                    ? "bg-[#0B2730] text-[#F2E04E] shadow-[0_0_0_8px_rgba(11,39,48,0.15)]"
+                    : "text-[#5D7478] hover:bg-[#F4F0E7] hover:text-[#0B2730] hover:border-[#139CAA]/40 border border-transparent",
+                  "border border-transparent",
                 )}
               >
-                {SECTION_LABELS[key]}
+                <span className="font-arabic text-[9px]">{SECTION_LABELS[key]}</span>
                 <span
                   className={cn(
                     "font-grotesk text-[8px]",
@@ -694,7 +701,7 @@ export function ContentEditor({ initialData }: { initialData: SiteData }) {
           </div>
         </aside>
 
-        <div className="admin-card min-w-0 p-4 sm:p-5">
+        <div className="admin-card min-w-0 p-5 sm:p-6">
           <div className="mb-4 flex items-center justify-between gap-3 border-b border-[#E7E0D3] pb-3">
             <div>
               <h2 className="admin-section-title">{SECTION_LABELS[section]}</h2>

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readSiteData } from "@/lib/store";
+import { readSiteData, createContactInquiry } from "@/lib/store";
 
 export const runtime = "nodejs";
 
@@ -103,6 +103,13 @@ export async function POST(request: Request) {
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
     return NextResponse.json({ ok: false, error: "invalid_email" }, { status: 400 });
+  }
+
+  // حفظ الاستفسار في قاعدة البيانات قبل الإرسال
+  try {
+    await createContactInquiry({ name, phone, email, service, message, locale, quote: body.quote });
+  } catch {
+    // لا نفشل الطلب إذا فشل التخزين، البريد الإلكتروني أهم
   }
 
   const settings = (await readSiteData()).settings;

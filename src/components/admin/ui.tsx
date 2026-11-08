@@ -32,7 +32,7 @@ export function PageHeader({
     <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
       <div>
         {eyebrow && (
-          <p className="mb-2 font-grotesk text-[9px] tracking-[0.24em] text-[#8A6A25]">
+          <p className="mb-2 font-grotesk text-[9px] tracking-[0.24em] text-[#6A7D80] uppercase">
             {eyebrow}
           </p>
         )}
@@ -111,7 +111,7 @@ export function Toggle({
   onChange: (value: boolean) => void;
 }) {
   return (
-    <label className="flex cursor-pointer items-start justify-between gap-4 rounded-xl border border-[#E7E0D3] bg-[#FCFAF5] p-3.5">
+    <label className="admin-toggle">
       <span>
         <span className="block text-sm font-semibold text-[#14262B]">
           {label}
@@ -122,26 +122,14 @@ export function Toggle({
           </span>
         )}
       </span>
-      <button
-        type="button"
+      <input
+        type="checkbox"
         role="switch"
         aria-checked={checked}
-        onClick={() => onChange(!checked)}
-        className={cn(
-          "relative mt-0.5 h-6 w-11 shrink-0 rounded-full border transition",
-          checked
-            ? "border-[#0B2730] bg-[#0B2730]"
-            : "border-[#DED5C4] bg-[#EAE4D8]",
-        )}
-      >
-        <span
-          className={cn(
-            "absolute top-0.5 h-4.5 w-4.5 rounded-full bg-white shadow transition",
-            checked ? "start-[1.45rem]" : "start-0.5",
-          )}
-          style={{ height: 18, width: 18 }}
-        />
-      </button>
+        checked={checked}
+        onChange={() => onChange(!checked)}
+      />
+      <span className="toggle-thumb" />
     </label>
   );
 }
@@ -162,7 +150,7 @@ export function SaveBar({
   extra?: ReactNode;
 }) {
   return (
-    <div className="sticky bottom-3 z-30 mt-6 flex flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-[#0B2730] p-3 text-[#F7F2E9] shadow-[0_20px_50px_-20px_rgba(11,39,48,0.8)]">
+    <div className="admin-savebar">
       <div className="flex min-w-0 flex-1 items-center gap-2 text-[11px]">
         <span
           className={cn(
@@ -262,9 +250,8 @@ export function ImageField({
     <div>
       <label className="admin-label">{label}</label>
       <div className="flex flex-wrap items-start gap-3">
-        <div className="relative h-24 w-36 shrink-0 overflow-hidden rounded-xl border border-[#DED5C4] bg-[#FCFAF5]">
+        <div className="admin-image-preview">
           {value ? (
-            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={value}
               alt={label}
@@ -376,7 +363,6 @@ export function ImageField({
                       )}
                     >
                       <span className="block aspect-[4/3] overflow-hidden">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={item.url}
                           alt={item.name}
@@ -402,15 +388,17 @@ export function ImageField({
 export function AddButton({
   label,
   onClick,
+  className,
 }: {
   label: string;
   onClick: () => void;
+  className?: string;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className="admin-btn admin-btn-ghost min-h-8 px-3 text-[10px]"
+      className={cn("admin-btn admin-btn-ghost min-h-8 px-3 text-[10px]", className)}
     >
       <Plus size={13} />
       {label}
@@ -421,16 +409,21 @@ export function AddButton({
 export function DeleteButton({
   onClick,
   label = "حذف",
+  className,
 }: {
   onClick: MouseEventHandler<HTMLButtonElement>;
   label?: string;
+  className?: string;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#E7B9B5] text-[#A9362E] transition hover:bg-[#FDF3F2]"
+      className={cn(
+        "inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#E7B9B5] text-[#A9362E] transition hover:bg-[#FDF3F2]",
+        className,
+      )}
     >
       <Trash size={12} />
     </button>
