@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { BrandMark } from "@/components/brand/Logo";
 import { Icon3D } from "@/components/ui/Icon3D";
-import { Play } from "@/components/ui/Icons";
+import { Layers, LayoutGrid, PenTool, Play, Sparkle } from "@/components/ui/Icons";
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -97,6 +97,50 @@ export function StrategyPreview() {
   );
 }
 
+const identityTiles = [
+  {
+    label: "COLOR",
+    icon: (
+      <span className="flex -space-x-2" dir="ltr">
+        {["#139CAA", "#D1A246", "#F28C28"].map((color) => (
+          <span
+            key={color}
+            className="h-6 w-6 rounded-full mix-blend-multiply"
+            style={{ backgroundColor: color }}
+          />
+        ))}
+      </span>
+    ),
+  },
+  {
+    label: "TYPE",
+    icon: (
+      <span
+        className="font-grotesk text-2xl font-semibold leading-none text-[#0B2730]"
+        dir="ltr"
+      >
+        Aa
+      </span>
+    ),
+  },
+  {
+    label: "GRID",
+    icon: <LayoutGrid size={24} style={{ color: "#B0822F" }} />,
+  },
+  {
+    label: "IDEA",
+    icon: <Sparkle size={24} style={{ color: "#E07B1A" }} />,
+  },
+  {
+    label: "SYSTEM",
+    icon: <Layers size={24} style={{ color: "#6B7472" }} />,
+  },
+  {
+    label: "MARK",
+    icon: <PenTool size={24} style={{ color: "#0E7C89" }} />,
+  },
+];
+
 export function BrandPreview() {
   return (
     <div className="relative h-full min-h-[320px] overflow-hidden rounded-card border border-line bg-[#F3EDE1] p-5">
@@ -109,17 +153,20 @@ export function BrandPreview() {
       </div>
 
       <div className="relative mt-6 grid grid-cols-3 gap-2">
-        {[0, 1, 2, 3, 4, 5].map((i) => (
+        {identityTiles.map((tile, i) => (
           <motion.div
-            key={i}
+            key={tile.label}
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: i * 0.06 }}
-            className="flex aspect-square items-center justify-center rounded-xl border border-[#0B2730]/10 bg-[#FBF8F1]"
+            className="flex aspect-square flex-col items-center justify-center gap-2 rounded-xl border border-[#0B2730]/10 bg-[#FBF8F1] px-2 py-3"
           >
-            <BrandMark
-              idPrefix={`brand-grid-${i}`}
-              className={i === 4 ? "h-10 w-10 grayscale" : "h-10 w-10"}
-            />
+            <span className="flex h-8 items-center justify-center">{tile.icon}</span>
+            <span
+              className="font-grotesk text-[7px] tracking-[0.18em] text-[#0B2730]/45"
+              dir="ltr"
+            >
+              {tile.label}
+            </span>
           </motion.div>
         ))}
       </div>
