@@ -47,32 +47,36 @@ export function verifyPassword(input: string) {
 }
 
 export function createSessionToken(user?: { id?: string; email?: string; role?: string }) {
-  const expires = String(Date.now() + SESSION_MAX_AGE * 1000);
-  const payload: SessionPayload = { exp: Number(expires) };
+  const payload: SessionPayload = { exp: Date.now() + SESSION_MAX_AGE * 1000 };
   if (user) {
     payload.userId = user.id;
     payload.email = user.email;
     payload.role = user.role;
   }
-  return `${expires}.${sign(JSON.stringify(payload))}`;
+  const encoded = Buffer.from(JSON.stringify(payload)).toString("base64url");
+  return `${encoded}.${sign(encoded)}`;
 }
 
 export function verifySessionToken(token: string | undefined) {
   if (!token) return false;
   const index = token.lastIndexOf(".");
   if (index <= 0) return false;
-  const expires = token.slice(0, index);
+  const payloadPart = token.slice(0, index);
   const signature = token.slice(index + 1);
-  if (!safeEqual(signature, sign(expires))) return false;
-  const expiresAt = Number(expires);
-  return Number.isFinite(expiresAt) && expiresAt > Date.now();
+  if (!safeEqual(signature, sign(payloadPart))) return false;
+  const payload = decodeSessionToken(token);
+  return Boolean(
+    payload &&
+      Number.isFinite(payload.exp) &&
+      payload.exp > Date.now(),
+  );
 }
 
 export function decodeSessionToken(token: string | undefined): SessionPayload | null {
   if (!token) return null;
   const index = token.lastIndexOf(".");
   if (index <= 0) return null;
-  const payloadPart = token.slice(index + 1);
+  const payloadPart = token.slice(0, index);
   try {
     return JSON.parse(Buffer.from(payloadPart, "base64url").toString("utf8")) as SessionPayload;
   } catch {

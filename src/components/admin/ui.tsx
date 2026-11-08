@@ -29,23 +29,13 @@ export function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-      <div>
-        {eyebrow && (
-          <p className="mb-2 font-grotesk text-[9px] tracking-[0.24em] text-[#6A7D80] uppercase">
-            {eyebrow}
-          </p>
-        )}
-        <h1 className="text-2xl font-bold tracking-tight text-[#0B2730] sm:text-3xl">
-          {title}
-        </h1>
-        {description && (
-          <p className="mt-2 max-w-2xl text-sm leading-7 text-[#6A7D80]">
-            {description}
-          </p>
-        )}
+    <div className="admin-page-head">
+      <div className="min-w-0">
+        {eyebrow && <p className="admin-eyebrow">{eyebrow}</p>}
+        <h1 className="admin-page-title">{title}</h1>
+        {description && <p className="admin-page-desc">{description}</p>}
       </div>
-      {children && <div className="flex flex-wrap items-center gap-2">{children}</div>}
+      {children && <div className="admin-page-actions">{children}</div>}
     </div>
   );
 }
@@ -63,19 +53,45 @@ export function Card({
   children: ReactNode;
   className?: string;
 }) {
+  const hasHead = Boolean(title || description || actions);
   return (
-    <section className={cn("admin-card p-4 sm:p-5", className)}>
-      {(title || actions) && (
-        <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
-          <div>
-            {title && <h2 className="admin-section-title">{title}</h2>}
-            {description && <p className="admin-muted mt-1">{description}</p>}
+    <section className={cn("admin-card", className)}>
+      {hasHead && (
+        <div className="admin-card-head">
+          <div className="min-w-0">
+            {title && <h2 className="admin-card-title">{title}</h2>}
+            {description && <p className="admin-card-desc">{description}</p>}
           </div>
-          {actions}
+          {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
         </div>
       )}
-      {children}
+      {hasHead ? <div className="admin-card-body">{children}</div> : children}
     </section>
+  );
+}
+
+export function StatCard({
+  label,
+  value,
+  hint,
+  icon,
+  tone = "ink",
+}: {
+  label: string;
+  value: string | number;
+  hint?: string;
+  icon?: ReactNode;
+  tone?: "ink" | "teal" | "gold" | "green" | "orange" | "red";
+}) {
+  return (
+    <div className={cn("admin-stat", `tone-${tone}`)}>
+      <div className="min-w-0">
+        <p className="admin-stat-label">{label}</p>
+        <p className="admin-stat-value">{value}</p>
+        {hint && <p className="admin-stat-hint">{hint}</p>}
+      </div>
+      {icon && <span className="admin-stat-icon">{icon}</span>}
+    </div>
   );
 }
 
@@ -86,17 +102,7 @@ export function Notice({
   tone?: "info" | "warn" | "danger" | "success";
   children: ReactNode;
 }) {
-  const tones = {
-    info: "border-[#B9D8DB] bg-[#EEF8F8] text-[#28636B]",
-    warn: "border-[#E7D19A] bg-[#FBF3DD] text-[#73551A]",
-    danger: "border-[#E7B9B5] bg-[#FDF3F2] text-[#A9362E]",
-    success: "border-[#B9DCC4] bg-[#EFF9F2] text-[#2C6B44]",
-  } as const;
-  return (
-    <div className={cn("rounded-xl border px-3.5 py-3 text-xs leading-6", tones[tone])}>
-      {children}
-    </div>
-  );
+  return <div className={cn("admin-notice", `admin-notice-${tone}`)}>{children}</div>;
 }
 
 export function Toggle({
@@ -112,24 +118,22 @@ export function Toggle({
 }) {
   return (
     <label className="admin-toggle">
-      <span>
-        <span className="block text-sm font-semibold text-[#14262B]">
-          {label}
-        </span>
-        {description && (
-          <span className="mt-1 block text-[11px] leading-5 text-[#6A7D80]">
-            {description}
-          </span>
-        )}
+      <span className="admin-toggle-text">
+        <span className="admin-toggle-title">{label}</span>
+        {description && <span className="admin-toggle-desc">{description}</span>}
       </span>
-      <input
-        type="checkbox"
-        role="switch"
-        aria-checked={checked}
-        checked={checked}
-        onChange={() => onChange(!checked)}
-      />
-      <span className="toggle-thumb" />
+      <span className="admin-switch">
+        <input
+          type="checkbox"
+          role="switch"
+          aria-checked={checked}
+          checked={checked}
+          onChange={() => onChange(!checked)}
+        />
+        <span className="admin-switch-track" aria-hidden>
+          <span className="admin-switch-thumb" />
+        </span>
+      </span>
     </label>
   );
 }
@@ -151,14 +155,14 @@ export function SaveBar({
 }) {
   return (
     <div className="admin-savebar">
-      <div className="flex min-w-0 flex-1 items-center gap-2 text-[11px]">
+      <div className="admin-savebar-status min-w-0 flex-1">
         <span
           className={cn(
-            "h-2 w-2 shrink-0 rounded-full",
-            dirty ? "bg-[#F2E04E]" : "bg-[#3DC1C5]",
+            "admin-savebar-dot",
+            dirty ? "is-dirty" : "is-clean",
           )}
         />
-        <span className="text-white/60">
+        <span className="truncate">
           {saving
             ? "جارٍ الحفظ…"
             : dirty
@@ -168,10 +172,8 @@ export function SaveBar({
         {message && (
           <span
             className={cn(
-              "truncate rounded-full px-2.5 py-1 text-[10px]",
-              message.type === "ok"
-                ? "bg-[#3DC1C5]/15 text-[#8AE0E1]"
-                : "bg-[#E7B9B5]/15 text-[#F7C9C4]",
+              "admin-savebar-message",
+              message.type === "ok" ? "is-ok" : "is-error",
             )}
           >
             {message.text}
@@ -183,7 +185,7 @@ export function SaveBar({
         type="button"
         onClick={onDiscard}
         disabled={!dirty || saving}
-        className="admin-btn min-h-9 border border-white/15 px-3 text-[10px] text-white/60 hover:border-white/35 hover:text-white"
+        className="admin-btn admin-btn-sm border border-white/15 bg-transparent text-white/70 hover:border-white/30 hover:bg-white/10 hover:text-white"
       >
         <Refresh size={13} />
         تراجع
@@ -192,7 +194,7 @@ export function SaveBar({
         type="button"
         onClick={onSave}
         disabled={!dirty || saving}
-        className="admin-btn admin-btn-gold min-h-9 px-4 text-[10px]"
+        className="admin-btn admin-btn-gold admin-btn-sm px-4"
       >
         <Save size={14} />
         {saving ? "جارٍ الحفظ…" : "حفظ التغييرات"}
@@ -258,7 +260,7 @@ export function ImageField({
               className="h-full w-full object-cover"
             />
           ) : (
-            <span className="flex h-full flex-col items-center justify-center gap-1 text-[10px] text-[#9AA5A5]">
+            <span className="flex h-full flex-col items-center justify-center gap-1.5 text-[10px] text-[#94a3a5]">
               <ImageIcon size={20} />
               لا توجد صورة
             </span>
@@ -279,7 +281,7 @@ export function ImageField({
               type="button"
               onClick={() => inputRef.current?.click()}
               disabled={busy}
-              className="admin-btn admin-btn-ghost min-h-8 px-3 text-[10px]"
+              className="admin-btn admin-btn-ghost admin-btn-sm"
             >
               <Upload size={13} />
               {busy ? "جارٍ الرفع…" : "رفع صورة"}
@@ -287,7 +289,7 @@ export function ImageField({
             <button
               type="button"
               onClick={openLibrary}
-              className="admin-btn admin-btn-ghost min-h-8 px-3 text-[10px]"
+              className="admin-btn admin-btn-ghost admin-btn-sm"
             >
               <ImageIcon size={13} />
               المكتبة
@@ -296,15 +298,17 @@ export function ImageField({
               <button
                 type="button"
                 onClick={() => onChange("")}
-                className="admin-btn min-h-8 px-2.5 text-[10px] text-[#A9362E] hover:bg-[#FDF3F2]"
+                className="admin-btn admin-btn-sm border border-transparent bg-transparent text-[#a63a31] hover:border-[#f0cdc8] hover:bg-[#fdf1ef]"
               >
                 <Close size={13} />
                 إزالة
               </button>
             )}
           </div>
-          {hint && <p className="text-[10px] leading-5 text-[#8A9797]">{hint}</p>}
-          {error && <p className="text-[10px] leading-5 text-[#A9362E]">{error}</p>}
+          {hint && <p className="admin-field-hint">{hint}</p>}
+          {error && (
+            <p className="text-[10px] leading-5 text-[#a63a31]">{error}</p>
+          )}
         </div>
       </div>
 
@@ -321,30 +325,38 @@ export function ImageField({
       />
 
       {libraryOpen && (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-[#04181E]/70 p-4 backdrop-blur-sm">
-          <div className="max-h-[80vh] w-full max-w-3xl overflow-hidden rounded-2xl border border-[#DED5C4] bg-white shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[#E7E0D3] px-5 py-3.5">
-              <h3 className="text-sm font-bold text-[#0B2730]">
-                مكتبة الصور
-              </h3>
+        <div className="admin-modal-backdrop">
+          <div className="admin-modal">
+            <div className="admin-modal-head">
+              <h3 className="admin-modal-title">مكتبة الصور</h3>
               <button
                 type="button"
                 onClick={() => setLibraryOpen(false)}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#DED5C4] text-[#6A7D80]"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#d5cdba] text-[#6c8085] transition hover:border-[#0f97a4] hover:text-[#071e25]"
                 aria-label="إغلاق"
               >
                 <Close size={15} />
               </button>
             </div>
-            <div className="admin-scroll max-h-[60vh] overflow-y-auto p-4">
+            <div className="admin-modal-body admin-scroll">
               {!library ? (
-                <p className="py-10 text-center text-xs text-[#8A9797]">
-                  جارٍ التحميل…
-                </p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+                  {Array.from({ length: 8 }).map((_, index) => (
+                    <div key={index} className="admin-skeleton aspect-[4/3]" />
+                  ))}
+                </div>
               ) : library.length === 0 ? (
-                <p className="py-10 text-center text-xs text-[#8A9797]">
-                  لا توجد صور مرفوعة بعد. استخدم زر «رفع صورة».
-                </p>
+                <div className="admin-empty">
+                  <span className="admin-empty-icon">
+                    <ImageIcon size={22} />
+                  </span>
+                  <p className="text-xs font-semibold text-[#102a31]">
+                    لا توجد صور مرفوعة بعد
+                  </p>
+                  <p className="max-w-xs text-[11px] leading-6 text-[#6c8085]">
+                    استخدم زر «رفع صورة» لإضافة أول صورة إلى المكتبة.
+                  </p>
+                </div>
               ) : (
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
                   {library.map((item) => (
@@ -356,10 +368,10 @@ export function ImageField({
                         setLibraryOpen(false);
                       }}
                       className={cn(
-                        "group overflow-hidden rounded-xl border bg-[#FCFAF5] text-start transition",
+                        "group overflow-hidden rounded-xl border bg-[#faf8f2] text-start transition",
                         value === item.url
-                          ? "border-[#139CAA] ring-2 ring-[#139CAA]/20"
-                          : "border-[#E7E0D3] hover:border-[#139CAA]",
+                          ? "border-[#0f97a4] ring-2 ring-[#0f97a4]/20"
+                          : "border-[#e5dfd1] hover:border-[#0f97a4]",
                       )}
                     >
                       <span className="block aspect-[4/3] overflow-hidden">
@@ -370,7 +382,7 @@ export function ImageField({
                           className="h-full w-full object-cover transition group-hover:scale-[1.03]"
                         />
                       </span>
-                      <span className="block truncate px-2 py-1.5 text-[9px] text-[#6A7D80]">
+                      <span className="block truncate px-2 py-1.5 text-[9px] text-[#6c8085]">
                         {item.name}
                       </span>
                     </button>
@@ -398,7 +410,7 @@ export function AddButton({
     <button
       type="button"
       onClick={onClick}
-      className={cn("admin-btn admin-btn-ghost min-h-8 px-3 text-[10px]", className)}
+      className={cn("admin-btn admin-btn-ghost admin-btn-sm", className)}
     >
       <Plus size={13} />
       {label}
@@ -420,10 +432,7 @@ export function DeleteButton({
       type="button"
       onClick={onClick}
       aria-label={label}
-      className={cn(
-        "inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#E7B9B5] text-[#A9362E] transition hover:bg-[#FDF3F2]",
-        className,
-      )}
+      className={cn("admin-icon-danger", className)}
     >
       <Trash size={12} />
     </button>
@@ -432,7 +441,7 @@ export function DeleteButton({
 
 export function CheckPill({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-[#EFF9F2] px-2.5 py-1 text-[10px] font-medium text-[#2C6B44]">
+    <span className="admin-badge admin-badge-success">
       <Check size={11} />
       {children}
     </span>

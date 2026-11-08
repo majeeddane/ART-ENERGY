@@ -2,8 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Card, Notice, PageHeader } from "@/components/admin/ui";
-import { Activity, Clock, User } from "@/components/ui/Icons";
-import { cn } from "@/lib/utils";
 import { type AdminAuditLog } from "@/lib/store";
 
 const ACTION_LABELS: Record<string, string> = {
@@ -71,11 +69,12 @@ export default function AdminAuditLogPage() {
         description="سجل لجميع العمليات التي يقوم بها المسؤولون والمحررون في لوحة التحكم، بما في ذلك التعديلات والحذف والإضافة."
       />
 
-      <div className="mb-4 flex flex-wrap items-center gap-2">
+      <div className="admin-card mb-4 flex flex-wrap items-center gap-2 p-3">
         <select
           value={userFilter}
           onChange={(e) => setUserFilter(e.target.value)}
-          className="admin-input text-[10px] min-w-[160px]"
+          className="admin-input admin-select min-w-[180px] text-[11px]"
+          aria-label="تصفية حسب المستخدم"
         >
           <option value="">جميع المستخدمين</option>
           {uniqueUsers.map((u) => (
@@ -85,7 +84,8 @@ export default function AdminAuditLogPage() {
         <select
           value={actionFilter}
           onChange={(e) => setActionFilter(e.target.value)}
-          className="admin-input text-[10px] min-w-[160px]"
+          className="admin-input admin-select min-w-[180px] text-[11px]"
+          aria-label="تصفية حسب الإجراء"
         >
           <option value="">جميع الإجراءات</option>
           {uniqueActions.map((a) => (
@@ -98,27 +98,27 @@ export default function AdminAuditLogPage() {
 
       <div className="mt-6">
         <Card title="سجل العمليات" description={`عرض آخر ${logs.length} عملية مسجلة.`}>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div className="admin-table-wrap admin-scroll">
+            <table className="admin-table">
               <thead>
-                <tr className="border-b border-[#E7E0D3] bg-[#FCFAF5]">
-                  <th className="px-3.5 py-3 text-[10px] font-semibold text-[#14262B]">التاريخ والوقت</th>
-                  <th className="px-3.5 py-3 text-[10px] font-semibold text-[#14262B]">المستخدم</th>
-                  <th className="px-3.5 py-3 text-[10px] font-semibold text-[#14262B]">الإجراء</th>
-                  <th className="px-3.5 py-3 text-[10px] font-semibold text-[#14262B]">نوع الهدف</th>
-                  <th className="px-3.5 py-3 text-[10px] font-semibold text-[#14262B]">تفاصيل</th>
+                <tr>
+                  <th>التاريخ والوقت</th>
+                  <th>المستخدم</th>
+                  <th>الإجراء</th>
+                  <th>نوع الهدف</th>
+                  <th>تفاصيل</th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={5} className="px-3.5 py-8 text-center text-xs text-[#8A979B]">
+                    <td colSpan={5} className="admin-table-empty">
                       جاري التحميل…
                     </td>
                   </tr>
                 ) : logs.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-3.5 py-8 text-center text-xs text-[#8A979B]">
+                    <td colSpan={5} className="admin-table-empty">
                       لا توجد أنشطة مسجلة بعد.
                     </td>
                   </tr>
@@ -132,14 +132,24 @@ export default function AdminAuditLogPage() {
                       minute: "2-digit",
                     });
                     return (
-                      <tr key={log.id} className="border-b border-[#E7E0D3] hover:bg-[#F9F7F2] transition-colors">
-                        <td className="px-3.5 py-3 text-xs dir-ltr text-[#6A7D80]">{date}</td>
-                        <td className="px-3.5 py-3 text-sm text-[#0B2730]">{log.user_email}</td>
-                        <td className="px-3.5 py-3 text-xs text-[#6A7D80]">
-                          {ACTION_LABELS[log.action] || log.action}
+                      <tr key={log.id}>
+                        <td>
+                          <span className="text-[11px] text-[#6c8085]" dir="ltr">{date}</span>
                         </td>
-                        <td className="px-3.5 py-3 text-xs dir-ltr text-[#6A7D80]">{log.target_type}</td>
-                        <td className="px-3.5 py-3 text-xs text-[#6A7D80]">{log.details ?? "—"}</td>
+                        <td>
+                          <span className="font-semibold text-[#102a31]">{log.user_email}</span>
+                        </td>
+                        <td>
+                          <span className="admin-badge admin-badge-info">
+                            {ACTION_LABELS[log.action] || log.action}
+                          </span>
+                        </td>
+                        <td>
+                          <span className="font-grotesk text-[10px] text-[#6c8085]" dir="ltr">
+                            {log.target_type}
+                          </span>
+                        </td>
+                        <td className="text-[11px] text-[#6c8085]">{log.details ?? "—"}</td>
                       </tr>
                     );
                   })

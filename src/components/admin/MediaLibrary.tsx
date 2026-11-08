@@ -145,20 +145,20 @@ export function MediaLibrary({
       <div className="mt-6">
         {media.length === 0 ? (
           <Card className="p-6">
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-dashed border-[#DED5C4] text-[#9AA5A5]">
+            <div className="admin-empty">
+              <span className="admin-empty-icon">
                 <ImageIcon size={24} />
-              </div>
-              <p className="mt-4 text-sm font-semibold text-[#0B2730]">
+              </span>
+              <p className="text-sm font-semibold text-[#102a31]">
                 لا توجد صور بعد
               </p>
-              <p className="mt-1 max-w-sm text-xs leading-6 text-[#6A7D80]">
+              <p className="mt-1 max-w-sm text-[11px] leading-6 text-[#6c8085]">
                 ارفع أول صورة لتظهر هنا وتصبح متاحة في حقول الصور.
               </p>
               <button
                 type="button"
                 onClick={() => inputRef.current?.click()}
-                className="admin-btn admin-btn-ghost mt-5 min-h-9 px-4 text-[10px]"
+                className="admin-btn admin-btn-ghost admin-btn-sm mt-4"
               >
                 <Upload size={13} />
                 رفع صورة
@@ -170,9 +170,9 @@ export function MediaLibrary({
             {media.map((item) => (
               <article
                 key={item.id}
-                className="admin-card overflow-hidden"
+                className="admin-media-tile"
               >
-                <div className="relative aspect-[4/3] bg-[#FCFAF5]">
+                <div className="relative aspect-[4/3] bg-[#faf8f2]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={item.url}

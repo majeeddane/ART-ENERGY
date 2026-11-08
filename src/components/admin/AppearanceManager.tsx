@@ -114,7 +114,7 @@ export function AppearanceManager({ initialData }: { initialData: SiteData }) {
         description={L.description}
       />
 
-      <div className="mb-4 flex flex-wrap items-center gap-2">
+      <div className="admin-tabs mb-4">
         <button
           type="button"
           onClick={() => setLocale("ar")}

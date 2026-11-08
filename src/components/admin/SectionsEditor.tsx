@@ -282,7 +282,7 @@ export function SectionsEditor({ initialData }: { initialData: SiteData }) {
         description="أضف الأعمال والعملاء والفريق والمقالات. كل عنصر هنا يظهر تلقائيًا عند تفعيل القسم."
       />
 
-      <div className="mb-4 flex flex-wrap items-center gap-2">
+      <div className="admin-tabs mb-4 overflow-x-auto">
         {(Object.keys(TAB_META) as HiddenKey[]).map((key) => (
           <button
             key={key}

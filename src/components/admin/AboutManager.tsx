@@ -99,9 +99,9 @@ function SpecialtyShell({
   return (
     <details
       open
-      className="group rounded-xl border border-[#E7E0D3] bg-[#FCFAF5] shadow-sm transition-all hover:shadow-soft"
+      className="admin-shell-item group"
     >
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-3">
+      <summary className="admin-shell-summary">
         <span className="flex min-w-0 items-center gap-2">
           <ChevronDown
             size={14}
@@ -229,7 +229,7 @@ export function AboutManager({ initialData }: { initialData: SiteData }) {
         description={L.description}
       />
 
-      <div className="mb-4 flex flex-wrap items-center gap-2">
+      <div className="admin-tabs mb-4">
         <button
           type="button"
           onClick={() => setLocale("ar")}

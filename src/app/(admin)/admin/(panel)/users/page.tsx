@@ -1,22 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AddButton, Card, DeleteButton, Notice, PageHeader } from "@/components/admin/ui";
+import {
+  AddButton,
+  Card,
+  DeleteButton,
+  Notice,
+  PageHeader,
+  StatCard,
+} from "@/components/admin/ui";
 import { Globe, Lock, User } from "@/components/ui/Icons";
-import { cn } from "@/lib/utils";
 import { type AdminUser, type AdminUserRole } from "@/lib/store";
 
-const ROLE_LABELS: Record<AdminUserRole, { label: string; color: string }> = {
-  admin: { label: "مدير النظام", color: "text-[#B8873A] border-[#DDB55C]/30 bg-[#DDB55C]/10" },
-  editor: { label: "محرر", color: "text-[#139CAA] border-[#139CAA]/30 bg-[#139CAA]/10" },
-  viewer: { label: "مشاهد", color: "text-[#6A7D80] border-[#DED5C4]/30 bg-[#DED5C4]/10" },
+const ROLE_LABELS: Record<AdminUserRole, { label: string; badge: string }> = {
+  admin: { label: "مدير النظام", badge: "admin-badge-warn" },
+  editor: { label: "محرر", badge: "admin-badge-info" },
+  viewer: { label: "مشاهد", badge: "admin-badge-neutral" },
 };
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
+  const [showAdd, setShowAdd] = useState(false);
   const [newEmail, setNewEmail] = useState("");
   const [newName, setNewName] = useState("");
   const [newRole, setNewRole] = useState<AdminUserRole>("editor");
@@ -58,6 +64,7 @@ export default function AdminUsersPage() {
       setNewName("");
       setNewRole("editor");
       setNewPassword("");
+      setShowAdd(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "فشل إضافة المستخدم");
     } finally {
@@ -77,14 +84,14 @@ export default function AdminUsersPage() {
       if (!res.ok) throw new Error(data.error || "فشل التحديث");
       setUsers((prev) => prev.map((u) => (u.id === userId ? data.data : u)));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "فشل تحديث роль المستخدم");
+      setError(err instanceof Error ? err.message : "فشل تحديث صلاحيات المستخدم");
     } finally {
       setLoading(false);
     }
   }
 
   async function handleDeleteUser(userId: string) {
-    if (!window.confirm("هل أنت متأكد أنك تريد حذف هذا المستخدم؟")) return;
+    if (!window.confirm("هل أنت متأكد أن تريد حذف هذا المستخدم؟")) return;
     setLoading(true);
     try {
       const res = await fetch(`/api/admin/users/${userId}`, { method: "DELETE" });
@@ -100,7 +107,6 @@ export default function AdminUsersPage() {
   const total = users.length;
   const active = users.filter((u) => u.is_active).length;
   const admins = users.filter((u) => u.role === "admin").length;
-  const stats = { total, active, admins };
 
   return (
     <div>
@@ -109,47 +115,137 @@ export default function AdminUsersPage() {
         title="المستخدمون والصلاحيات"
         description="إدارة المسؤولين والمحررين والمشاهدين، وتحديد صلاحيات الوصول لكل قسم في لوحة التحكم."
       >
-        <AddButton label="إضافة مستخدم" onClick={handleAddUser} className="mt-4" />
+        <AddButton
+          label={showAdd ? "إغلاق النموذج" : "إضافة مستخدم"}
+          onClick={() => {
+            setShowAdd((value) => !value);
+            setError(null);
+          }}
+        />
       </PageHeader>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <StatCard label="إجمالي المستخدمين" value={total} color="text-[#0B2730]" icon={<User size={16} />} />
-        <StatCard label="نشط" value={active} color="text-[#2C6B44]" icon={<Globe size={16} />} />
-        <StatCard label="مديرون نظام" value={admins} color="text-[#B8873A]" icon={<Lock size={16} />} />
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <StatCard label="إجمالي المستخدمين" value={total} tone="ink" icon={<User size={16} />} />
+        <StatCard label="نشط" value={active} tone="green" icon={<Globe size={16} />} />
+        <StatCard label="مديرون نظام" value={admins} tone="gold" icon={<Lock size={16} />} />
       </div>
 
-      {error && <Notice tone="danger">{error}</Notice>}
+      {error && (
+        <div className="mt-4">
+          <Notice tone="danger">{error}</Notice>
+        </div>
+      )}
 
-      {/* بطاقات الإحصائيات */}
-      <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <StatCard label="إجمالي المستخدمين" value={stats.total} color="text-[#0B2730]" icon={<User size={16} />} />
-        <StatCard label="نشط" value={stats.active} color="text-[#2C6B44]" icon={<Globe size={16} />} />
-        <StatCard label="مديرون نظام" value={stats.admins} color="text-[#B8873A]" icon={<Lock size={16} />} />
-      </div>
+      {showAdd && (
+        <div className="mt-4">
+          <Card
+            title="إضافة مستخدم جديد"
+            description="سيتمكن المستخدم من الدخول إلى لوحة التحكم حسب الدور المحدد."
+          >
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div>
+                <label className="admin-label" htmlFor="new-user-name">
+                  الاسم
+                </label>
+                <input
+                  id="new-user-name"
+                  className="admin-input"
+                  value={newName}
+                  onChange={(event) => setNewName(event.target.value)}
+                  placeholder="اسم المستخدم"
+                />
+              </div>
+              <div>
+                <label className="admin-label" htmlFor="new-user-email">
+                  البريد الإلكتروني
+                </label>
+                <input
+                  id="new-user-email"
+                  type="email"
+                  dir="ltr"
+                  className="admin-input"
+                  value={newEmail}
+                  onChange={(event) => setNewEmail(event.target.value)}
+                  placeholder="name@artenergy.sa"
+                />
+              </div>
+              <div>
+                <label className="admin-label" htmlFor="new-user-password">
+                  كلمة المرور
+                </label>
+                <input
+                  id="new-user-password"
+                  type="password"
+                  dir="ltr"
+                  className="admin-input"
+                  value={newPassword}
+                  onChange={(event) => setNewPassword(event.target.value)}
+                  placeholder="••••••••"
+                />
+              </div>
+              <div>
+                <label className="admin-label" htmlFor="new-user-role">
+                  الدور
+                </label>
+                <select
+                  id="new-user-role"
+                  className="admin-input admin-select"
+                  value={newRole}
+                  onChange={(event) => setNewRole(event.target.value as AdminUserRole)}
+                >
+                  <option value="admin">مدير النظام</option>
+                  <option value="editor">محرر</option>
+                  <option value="viewer">مشاهد</option>
+                </select>
+              </div>
+            </div>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={handleAddUser}
+                disabled={loading}
+                className="admin-btn admin-btn-primary admin-btn-sm"
+              >
+                إضافة المستخدم
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAdd(false);
+                  setError(null);
+                }}
+                className="admin-btn admin-btn-ghost admin-btn-sm"
+              >
+                إلغاء
+              </button>
+            </div>
+          </Card>
+        </div>
+      )}
 
-      <div className="mt-6">
+      <div className="mt-6 space-y-4">
         <Card title="قائمة المستخدمين" description={`إجمالي ${users.length} مستخدم مسجل في النظام.`}>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div className="admin-table-wrap admin-scroll">
+            <table className="admin-table">
               <thead>
-                <tr className="border-b border-[#E7E0D3] bg-[#FCFAF5]">
-                  <th className="px-3.5 py-3 text-[10px] font-semibold text-[#14262B]">الاسم</th>
-                  <th className="px-3.5 py-3 text-[10px] font-semibold text-[#14262B]">البريد الإلكتروني</th>
-                  <th className="px-3.5 py-3 text-[10px] font-semibold text-[#14262B]">الدور</th>
-                  <th className="px-3.5 py-3 text-[10px] font-semibold text-[#14262B]">الحالة</th>
-                  <th className="px-3.5 py-3 text-[10px] font-semibold text-[#14262B] text-right">الإجراءات</th>
+                <tr>
+                  <th>الاسم</th>
+                  <th>البريد الإلكتروني</th>
+                  <th>الدور</th>
+                  <th>الحالة</th>
+                  <th>الإجراءات</th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={5} className="px-3.5 py-8 text-center text-xs text-[#8A979B]">
+                    <td colSpan={5} className="admin-table-empty">
                       جاري التحميل…
                     </td>
                   </tr>
                 ) : users.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-3.5 py-8 text-center text-xs text-[#8A979B]">
+                    <td colSpan={5} className="admin-table-empty">
                       لا توجد مستخدمين بعد.
                     </td>
                   </tr>
@@ -157,40 +253,48 @@ export default function AdminUsersPage() {
                   users.map((u) => {
                     const roleInfo = ROLE_LABELS[u.role as AdminUserRole] ?? ROLE_LABELS.viewer;
                     return (
-                      <tr key={u.id} className="border-b border-[#E7E0D3] hover:bg-[#F9F7F2] transition-colors">
-                        <td className="px-3.5 py-3 text-sm text-[#0B2730]">{u.name}</td>
-                        <td className="px-3.5 py-3 text-xs dir-ltr text-[#6A7D80]">{u.email}</td>
-                        <td className="px-3.5 py-3">
-                          <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold border ${roleInfo.color}`}>
+                      <tr key={u.id}>
+                        <td>
+                          <span className="font-semibold text-[#102a31]">{u.name}</span>
+                        </td>
+                        <td>
+                          <span className="text-[11px] text-[#6c8085]" dir="ltr">
+                            {u.email}
+                          </span>
+                        </td>
+                        <td>
+                          <span className={`admin-badge ${roleInfo.badge}`}>
                             {roleInfo.label}
                           </span>
                         </td>
-                        <td className="px-3.5 py-3">
+                        <td>
                           <select
                             value={u.is_active ? "active" : "inactive"}
-                            onChange={(e) => handleRoleChange(u.id, u.role as AdminUserRole, e.target.value === "active")}
-                            className="admin-input text-[10px] text-left min-w-[100px]"
+                            onChange={(e) =>
+                              handleRoleChange(u.id, u.role as AdminUserRole, e.target.value === "active")
+                            }
+                            className="admin-input admin-select text-[10px] min-w-[110px]"
+                            aria-label="حالة المستخدم"
                           >
                             <option value="active">نشط</option>
                             <option value="inactive">معطل</option>
                           </select>
                         </td>
-                        <td className="px-3.5 py-3 text-right">
-                          <div className="flex items-center gap-1">
+                        <td>
+                          <div className="flex items-center gap-1.5">
                             <select
                               value={u.role}
-                              onChange={(e) => handleRoleChange(u.id, e.target.value as AdminUserRole, u.is_active)}
-                              className="admin-input text-[10px] text-left min-w-[120px]"
+                              onChange={(e) =>
+                                handleRoleChange(u.id, e.target.value as AdminUserRole, u.is_active)
+                              }
+                              className="admin-input admin-select text-[10px] min-w-[130px]"
+                              aria-label="دور المستخدم"
                             >
                               <option value="admin">مدير النظام</option>
                               <option value="editor">محرر</option>
                               <option value="viewer">مشاهد</option>
                             </select>
-                            <DeleteButton
-                              onClick={() => handleDeleteUser(u.id)}
-                              label="حذف"
-                              className="ml-1"
-                            />
+                            <DeleteButton onClick={() => handleDeleteUser(u.id)} label="حذف" />
                           </div>
                         </td>
                       </tr>
@@ -203,27 +307,11 @@ export default function AdminUsersPage() {
         </Card>
 
         <Notice tone="info">
-          يتضمن النظام دورين رئيسيين: <strong>مدير النظام</strong> (صلاحية كاملة)،
-          <strong>محرر</strong> (تعديل المحتوى والأقسام والوسائط)، و
-          <strong>مشاهد</strong> (عرض فقط). لا يمكن حذف المستخدم الذي يقوم بتسجيل الدخول حالياً.
+          يتضمن النظام ثلاثة أدوار: <strong>مدير النظام</strong> (صلاحية كاملة)،
+          <strong> محرر</strong> (تعديل المحتوى والأقسام والوسائط)، و
+          <strong> مشاهد</strong> (عرض فقط). لا يمكن حذف المستخدم الذي يقوم بتسجيل الدخول حالياً.
         </Notice>
       </div>
     </div>
-  );
-}
-
-function StatCard({ label, value, color, icon }: { label: string; value: number; color: string; icon: React.ReactNode }) {
-  return (
-    <Card className="p-3.5">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-[10px] font-semibold text-[#6A7D80]">{label}</p>
-          <p className={cn("mt-1 font-display text-2xl leading-none", color)}>{value}</p>
-        </div>
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#F2E04E]/20 border border-[#F2E04E]/40">
-          {icon}
-        </div>
-      </div>
-    </Card>
   );
 }

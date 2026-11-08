@@ -337,7 +337,7 @@ function ArrayEditor({
           <details
             key={index}
             open={depth < 1}
-            className="group rounded-xl border border-[#E7E0D3] bg-[#FCFAF5]"
+            className="admin-shell-item group"
           >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-3 py-2.5">
               <span className="flex min-w-0 items-center gap-2">
@@ -405,7 +405,7 @@ function ObjectEditor({
             <details
               key={key}
               open={depth < 1}
-              className="group rounded-xl border border-[#E7E0D3] bg-white"
+              className="admin-shell-item group"
             >
               <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-3.5 py-2.5">
                 <span className="flex items-center gap-2 text-xs font-semibold text-[#14262B]">
@@ -644,7 +644,7 @@ export function ContentEditor({ initialData }: { initialData: SiteData }) {
       </PageHeader>
 
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <div className="inline-flex rounded-full border border-[#E7E0D3] bg-white p-1">
+        <div className="admin-tabs">
           <button
             type="button"
             onClick={() => setLocale("ar")}
@@ -671,7 +671,7 @@ export function ContentEditor({ initialData }: { initialData: SiteData }) {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-[220px_1fr]">
-        <aside className="admin-card admin-scroll h-fit overflow-x-auto p-3 lg:sticky lg:top-5">
+        <aside className="admin-card admin-scroll h-fit overflow-x-auto p-3 lg:sticky lg:top-24">
           <div className="flex gap-1 lg:flex-col">
             {SECTION_ORDER.map((key) => (
               <button
@@ -681,9 +681,8 @@ export function ContentEditor({ initialData }: { initialData: SiteData }) {
                 className={cn(
                   "flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-start text-[10px] font-medium transition-all duration-200 lg:w-full",
                   section === key
-                    ? "bg-[#0B2730] text-[#F2E04E] shadow-[0_0_0_8px_rgba(11,39,48,0.15)]"
-                    : "text-[#5D7478] hover:bg-[#F4F0E7] hover:text-[#0B2730] hover:border-[#139CAA]/40 border border-transparent",
-                  "border border-transparent",
+                    ? "bg-[#071e25] text-[#e8d24d]"
+                    : "border border-transparent text-[#3d5459] hover:border-[#d5cdba] hover:bg-[#f5f1e6] hover:text-[#071e25]",
                 )}
               >
                 <span className="font-arabic text-[9px]">{SECTION_LABELS[key]}</span>
